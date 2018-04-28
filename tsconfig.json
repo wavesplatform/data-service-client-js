@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "umd",
+    "declaration": true,
+    "outDir": "dist/"
+  },
+  "exclude": ["*.sandbox.js", "*.sandbox.ts"],
+  "include": ["src/**/*", "node_modules/*"]
+}

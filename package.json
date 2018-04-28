@@ -1,0 +1,34 @@
+{
+  "name": "data-service-client-js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ivan Shmidt <bahoc47@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "build:browser": "browserify ./dist/index.js -o ./dist/umd.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@types/node": "8.0.0",
+    "@waves/data-entities": "^1.0.2",
+    "parse-json-bignumber": "^0.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "@types/node-fetch": "^1.6.9",
+    "browserify": "^16.2.0",
+    "jest": "^22.4.3",
+    "node-fetch": "^2.1.2",
+    "ts-jest": "^22.4.4",
+    "typescript": "^2.8.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+  }
+}
