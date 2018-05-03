@@ -3,7 +3,7 @@ export type TListResponseJSON<T> = {
   data: T[];
 };
 
-export type TParser = (text: string) => {};
+export type TParser = (text: string) => any;
 
 export type TLibOptions = {
   nodeUrl: string;
