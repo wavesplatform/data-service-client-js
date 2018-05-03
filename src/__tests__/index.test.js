@@ -1,7 +1,10 @@
 const DataServiceClient = require('../index.ts').default;
 
 global.fetch = jest.fn(() =>
-  Promise.resolve({ text: () => Promise.resolve('{"data":[{ "data": 1 }]}') })
+  Promise.resolve({
+    ok: true,
+    text: () => Promise.resolve('{"data":[{ "data": 1 }]}'),
+  })
 );
 const NODE_URL = 'NODE_URL';
 const client = new DataServiceClient({ nodeUrl: NODE_URL });
@@ -11,9 +14,7 @@ test('Assets endpoint: fetch is called with correct params#1', async () => {
     '4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca',
     'AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa',
   ];
-  try {
-    await client.getAssets(...ids);
-  } catch (e) {}
+  await client.getAssets(...ids);
   expect(global.fetch).toBeCalledWith(
     `${NODE_URL}/assets?ids[]=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca&ids[]=AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa`
   );

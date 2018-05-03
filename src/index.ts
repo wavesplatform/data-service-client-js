@@ -3,40 +3,38 @@ import { Asset, IAssetJSON } from '@waves/data-entities';
 import * as createParser from 'parse-json-bignumber';
 const JSONBigParser = createParser();
 
-import { some, fetchData, notString, pipeP } from './utils';
+import { some, fetchData, notString, pipeP, createQS } from './utils';
 
 // Types
 export type TLibOptions = {
   nodeUrl: string;
 };
 export type AssetId = string;
+
 export type TAssetResponseJSON = {
-  __type: string;
+  __type: 'asset';
   data: IAssetJSON;
 };
-export interface IAssetsResponseJSON {
-  data: TAssetResponseJSON[];
-  __type: string;
-}
+export type TListResponseJSON<T> = {
+  __type: 'list';
+  data: T[];
+};
+export type TAssetsResponseJSON = TListResponseJSON<TAssetResponseJSON>;
 
 // Helpers
-const validateIds = async (ids: string[]): Promise<Error | string[]> =>
+const validateIds = (ids: string[]): Promise<AssetId[]> =>
   ids.some(notString)
     ? Promise.reject(new Error('ArgumentsError: AssetId should be string'))
     : Promise.resolve(ids);
 
-const createQSForMany = (ids: string[]): string =>
-  ids.map((id: string) => `ids[]=${encodeURIComponent(id)}`).join('&');
-
 const createUrlForMany = (nodeUrl: string) => (ids: string[]): string =>
-  `${nodeUrl}/assets?${createQSForMany(ids)}`;
+  `${nodeUrl}/assets?${createQS({ ids })}`;
 
-const mapToAssets = (res: IAssetsResponseJSON): Asset[] =>
+const mapToAssets = (res: TAssetsResponseJSON): Asset[] =>
   res.data.map(({ data }) => (data === null ? null : new Asset(data)));
 
 export default class DataServiceClient {
-  private options: TLibOptions;
-  public async getAssets(...ids: AssetId[]): Promise<Asset[]> {
+  public getAssets(...ids: AssetId[]): Promise<Asset[]> {
     return pipeP(
       validateIds,
       createUrlForMany(this.options.nodeUrl),
@@ -45,12 +43,10 @@ export default class DataServiceClient {
     )(...ids);
   }
 
-  constructor(options: TLibOptions) {
+  constructor(private options: TLibOptions) {
     if (!options.nodeUrl)
       throw new Error(
         'No nodeUrl was presented in options object. Check constructor call.'
       );
-
-    this.options = options;
   }
 }
