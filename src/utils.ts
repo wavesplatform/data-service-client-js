@@ -1,5 +1,6 @@
+import { TParser } from './types';
+
 type TPredicate = (...args: any[]) => boolean;
-type TParser = (text: string) => {};
 
 export const fetchData = (parser: TParser) => (url: string): Promise<any> => {
   return fetch(url)
