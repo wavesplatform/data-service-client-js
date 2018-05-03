@@ -3,8 +3,10 @@ type TParser = (text: string) => {};
 
 export const fetchData = (parser: TParser) => (url: string): Promise<{}> => {
   return fetch(url)
-    .then(body => body.text())
-    .then(text => parser(text));
+    .then(
+      (res: Response) => (res.ok ? res.text() : res.text().then(Promise.reject))
+    )
+    .then((text: string) => parser(text));
 };
 
 export const notString = (value: any): boolean => typeof value !== 'string';
