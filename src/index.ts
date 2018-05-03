@@ -21,25 +21,24 @@ export type TListResponseJSON<T> = {
 };
 export type TAssetsResponseJSON = TListResponseJSON<TAssetResponseJSON>;
 
-// Helpers
-const validateIds = (ids: string[]): Promise<AssetId[]> =>
-  ids.some(notString)
-    ? Promise.reject(new Error('ArgumentsError: AssetId should be string'))
-    : Promise.resolve(ids);
-
-const createUrlForMany = (nodeUrl: string) => (ids: string[]): string =>
-  `${nodeUrl}/assets?${createQS({ ids })}`;
-
-const mapToAssets = (res: TAssetsResponseJSON): Asset[] =>
-  res.data.map(({ data }) => (data === null ? null : new Asset(data)));
-
 export default class DataServiceClient {
+  // Helpers
+  private validateIds = (ids: string[]): Promise<AssetId[]> =>
+    ids.some(notString)
+      ? Promise.reject(new Error('ArgumentsError: AssetId should be string'))
+      : Promise.resolve(ids);
+  private createUrlForMany = (nodeUrl: string) => (ids: string[]): string =>
+    `${nodeUrl}/assets?${createQS({ ids })}`;
+  private mapToAssets = (res: TAssetsResponseJSON): Asset[] =>
+    res.data.map(({ data }) => (data === null ? null : new Asset(data)));
+
+  // Api
   public getAssets(...ids: AssetId[]): Promise<Asset[]> {
     return pipeP(
-      validateIds,
-      createUrlForMany(this.options.nodeUrl),
+      this.validateIds,
+      this.createUrlForMany(this.options.nodeUrl),
       fetchData(JSONBigParser),
-      mapToAssets
+      this.mapToAssets
     )(...ids);
   }
 
