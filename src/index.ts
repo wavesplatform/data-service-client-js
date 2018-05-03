@@ -32,7 +32,7 @@ const createUrlForMany = (nodeUrl: string) => (ids: string[]): string =>
   `${nodeUrl}/assets?${createQSForMany(ids)}`;
 
 const mapToAssets = (res: IAssetsResponseJSON): Asset[] =>
-  res.data.map(({ data }) => new Asset(data));
+  res.data.map(({ data }) => (data === null ? null : new Asset(data)));
 
 export default class DataServiceClient {
   private options: TLibOptions;
