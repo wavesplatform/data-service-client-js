@@ -7,13 +7,13 @@ export const fetchData = (parser: TParser) => (url: string): Promise<{}> => {
     .then(text => parser(text));
 };
 
-export const notString = (value: any) => typeof value !== 'string';
+export const notString = (value: any): boolean => typeof value !== 'string';
 
-export const pipeP = (...fns: Function[]) => (...args: any[]) =>
+export const pipeP = (...fns: Function[]) => (...args: any[]): Promise<any> =>
   fns.reduce(
     (prev: Promise<any>, fn: Function) =>
       prev.then(v => fn(v)).catch(e => Promise.reject(e)),
     Promise.resolve(args)
   );
-export const some = (predicate: TPredicate) => (arr: any[]) =>
+export const some = (predicate: TPredicate) => (arr: any[]): boolean =>
   arr.some(predicate);
