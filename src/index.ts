@@ -36,7 +36,7 @@ const mapToAssets = (res: IAssetsResponseJSON): Asset[] =>
 
 export default class DataServiceClient {
   private options: TLibOptions;
-  public async getAssets(...ids: AssetId[]): Promise<IAssetsResponseJSON> {
+  public async getAssets(...ids: AssetId[]): Promise<Asset[]> {
     return pipeM(
       validateIds,
       createUrlForMany(this.options.nodeUrl),
