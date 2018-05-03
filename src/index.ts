@@ -5,41 +5,52 @@ const JSONBigParser = createParser();
 
 import { some, fetchData, notString, pipeM } from './utils';
 
+// Types
 export type TLibOptions = {
   nodeUrl: string;
 };
 export type AssetId = string;
+export type TAssetResponseJSON = {
+  __type: string;
+  data: IAssetJSON;
+};
+export interface IAssetsResponseJSON {
+  data: TAssetResponseJSON[];
+  __type: string;
+}
+
+// Helpers
+const validateIds = async (ids: string[]): Promise<Error | string[]> =>
+  ids.some(notString)
+    ? Promise.reject(new Error('ArgumentsError: AssetId should be string'))
+    : Promise.resolve(ids);
+
+const createQSForMany = (ids: string[]): string =>
+  ids.map((id: string) => `ids[]=${encodeURIComponent(id)}`).join('&');
+
+const createUrlForMany = (nodeUrl: string) => (ids: string[]): string =>
+  `${nodeUrl}/assets?${createQSForMany(ids)}`;
+
+const mapToAssets = (res: IAssetsResponseJSON): Asset[] =>
+  res.data.map(({ data }) => new Asset(data));
 
 export default class DataServiceClient {
-  public getAssets: (...ids: AssetId[]) => Promise<Asset[]>;
+  private options: TLibOptions;
+  public async getAssets(...ids: AssetId[]): Promise<IAssetsResponseJSON> {
+    return pipeM(
+      validateIds,
+      createUrlForMany(this.options.nodeUrl),
+      fetchData(JSONBigParser),
+      mapToAssets
+    )(...ids);
+  }
 
   constructor(options: TLibOptions) {
     if (!options.nodeUrl)
       throw new Error(
         'No nodeUrl was presented in options object. Check constructor call.'
       );
-    this.getAssets = createGetAssets(options.nodeUrl);
+
+    this.options = options;
   }
 }
-const validateIds = async (ids: string[]) =>
-  ids.some(notString)
-    ? Promise.reject(new Error('ArgumentsError: AssetId should be string'))
-    : Promise.resolve(ids);
-
-const createQSForMany = (ids: string[]) =>
-  ids.map((id: string) => `ids[]=${encodeURIComponent(id)}`).join('&');
-const createUrlForMany = (nodeUrl: string) => (ids: string[]) =>
-  `${nodeUrl}/assets?${createQSForMany(ids)}`;
-
-const mapToAssets = (res: { __type: string; data: ({ data: IAssetJSON })[] }) =>
-  res.data.map(({ data }) => new Asset(data));
-
-const createGetAssets = (nodeUrl: string) => async (
-  ...ids: AssetId[]
-): Promise<Asset[]> =>
-  pipeM(
-    validateIds,
-    createUrlForMany(nodeUrl),
-    fetchData(JSONBigParser),
-    mapToAssets
-  )(...ids);
