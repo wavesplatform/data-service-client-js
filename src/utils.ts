@@ -9,7 +9,7 @@ export const fetchData = (parser: TParser) => (url: string) => {
 
 export const notString = (value: any) => typeof value !== 'string';
 
-export const pipeM = (...fns: Function[]) => (...args: any[]) =>
+export const pipeP = (...fns: Function[]) => (...args: any[]) =>
   fns.reduce(
     (prev: Promise<any>, fn: Function) =>
       prev.then(v => fn(v)).catch(e => Promise.reject(e)),

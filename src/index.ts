@@ -3,7 +3,7 @@ import { Asset, IAssetJSON } from '@waves/data-entities';
 import * as createParser from 'parse-json-bignumber';
 const JSONBigParser = createParser();
 
-import { some, fetchData, notString, pipeM } from './utils';
+import { some, fetchData, notString, pipeP } from './utils';
 
 // Types
 export type TLibOptions = {
@@ -37,7 +37,7 @@ const mapToAssets = (res: IAssetsResponseJSON): Asset[] =>
 export default class DataServiceClient {
   private options: TLibOptions;
   public async getAssets(...ids: AssetId[]): Promise<Asset[]> {
-    return pipeM(
+    return pipeP(
       validateIds,
       createUrlForMany(this.options.nodeUrl),
       fetchData(JSONBigParser),
