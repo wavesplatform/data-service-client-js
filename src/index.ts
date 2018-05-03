@@ -1,10 +1,18 @@
-import fetch from 'node-fetch';
+import { Asset, IAssetJSON } from '@waves/data-entities';
+// @ts-ignore-next-line
+import * as createParser from 'parse-json-bignumber';
+const JSONBigParser = createParser();
 
-const { Asset } = require('@waves/data-entities');
-const createParser = require('parse-json-bignumber');
+import { some, fetchData, notString, pipeM } from './utils';
+
+export type TLibOptions = {
+  nodeUrl: string;
+};
+export type AssetId = string;
 
 export default class DataServiceClient {
-  public getAssets;
+  public getAssets: (...ids: AssetId[]) => Promise<Asset[]>;
+
   constructor(options: TLibOptions) {
     if (!options.nodeUrl)
       throw new Error(
@@ -13,42 +21,25 @@ export default class DataServiceClient {
     this.getAssets = createGetAssets(options.nodeUrl);
   }
 }
-export type TLibOptions = {
-  nodeUrl: string;
-};
-
-type TPredicate = (...args: any[]) => boolean;
-type AssetId = string;
-type Parser = (text: string) => {};
-
-const JSONBigParser = createParser();
-const fetchData = (parser: Parser) => (url: string) => {
-  return fetch(url)
-    .then(body => body.text())
-    .then(text => parser(text));
-};
-
-const notString = (value: any) => typeof value !== 'string';
-
-const pipeM = (...fns: Function[]) => (...args: any[]) =>
-  fns.reduce(
-    (prev: Promise<any>, fn: Function) => prev.then(v => fn(v)),
-    Promise.resolve(args)
-  );
-const some = (predicate: TPredicate) => (arr: any[]) => arr.some(predicate);
-const validateIds = async (ids: string[]) => (
-  console.log(ids),
+const validateIds = async (ids: string[]) =>
   ids.some(notString)
     ? Promise.reject(new Error('ArgumentsError: AssetId should be string'))
-    : Promise.resolve(ids)
-);
+    : Promise.resolve(ids);
 
 const createQSForMany = (ids: string[]) =>
   ids.map((id: string) => `ids[]=${encodeURIComponent(id)}`).join('&');
 const createUrlForMany = (nodeUrl: string) => (ids: string[]) =>
   `${nodeUrl}/assets?${createQSForMany(ids)}`;
 
-const createGetAssets = (nodeUrl: string) => async (...ids: AssetId[]) =>
-  pipeM(validateIds, createUrlForMany(nodeUrl), fetchData(JSONBigParser))(
-    ...ids
-  );
+const mapToAssets = (res: { __type: string; data: ({ data: IAssetJSON })[] }) =>
+  res.data.map(({ data }) => new Asset(data));
+
+const createGetAssets = (nodeUrl: string) => async (
+  ...ids: AssetId[]
+): Promise<Asset[]> =>
+  pipeM(
+    validateIds,
+    createUrlForMany(nodeUrl),
+    fetchData(JSONBigParser),
+    mapToAssets
+  )(...ids);
