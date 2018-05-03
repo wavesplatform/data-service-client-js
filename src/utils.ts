@@ -1,7 +1,7 @@
 type TPredicate = (...args: any[]) => boolean;
 type TParser = (text: string) => {};
 
-export const fetchData = (parser: TParser) => (url: string) => {
+export const fetchData = (parser: TParser) => (url: string): Promise<{}> => {
   return fetch(url)
     .then(body => body.text())
     .then(text => parser(text));
