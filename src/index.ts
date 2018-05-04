@@ -1,8 +1,8 @@
 import { Asset, IAssetJSON } from '@waves/data-entities';
 // @ts-ignore-next-line
-import * as createParser from 'parse-json-bignumber';
+import * as JSONBig from '@waves/json-bigint';
 
-import { getAssetsFn } from './methods/getAssets';
+import getAssetsFn from './methods/getAssets';
 import { pipeP, fetchData } from './utils';
 
 import { TAssetId, TLibOptions } from './types';
@@ -17,6 +17,6 @@ export default class DataServiceClient {
         'No nodeUrl was presented in options object. Check constructor call.'
       );
     this.options.nodeUrl = options.nodeUrl;
-    this.options.parser = createParser();
+    this.options.parser = JSONBig.parse;
   }
 }

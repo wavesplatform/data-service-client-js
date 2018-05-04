@@ -23,10 +23,12 @@ const createUrlForMany = (nodeUrl: string) => (ids: TAssetId[]): string =>
 const mapToAssets = (res: TAssetsResponseJSON): Asset[] =>
   res.data.map(({ data }) => (data === null ? null : new Asset(data)));
 
-export const getAssetsFn = (options: TLibOptions): TGetAssetsFn =>
+const getAssets = (options: TLibOptions): TGetAssetsFn =>
   pipeP(
     validateIds,
     createUrlForMany(options.nodeUrl),
     fetchData(options.parser),
     mapToAssets
   );
+
+export default getAssets;
