@@ -1,5 +1,4 @@
 import { Asset, IAssetJSON } from '@waves/data-entities';
-// @ts-ignore-next-line
 import * as JSONBig from '@waves/json-bigint';
 
 import getAssetsFn from './methods/getAssets';
