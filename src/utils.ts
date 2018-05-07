@@ -1,6 +1,7 @@
 import { TParser } from './types';
 
 type TPredicate = (...args: any[]) => boolean;
+type TFunction = (...args: any[]) => any;
 
 export const fetchData = (parse: TParser) => (url: string): Promise<any> => {
   return fetch(url)
@@ -14,12 +15,8 @@ export const fetchData = (parse: TParser) => (url: string): Promise<any> => {
 };
 
 export const notString = (value: any): boolean => typeof value !== 'string';
-
-export const pipeP = (...fns: Function[]) => (...args: any[]): Promise<any> =>
-  fns.reduce(
-    (prev: Promise<any>, fn: Function) => prev.then(v => fn(v)),
-    Promise.resolve(args)
-  );
+export const pipeP = (...fns: TFunction[]) => (...args: any[]): Promise<any> =>
+  fns.reduce((prev, fn) => prev.then(fn), Promise.resolve(args));
 export const some = (predicate: TPredicate) => (arr: any[]): boolean =>
   arr.some(predicate);
 
