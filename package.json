@@ -1,6 +1,6 @@
 {
   "name": "data-service-client-js",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "author": "Ivan Shmidt <bahoc47@gmail.com>",
@@ -10,19 +10,19 @@
     "build": "tsc",
     "build:browser:dev": "browserify ./dist/index.js -o ./dist/umd.js",
     "build:browser": "browserify ./dist/index.js -o ./dist/umd.js -u bignumber.js -u @waves/json-bigint",
-    "build:all": "yarn build && yarn build:browser",
+    "build:all": "npm run build && npm run build:browser",
     "test": "jest",
-    "prepublish": "yarn test && yarn build:all"
+    "prepare": "npm test && npm run build:all"
   },
   "dependencies": {
     "@waves/data-entities": "^1.0.2",
     "@waves/json-bigint": "git+https://github.com/wavesplatform/json-bigint.git"
   },
   "devDependencies": {
-    "@types/node": "8.0.0",
     "@types/jest": "^22.2.3",
+    "@types/node": "8.0.0",
     "@types/node-fetch": "^1.6.9",
-    "browserify": "^16.2.0",
+    "browserify": "^16.2.2",
     "jest": "^22.4.3",
     "node-fetch": "^2.1.2",
     "ts-jest": "^22.4.4",
