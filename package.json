@@ -1,5 +1,5 @@
 {
-  "name": "data-service-client-js",
+  "name": "@waves/data-service-client-js",
   "version": "0.0.2",
   "main": "dist/index.js",
   "types": "src/index.ts",
