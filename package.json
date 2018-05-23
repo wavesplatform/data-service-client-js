@@ -16,11 +16,11 @@
     "prepublish": "yarn test && yarn build:all"
   },
   "dependencies": {
-    "@types/node": "8.0.0",
     "@waves/data-entities": "^1.0.2",
-    "parse-json-bignumber": "^0.0.2"
+    "@waves/json-bigint": "git+https://github.com/wavesplatform/json-bigint.git"
   },
   "devDependencies": {
+    "@types/node": "8.0.0",
     "@types/jest": "^22.2.3",
     "@types/node-fetch": "^1.6.9",
     "browserify": "^16.2.0",

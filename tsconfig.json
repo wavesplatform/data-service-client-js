@@ -4,7 +4,8 @@
     "module": "commonjs",
     "declaration": true,
     "outDir": "dist/",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "lib": ["es2017", "dom"]
   },
   "exclude": ["*.sandbox.js", "*.sandbox.ts"],
   "include": ["src/**/*", "node_modules/*"]
