@@ -15,8 +15,7 @@
     "prepare": "npm test && npm run build:all"
   },
   "dependencies": {
-    "@waves/data-entities": "^1.0.2",
-    "@waves/json-bigint": "0.2.3"
+    "@waves/data-entities": "^1.0.2"
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",
@@ -25,6 +24,7 @@
     "browserify": "^16.2.2",
     "jest": "^22.4.3",
     "node-fetch": "^2.1.2",
+    "parse-json-bignumber": "^0.0.2",
     "ts-jest": "^22.4.4",
     "typescript": "^2.8.3"
   },

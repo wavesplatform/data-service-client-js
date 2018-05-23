@@ -7,6 +7,6 @@ export type TParser = (text: string) => any;
 
 export type TLibOptions = {
   nodeUrl: string;
-  parser?: TParser;
+  parser: TParser;
 };
 export type TAssetId = string;
