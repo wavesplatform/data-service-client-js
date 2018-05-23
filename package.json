@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@waves/data-entities": "^1.0.2",
-    "@waves/json-bigint": "git+https://github.com/wavesplatform/json-bigint.git"
+    "@waves/json-bigint": "0.2.3"
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",

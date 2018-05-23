@@ -40,9 +40,9 @@
   dependencies:
     bignumber.js "6.0.0"
 
-"@waves/json-bigint@git+https://github.com/wavesplatform/json-bigint.git":
+"@waves/json-bigint@0.2.3":
   version "0.2.3"
-  resolved "git+https://github.com/wavesplatform/json-bigint.git#d4845ee0d9442845c861e7aeebee7daccd396643"
+  resolved "https://registry.yarnpkg.com/@waves/json-bigint/-/json-bigint-0.2.3.tgz#a9e5d2a693c77b6a3ac9eb08aa9f26d0c23724f4"
   dependencies:
     bignumber.js "^7.0.0"
 
