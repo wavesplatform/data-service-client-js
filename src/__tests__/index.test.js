@@ -1,3 +1,4 @@
+const parser = require('parse-json-bignumber')();
 const DataServiceClient = require('../index.ts').default;
 const { AssetPair } = require('@waves/data-entities');
 
@@ -8,7 +9,7 @@ global.fetch = jest.fn(() =>
   })
 );
 const NODE_URL = 'NODE_URL';
-const client = new DataServiceClient({ nodeUrl: NODE_URL });
+const client = new DataServiceClient({ nodeUrl: NODE_URL, parser });
 
 describe('Asssets endpoint: ', () => {
   it('fetch is called with correct params#1', async () => {

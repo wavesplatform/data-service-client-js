@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2015",
     "module": "commonjs",
-    "declaration": true,
+    "declaration": false,
     "outDir": "dist/",
     "moduleResolution": "node",
     "lib": ["es2017", "dom"]

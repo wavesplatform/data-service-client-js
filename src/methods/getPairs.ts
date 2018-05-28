@@ -30,7 +30,7 @@ const validatePairs = (pairs: AssetPair[]): Promise<AssetPair[]> =>
 const createUrlForMany = (nodeUrl: string) => (pairs: AssetPair[]): string =>
   `${nodeUrl}/pairs?${createQS({ pairs })}`;
 
-const mapToAssets = (res: TPairsResponseJSON): IPairJSON[] =>
+const mapToPairs = (res: TPairsResponseJSON): IPairJSON[] =>
   res.data.map(({ data }) => data);
 
 const getPairs = (options: TLibOptions): TGetPairsFn =>
@@ -38,7 +38,7 @@ const getPairs = (options: TLibOptions): TGetPairsFn =>
     validatePairs,
     createUrlForMany(options.nodeUrl),
     fetchData(options.parser),
-    mapToAssets
+    mapToPairs
   );
 
 export default getPairs;

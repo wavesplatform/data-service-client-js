@@ -1,31 +1,31 @@
 {
   "name": "@waves/data-service-client-js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "dist/index.js",
+  "types": "src/index.ts",
   "author": "Ivan Shmidt <bahoc47@gmail.com>",
   "license": "MIT",
-  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "tsc",
     "build:browser:dev": "tsc && browserify ./dist/index.js -o ./dist/umd.js",
     "build:browser":
       "browserify ./dist/index.js -o ./dist/umd.js -u bignumber.js -u @waves/json-bigint",
-    "build:all": "yarn build && yarn build:browser",
+    "build:all": "npm run build && npm run build:browser",
     "test": "jest",
-    "prepublish": "yarn test && yarn build:all"
+    "prepare": "npm test && npm run build:all"
   },
   "dependencies": {
-    "@waves/data-entities": "^1.0.2",
-    "@waves/json-bigint": "git+https://github.com/wavesplatform/json-bigint.git"
+    "@waves/data-entities": "^1.0.2"
   },
   "devDependencies": {
-    "@types/node": "8.0.0",
     "@types/jest": "^22.2.3",
+    "@types/node": "8.0.0",
     "@types/node-fetch": "^1.6.9",
-    "browserify": "^16.2.0",
+    "browserify": "^16.2.2",
     "jest": "^22.4.3",
     "node-fetch": "^2.1.2",
+    "parse-json-bignumber": "^0.0.2",
     "ts-jest": "^22.4.4",
     "typescript": "^2.8.3"
   },
@@ -34,6 +34,13 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
