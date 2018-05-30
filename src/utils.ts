@@ -1,7 +1,4 @@
-import { TParser } from './types';
-
-type TPredicate = (...args: any[]) => boolean;
-type TFunction = (...args: any[]) => any;
+import { TParser, TPredicate, TFunction } from './types';
 
 export const fetchData = (parse: TParser) => (url: string): Promise<any> => {
   return fetch(url)
@@ -24,11 +21,16 @@ export const some = (predicate: TPredicate) => (arr: any[]): boolean =>
  * @param obj flat object with primitives or arrays of primitives as values
  * @returns query string for obj
  */
-export const createQS = (obj: Object): string =>
-  Object.entries(obj)
+export const createQS = (obj: Object): string => {
+  const qs = Object.entries(obj)
     .map(([key, valueOrValues]) => {
       return Array.isArray(valueOrValues)
-        ? valueOrValues.map(v => `${key}[]=${v}`).join('&')
+        ? valueOrValues.map(v => `${key}=${v}`).join('&')
         : `${key}=${valueOrValues}`;
     })
     .join('&');
+  return qs === '' ? qs : `?${qs}`;
+};
+
+export const id = _ => _;
+export const T = (...args) => true;
