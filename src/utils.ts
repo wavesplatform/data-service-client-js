@@ -1,7 +1,4 @@
-import { TParser } from './types';
-
-type TPredicate = (...args: any[]) => boolean;
-type TFunction = (...args: any[]) => any;
+import { TParser, TPredicate, TFunction } from './types';
 
 export const fetchData = (parse: TParser) => (url: string): Promise<any> => {
   return fetch(url)
@@ -32,3 +29,5 @@ export const createQS = (obj: Object): string =>
         : `${key}=${valueOrValues}`;
     })
     .join('&');
+export const id = _ => _;
+export const T = (...args) => true;

@@ -1,22 +1,14 @@
-import { TLibOptions, TAssetId, TListResponseJSON } from '../types';
+import {
+  TLibOptions,
+  TAssetId,
+  TListResponseJSON,
+  TPairsResponseJSON,
+  IPairJSON,
+  TGetPairsFn,
+} from '../types';
 import { BigNumber, AssetPair } from '@waves/data-entities';
-import { some, notString, createQS, pipeP, fetchData } from '../utils';
-
-type TGetPairsFn = (...pairs: AssetPair[]) => Promise<IPairJSON[]>;
-
-export type IPairJSON = {
-  firstPrice: BigNumber;
-  lastPrice: BigNumber;
-  volume: BigNumber;
-  amountAsset: string;
-  priceAsset: string;
-};
-
-type TPairResponseJSON = {
-  __type: 'pair';
-  data: IPairJSON;
-};
-type TPairsResponseJSON = TListResponseJSON<TPairResponseJSON>;
+import { some, notString, createQS } from '../utils';
+import { createMethod } from './createMethod';
 
 const validatePairs = (pairs: AssetPair[]): Promise<AssetPair[]> =>
   pairs.every(AssetPair.isAssetPair)
@@ -30,15 +22,11 @@ const validatePairs = (pairs: AssetPair[]): Promise<AssetPair[]> =>
 const createUrlForMany = (nodeUrl: string) => (pairs: AssetPair[]): string =>
   `${nodeUrl}/pairs?${createQS({ pairs })}`;
 
-const mapToPairs = (res: TPairsResponseJSON): IPairJSON[] =>
-  res.data.map(({ data }) => data);
-
-const getPairs = (options: TLibOptions): TGetPairsFn =>
-  pipeP(
-    validatePairs,
-    createUrlForMany(options.nodeUrl),
-    fetchData(options.parser),
-    mapToPairs
-  );
+const getPairs = (libOptions: TLibOptions): TGetPairsFn =>
+  createMethod({
+    validate: validatePairs,
+    generateUrl: createUrlForMany,
+    libOptions,
+  });
 
 export default getPairs;
