@@ -20,7 +20,7 @@ const validatePairs = (pairs: AssetPair[]): Promise<AssetPair[]> =>
       );
 
 const createUrlForMany = (nodeUrl: string) => (pairs: AssetPair[]): string =>
-  `${nodeUrl}/pairs?${createQS({ pairs })}`;
+  `${nodeUrl}/pairs${createQS({ pairs })}`;
 
 const getPairs = (libOptions: TLibOptions): TGetPairsFn =>
   createMethod({

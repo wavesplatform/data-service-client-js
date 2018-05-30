@@ -1,14 +1,14 @@
 import { Asset, IAssetJSON } from '@waves/data-entities';
-import { TAssetResponseJSON } from './types';
+import { TAssetResponseJSON, ApiTypes } from './types';
 import { id } from './utils';
 
 const transformer = ({ __type, data, ...rest }) => {
   switch (__type) {
-    case 'list':
+    case ApiTypes.List:
       return data.map(transformer);
-    case 'asset':
+    case ApiTypes.Asset:
       return transformAsset(data);
-    case 'pair':
+    case ApiTypes.Pair:
       return transformPair(data);
   }
 };

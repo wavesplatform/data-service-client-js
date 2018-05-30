@@ -9,7 +9,7 @@ const validateIds = (ids: TAssetId[]): Promise<TAssetId[]> =>
     : Promise.resolve(ids);
 
 const createUrlForMany = (rootUrl: string) => (ids: TAssetId[]): string =>
-  `${rootUrl}/assets?${createQS({ ids })}`;
+  `${rootUrl}/assets${createQS({ ids })}`;
 
 const getAssets = (libOptions: TLibOptions) =>
   createMethod({

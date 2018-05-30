@@ -12,7 +12,7 @@ describe('Asssets endpoint: ', () => {
       'AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa',
     ];
     await client.getAssets(...ids);
-    expect(fetch).toBeCalledWith(
+    expect(fetch).toHaveBeenLastCalledWith(
       `${NODE_URL}/assets?ids[]=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca&ids[]=AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa`
     );
   });
@@ -20,7 +20,7 @@ describe('Asssets endpoint: ', () => {
   it('fetch is called with correct params#2', async () => {
     const ids = ['4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca'];
     await client.getAssets(...ids);
-    expect(fetch).toBeCalledWith(
+    expect(fetch).toHaveBeenLastCalledWith(
       `${NODE_URL}/assets?ids[]=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca`
     );
   });
@@ -29,7 +29,7 @@ describe('Asssets endpoint: ', () => {
     const ids = [];
     await client.getAssets(...ids);
 
-    expect(fetch).toBeCalledWith(`${NODE_URL}/assets?`);
+    expect(fetch).toHaveBeenLastCalledWith(`${NODE_URL}/assets`);
   });
 
   it('throws, if called with wrong types', async () => {
@@ -51,7 +51,7 @@ describe('Pairs endpoint: ', () => {
       '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu'
     );
     await client.getPairs(pair1, pair2);
-    expect(fetch).toBeCalledWith(
+    expect(fetch).toHaveBeenLastCalledWith(
       `${NODE_URL}/pairs?pairs[]=WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&pairs[]=WAVES/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu`
     );
   });
@@ -60,7 +60,7 @@ describe('Pairs endpoint: ', () => {
     const pairs = [];
     await client.getPairs(...pairs);
 
-    expect(fetch).toBeCalledWith(`${NODE_URL}/pairs?`);
+    expect(fetch).toHaveBeenLastCalledWith(`${NODE_URL}/pairs`);
   });
 
   it('throws, if called with wrong types', async () => {
@@ -128,8 +128,8 @@ describe('Custom transformer: ', () => {
       transform: customTransformer,
     });
     const assets = await customClient.getAssets('1', '2');
-    expect(transformMocks.list.mock.calls).toHaveLength(1);
-    expect(transformMocks.asset.mock.calls).toHaveLength(2);
-    expect(transformMocks.pair.mock.calls).toHaveLength(0);
+    expect(transformMocks.list).toHaveBeenCalledTimes(1);
+    expect(transformMocks.asset).toHaveBeenCalledTimes(2);
+    expect(transformMocks.pair).toHaveBeenCalledTimes(0);
   });
 });
