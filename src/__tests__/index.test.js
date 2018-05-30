@@ -3,7 +3,11 @@ const DataServiceClient = require('../index.ts').default;
 const { AssetPair } = require('@waves/data-entities');
 const fetch = jest.fn(() => Promise.resolve('{"data":[{ "data": 1 }]}'));
 const NODE_URL = 'NODE_URL';
-const client = new DataServiceClient({ rootUrl: NODE_URL, parser, fetch });
+const client = new DataServiceClient({
+  rootUrl: NODE_URL,
+  parse: parser,
+  fetch,
+});
 
 describe('Asssets endpoint: ', () => {
   it('fetch is called with correct params#1', async () => {
@@ -13,7 +17,7 @@ describe('Asssets endpoint: ', () => {
     ];
     await client.getAssets(...ids);
     expect(fetch).toHaveBeenLastCalledWith(
-      `${NODE_URL}/assets?ids[]=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca&ids[]=AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa`
+      `${NODE_URL}/assets?ids=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca&ids=AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa`
     );
   });
 
@@ -21,7 +25,7 @@ describe('Asssets endpoint: ', () => {
     const ids = ['4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca'];
     await client.getAssets(...ids);
     expect(fetch).toHaveBeenLastCalledWith(
-      `${NODE_URL}/assets?ids[]=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca`
+      `${NODE_URL}/assets?ids=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca`
     );
   });
 
@@ -52,7 +56,7 @@ describe('Pairs endpoint: ', () => {
     );
     await client.getPairs(pair1, pair2);
     expect(fetch).toHaveBeenLastCalledWith(
-      `${NODE_URL}/pairs?pairs[]=WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&pairs[]=WAVES/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu`
+      `${NODE_URL}/pairs?pairs=WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&pairs=WAVES/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu`
     );
   });
 
@@ -82,7 +86,7 @@ describe('Pairs endpoint: ', () => {
 
 describe('Custom transformer: ', () => {
   const fetchMocks = {
-    assets: {
+    assets: JSON.stringify({
       __type: 'list',
       data: [
         {
@@ -94,8 +98,8 @@ describe('Custom transformer: ', () => {
           data: {},
         },
       ],
-    },
-    pairs: {
+    }),
+    pairs: JSON.stringify({
       __type: 'list',
       data: [
         {
@@ -107,7 +111,7 @@ describe('Custom transformer: ', () => {
           data: {},
         },
       ],
-    },
+    }),
   };
   const customFetchMock = type =>
     jest.fn(() => Promise.resolve(fetchMocks[type]));
@@ -123,7 +127,7 @@ describe('Custom transformer: ', () => {
   it('works for list of assets', async () => {
     const customClient = new DataServiceClient({
       rootUrl: NODE_URL,
-      parser,
+      parse: parser,
       fetch: customFetchMock('assets'),
       transform: customTransformer,
     });
