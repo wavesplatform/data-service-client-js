@@ -12,6 +12,12 @@ export default class DataServiceClient {
     if (!options.transform) {
       this.options.transform = defaultTransform;
     }
+
+    if (!options.parse) {
+      throw new Error(
+        'No parse function was presented in options. Try json-bigint for example'
+      );
+    }
     if (!options.rootUrl) {
       throw new Error(
         'No rootUrl was presented in options object. Check constructor call.'
@@ -26,3 +32,5 @@ export default class DataServiceClient {
     return getAssetsFn(this.options)(...ids);
   }
 }
+
+export { defaultTransform };
