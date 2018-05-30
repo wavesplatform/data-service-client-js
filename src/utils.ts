@@ -25,7 +25,7 @@ export const createQS = (obj: Object): string => {
   const qs = Object.entries(obj)
     .map(([key, valueOrValues]) => {
       return Array.isArray(valueOrValues)
-        ? valueOrValues.map(v => `${key}[]=${v}`).join('&')
+        ? valueOrValues.map(v => `${key}=${v}`).join('&')
         : `${key}=${valueOrValues}`;
     })
     .join('&');
