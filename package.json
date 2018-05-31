@@ -1,6 +1,6 @@
 {
   "name": "@waves/data-service-client-js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "author": "Ivan Shmidt <bahoc47@gmail.com>",
@@ -32,6 +32,11 @@
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.test.json"
+      }
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]

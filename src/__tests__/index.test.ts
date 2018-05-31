@@ -38,7 +38,7 @@ describe('Asssets endpoint: ', () => {
   });
 
   it('throws, if called with wrong types', async () => {
-    const wrongTypes = [1, null, NaN, undefined, {}];
+    const wrongTypes: any[] = [1, null, NaN, undefined, {}];
     wrongTypes.map(
       async t => await expect(client.getAssets(t)).rejects.toBeDefined()
     );
@@ -48,12 +48,12 @@ describe('Asssets endpoint: ', () => {
 describe('Pairs endpoint: ', () => {
   it('fetch is called with correct params#1', async () => {
     const pair1 = new AssetPair(
-      'WAVES',
-      '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'
+      'WAVES' as any,
+      '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS' as any
     );
     const pair2 = new AssetPair(
-      'WAVES',
-      '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu'
+      'WAVES' as any,
+      '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu' as any
     );
     await client.getPairs(pair1, pair2);
     expect(fetch).toHaveBeenLastCalledWith(
@@ -69,7 +69,7 @@ describe('Pairs endpoint: ', () => {
   });
 
   it('throws, if called with wrong types', async () => {
-    const wrongTypes = [
+    const wrongTypes: any = [
       1,
       null,
       NaN,
@@ -86,7 +86,8 @@ describe('Pairs endpoint: ', () => {
 });
 
 describe('ExchangeTxs endpoint: ', async () => {
-  const goodCases = [
+  type Case = { label: string; params: any[]; expectedUrl?: string };
+  const goodCases: Case[] = [
     {
       label: 'single string',
       params: ['8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'],
@@ -119,7 +120,7 @@ describe('ExchangeTxs endpoint: ', async () => {
       expectedUrl: `${NODE_URL}/transactions/exchange?timeStart=2016-02-01&timeEnd=2016-03-01&matcher=matcher&sender=sender&amountAsset=asset1&priceAsset=priceAsset&limit=5&sort=-some`,
     },
   ];
-  const badCases = [
+  const badCases: Case[] = [
     {
       label: 'with wrong filters',
       params: [{ incorrectField: '' }],
@@ -136,13 +137,13 @@ describe('ExchangeTxs endpoint: ', async () => {
 
   goodCases.forEach((c, i) => {
     it(`works with (${c.label})`, async () => {
-      const result = await client.getExchangeTxs(...c.params);
+      const result = await client.getExchangeTxs(c.params[0]);
       expect(fetch).toHaveBeenLastCalledWith(c.expectedUrl);
     });
   });
   badCases.forEach((c, i) => {
     it(`fails with (${c.label})`, async () => {
-      await expect(client.getExchangeTxs(...c.params)).rejects.toBeDefined();
+      await expect(client.getExchangeTxs(c.params[0])).rejects.toBeDefined();
     });
   });
 });
