@@ -10,6 +10,10 @@ const transformer = ({ __type, data, ...rest }) => {
       return transformAsset(data);
     case ApiTypes.Pair:
       return transformPair(data);
+    case ApiTypes.Transaction:
+      return data;
+    default:
+      return { __type, data, ...rest };
   }
 };
 

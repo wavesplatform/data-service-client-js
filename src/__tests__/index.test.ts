@@ -1,6 +1,7 @@
 const parser = require('parse-json-bignumber')();
-const DataServiceClient = require('../index.ts').default;
-const { AssetPair } = require('@waves/data-entities');
+import DataServiceClient from '../index';
+import { AssetPair } from '@waves/data-entities';
+
 const fetch = jest.fn(() => Promise.resolve('{"data":[{ "data": 1 }]}'));
 const NODE_URL = 'NODE_URL';
 const client = new DataServiceClient({
@@ -84,6 +85,67 @@ describe('Pairs endpoint: ', () => {
   });
 });
 
+describe('ExchangeTxs endpoint: ', async () => {
+  const goodCases = [
+    {
+      label: 'single string',
+      params: ['8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'],
+      expectedUrl: `${NODE_URL}/transactions/exchange/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS`,
+    },
+    {
+      label: 'empty call',
+      params: [],
+      expectedUrl: `${NODE_URL}/transactions/exchange`,
+    },
+    {
+      label: 'with one filter',
+      params: [{ timeStart: '2016-01-01' }],
+      expectedUrl: `${NODE_URL}/transactions/exchange?timeStart=2016-01-01`,
+    },
+    {
+      label: 'with all filters',
+      params: [
+        {
+          timeStart: '2016-02-01',
+          timeEnd: '2016-03-01',
+          matcher: 'matcher',
+          sender: 'sender',
+          amountAsset: 'asset1',
+          priceAsset: 'priceAsset',
+          limit: 5,
+          sort: '-some',
+        },
+      ],
+      expectedUrl: `${NODE_URL}/transactions/exchange?timeStart=2016-02-01&timeEnd=2016-03-01&matcher=matcher&sender=sender&amountAsset=asset1&priceAsset=priceAsset&limit=5&sort=-some`,
+    },
+  ];
+  const badCases = [
+    {
+      label: 'with wrong filters',
+      params: [{ incorrectField: '' }],
+    },
+    {
+      label: 'with number',
+      params: [1],
+    },
+    {
+      label: 'with null',
+      params: [null],
+    },
+  ];
+
+  goodCases.forEach((c, i) => {
+    it(`works with (${c.label})`, async () => {
+      const result = await client.getExchangeTxs(...c.params);
+      expect(fetch).toHaveBeenLastCalledWith(c.expectedUrl);
+    });
+  });
+  badCases.forEach((c, i) => {
+    it(`fails with (${c.label})`, async () => {
+      await expect(client.getExchangeTxs(...c.params)).rejects.toBeDefined();
+    });
+  });
+});
 describe('Custom transformer: ', () => {
   const fetchMocks = {
     assets: JSON.stringify({
