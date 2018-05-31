@@ -1,17 +1,34 @@
 import { Asset, IAssetJSON, AssetPair } from '@waves/data-entities';
-import getAssetsFn from './methods/getAssets';
-import getPairsFn from './methods/getPairs';
 import { pipeP, fetchData } from './utils';
 import defaultTransform from './transform';
 
-import { TAssetId, TLibOptions, IPairJSON } from './types';
+import createGetAssets from './methods/getAssets';
+import createGetPairs from './methods/getPairs';
+import { createGetExchangeTxs } from './methods/getExchangeTxs';
+
+import {
+  TAssetId,
+  TLibOptions,
+  IPairJSON,
+  TGetAssets,
+  TGetPairs,
+  IGetExchangeTxs,
+} from './types';
+
 export default class DataServiceClient {
-  private options: TLibOptions;
-  constructor(options: TLibOptions) {
-    this.options = options;
+  public getPairs: TGetPairs;
+  public getAssets: TGetAssets;
+  public getExchangeTxs: IGetExchangeTxs;
+
+  constructor(params: TLibOptions) {
+    let options = { ...params };
     if (!options.transform) {
-      this.options.transform = defaultTransform;
+      options.transform = defaultTransform;
     }
+    // Create methods
+    this.getAssets = createGetAssets(options);
+    this.getPairs = createGetPairs(options);
+    this.getExchangeTxs = createGetExchangeTxs(options);
 
     if (!options.parse) {
       throw new Error(
@@ -23,13 +40,6 @@ export default class DataServiceClient {
         'No rootUrl was presented in options object. Check constructor call.'
       );
     }
-  }
-
-  public getPairs(...pairs: AssetPair[]): Promise<IPairJSON[]> {
-    return getPairsFn(this.options)(...pairs);
-  }
-  public getAssets(...ids: TAssetId[]): Promise<Asset[]> {
-    return getAssetsFn(this.options)(...ids);
   }
 }
 
