@@ -11,7 +11,7 @@ export const fetchData = (parse: TParser) => (url: string): Promise<any> => {
     .then(parse);
 };
 
-export const notString = (value: any): boolean => typeof value !== 'string';
+export const isNotString = (value: any): boolean => typeof value !== 'string';
 export const pipeP = (...fns: TFunction[]) => (...args: any[]): Promise<any> =>
   fns.reduce(
     (prev, fn) => prev.then(fn),

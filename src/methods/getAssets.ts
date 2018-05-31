@@ -6,12 +6,12 @@ import {
   TCreateGetFn,
 } from '../types';
 
-import { some, notString, createQS, pipeP, fetchData } from '../utils';
+import { some, isNotString, createQS, pipeP, fetchData } from '../utils';
 import { createMethod } from './createMethod';
 
 const validateIds = (idOrIds: TAssetId[] | TAssetId): Promise<TAssetId[]> => {
   const arrayToCheck = Array.isArray(idOrIds) ? idOrIds : [idOrIds];
-  return arrayToCheck.some(notString)
+  return arrayToCheck.some(isNotString)
     ? Promise.reject(new Error('ArgumentsError: AssetId should be string'))
     : Promise.resolve(arrayToCheck);
 };

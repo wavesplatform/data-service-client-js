@@ -1,4 +1,4 @@
-const { createQS, pipeP } = require('../utils');
+import { createQS, pipeP } from '../utils';
 
 test('Create querystring utils works #1', () => {
   const obj = { a: true, b: 1, c: 'string', e: [9, 8, 7] };

@@ -1,6 +1,7 @@
 const parser = require('parse-json-bignumber')();
-const DataServiceClient = require('../index.ts').default;
-const { AssetPair } = require('@waves/data-entities');
+import DataServiceClient from '../index';
+import { AssetPair } from '@waves/data-entities';
+
 const fetch = jest.fn(() => Promise.resolve('{"data":[{ "data": 1 }]}'));
 const NODE_URL = 'NODE_URL';
 const client = new DataServiceClient({

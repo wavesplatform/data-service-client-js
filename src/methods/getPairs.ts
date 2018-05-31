@@ -8,7 +8,7 @@ import {
   TCreateGetFn,
 } from '../types';
 import { BigNumber, AssetPair } from '@waves/data-entities';
-import { some, notString, createQS } from '../utils';
+import { some, isNotString, createQS } from '../utils';
 import { createMethod } from './createMethod';
 
 const validatePairs = (

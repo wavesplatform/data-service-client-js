@@ -26,7 +26,7 @@
     "jest": "^22.4.3",
     "node-fetch": "^2.1.2",
     "parse-json-bignumber": "^0.0.2",
-    "ts-jest": "^22.4.4",
+    "ts-jest": "^22.4.6",
     "typescript": "^2.8.3"
   },
   "jest": {
@@ -34,13 +34,6 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
   }
 }

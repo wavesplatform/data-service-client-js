@@ -4,7 +4,7 @@ import defaultTransform from './transform';
 
 import createGetAssets from './methods/getAssets';
 import createGetPairs from './methods/getPairs';
-import { createGetExchangeTxs } from './methods/getExchangeTxs';
+import createGetExchangeTxs from './methods/getExchangeTxs';
 
 import {
   TAssetId,

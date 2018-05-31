@@ -9,7 +9,7 @@ import {
 } from '../types';
 import { Asset } from '@waves/data-entities';
 
-import { some, notString, createQS, pipeP, fetchData } from '../utils';
+import { some, isNotString, createQS, pipeP, fetchData } from '../utils';
 import { createMethod } from './createMethod';
 
 // One
@@ -19,19 +19,25 @@ const generateUrlOne = (rootUrl: string) => (id: string) =>
   `${rootUrl}/transactions/exchange/${id}`;
 
 //Many
-const possibleFilters = [
-  'timeStart',
-  'timeEnd',
-  'limit',
-  'sort',
-  'matcher',
-  'sender',
-  'amountAsset',
-  'priceAsset',
-];
-const validateFilters = filters =>
-  typeof filters === 'object' &&
-  Object.keys(filters).every(k => possibleFilters.includes(k))
+
+const isFilters = (filters: any): filters is TransactionFilters => {
+  const possibleFilters = [
+    'timeStart',
+    'timeEnd',
+    'limit',
+    'sort',
+    'matcher',
+    'sender',
+    'amountAsset',
+    'priceAsset',
+  ];
+  return (
+    typeof filters === 'object' &&
+    Object.keys(filters).every(k => possibleFilters.includes(k))
+  );
+};
+const validateFilters = (filters: any) =>
+  isFilters(filters)
     ? Promise.resolve(filters)
     : Promise.reject('Wrong filters object');
 
@@ -51,18 +57,13 @@ const createGetExchangeTxs: TCreateGetFn<IGetExchangeTxs> = libOptions => {
   });
 
   const getExchangeTxs: IGetExchangeTxs = (
-    idOrFilters?: TransactionFilters | string
-  ) => {
-    switch (true) {
-      case idOrFilters === undefined:
-        return getExchangeTxsMany({});
-      case typeof idOrFilters === 'string':
-        return getExchangeTxsOne(idOrFilters);
-      default:
-        return getExchangeTxsMany(idOrFilters);
-    }
-  };
+    idOrFilters: string | TransactionFilters = {}
+  ) =>
+    typeof idOrFilters === 'string'
+      ? getExchangeTxsOne(idOrFilters)
+      : getExchangeTxsMany(idOrFilters);
+
   return getExchangeTxs;
 };
 
-export { createGetExchangeTxs };
+export default createGetExchangeTxs;
