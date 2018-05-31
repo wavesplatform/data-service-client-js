@@ -13,7 +13,10 @@ export const fetchData = (parse: TParser) => (url: string): Promise<any> => {
 
 export const notString = (value: any): boolean => typeof value !== 'string';
 export const pipeP = (...fns: TFunction[]) => (...args: any[]): Promise<any> =>
-  fns.reduce((prev, fn) => prev.then(fn), Promise.resolve(args));
+  fns.reduce(
+    (prev, fn) => prev.then(fn),
+    Promise.resolve(args.length === 1 ? args[0] : args)
+  );
 export const some = (predicate: TPredicate) => (arr: any[]): boolean =>
   arr.some(predicate);
 

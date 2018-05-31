@@ -1,5 +1,5 @@
 import { Asset, IAssetJSON, BigNumber, AssetPair } from '@waves/data-entities';
-export { Asset };
+
 export type TListResponseJSON<T> = {
   __type: ApiTypes.List;
   data: T[];
