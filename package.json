@@ -9,11 +9,10 @@
     "dev": "ts-node src/index.ts",
     "build": "tsc",
     "build:browser:dev": "tsc && browserify ./dist/index.js -o ./dist/umd.js",
-    "build:browser":
-      "browserify ./dist/index.js -o ./dist/umd.js -u bignumber.js -u @waves/json-bigint",
+    "build:browser": "browserify ./dist/index.js -o ./dist/umd.js -u bignumber.js -u @waves/json-bigint",
     "build:all": "npm run build && npm run build:browser",
     "test": "jest",
-    "prepare": "npm test && npm run build:all"
+    "prepare": "npm run build:all && npm test"
   },
   "dependencies": {
     "@waves/data-entities": "^1.0.2"
@@ -33,12 +32,14 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.test.json"
-      }
-    },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
