@@ -7,6 +7,6 @@
     "moduleResolution": "node",
     "lib": ["es2017", "dom"]
   },
-  "exclude": ["*.sandbox.js", "*.sandbox.ts"],
+  "exclude": ["*.sandbox.js", "*.sandbox.ts", "**/__tests__/**"],
   "include": ["src/**/*", "node_modules/*"]
 }
