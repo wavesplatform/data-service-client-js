@@ -1,6 +1,6 @@
 import { TParser, TPredicate, TFunction } from './types';
 
-export const fetchData = (parse: TParser) => (url: string): Promise<any> => {
+export const fetchData = (url: string): Promise<string> => {
   return fetch(url)
     .then(
       (res: Response) =>
@@ -8,7 +8,6 @@ export const fetchData = (parse: TParser) => (url: string): Promise<any> => {
           ? res.text()
           : res.text().then(str => Promise.reject(new Error(str)))
     )
-    .then(parse);
 };
 
 export const isNotString = (value: any): boolean => typeof value !== 'string';
