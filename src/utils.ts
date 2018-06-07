@@ -1,15 +1,14 @@
 import { TParser, TPredicate, TFunction } from './types';
 
-export const fetchData = (url: string): Promise<string> => {
-  return fetch(url)
-    .then(
-      (res: Response) =>
-        res.ok
-          ? res.text()
-          : res.text().then(str => Promise.reject(new Error(str)))
-    )
+export const defaultFetch = (url: string): Promise<string> => {
+  return fetch(url).then(
+    (res: Response) =>
+      res.ok
+        ? res.text()
+        : res.text().then(str => Promise.reject(new Error(str)))
+  );
 };
-
+export const defaultParse = JSON.parse.bind(JSON);
 export const isNotString = (value: any): boolean => typeof value !== 'string';
 export const pipeP = (...fns: TFunction[]) => (...args: any[]): Promise<any> =>
   fns.reduce(

@@ -64,7 +64,7 @@ interface getExchangeTxs {
 
 ## Custom init params
 
-One can set custom fetcher, parser and transformer for library.
+You can set custom fetcher, parser and transformer for library.
 
 ```typescript
 type TLibOptions = {
@@ -77,9 +77,13 @@ type TLibOptions = {
 
 The path is fetch -> parse -> transform
 
-Parse can be `res => res.text()` for fetch, or `json-bigint`'s parse if you want to add support for bignumbers.
+### Fetch must return string!
+
+Fetch by default is `fetch(...).then(res => res.text())`
+
+Parse by default is `JSON.parse.bind(JSON)` , you can use `json-bigint`'s parse if you want to add support for bignumbers.
 
 Transform function has next signature by default (it depends on your parse function):
-`({ \_\_type, data, ...rest }) => any`
+`({ __type, data, ...rest }) => any`
 
 Basically you can switch on \_\_type and do transformations.
