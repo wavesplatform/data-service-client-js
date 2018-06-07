@@ -1,5 +1,6 @@
-import { id, T, pipeP } from '../utils';
+import { id, T, pipeP, fetchData } from '../utils';
 import { TFunction, TLibOptions } from '../types';
+
 const createMethod = ({
   validate = T,
   generateUrl,
@@ -8,7 +9,7 @@ const createMethod = ({
   pipeP(
     validate,
     generateUrl(libOptions.rootUrl),
-    libOptions.fetch,
+    libOptions.fetch || fetchData(libOptions.parse),
     libOptions.parse,
     libOptions.transform
   );
