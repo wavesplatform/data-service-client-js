@@ -1,5 +1,5 @@
 import { Asset, IAssetJSON, AssetPair } from '@waves/data-entities';
-import { pipeP, fetchData } from './utils';
+import { pipeP, defaultFetch, defaultParse } from './utils';
 import defaultTransform from './transform';
 
 import createGetAssets from './methods/getAssets';
@@ -22,24 +22,26 @@ export default class DataServiceClient {
 
   constructor(params: TLibOptions) {
     let options = { ...params };
-    if (!options.transform) {
-      options.transform = defaultTransform;
-    }
-    // Create methods
-    this.getAssets = createGetAssets(options);
-    this.getPairs = createGetPairs(options);
-    this.getExchangeTxs = createGetExchangeTxs(options);
-
-    if (!options.parse) {
-      throw new Error(
-        'No parse function was presented in options. Try json-bigint for example'
-      );
-    }
     if (!options.rootUrl) {
       throw new Error(
         'No rootUrl was presented in options object. Check constructor call.'
       );
     }
+    // Add defaults
+    if (!options.transform) {
+      options.transform = defaultTransform;
+    }
+    if (!options.fetch) {
+      options.fetch = defaultFetch;
+    }
+    if (!options.parse) {
+      options.parse = defaultParse;
+    }
+
+    // Create methods
+    this.getAssets = createGetAssets(options);
+    this.getPairs = createGetPairs(options);
+    this.getExchangeTxs = createGetExchangeTxs(options);
   }
 }
 
