@@ -1,6 +1,6 @@
 {
   "name": "@waves/data-service-client-js",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "author": "Ivan Shmidt <bahoc47@gmail.com>",
