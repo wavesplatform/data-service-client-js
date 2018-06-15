@@ -8,41 +8,43 @@ const DataServiceClient = require('@waves/data-service-client-js').default;
 // Initialization
 const client = new DataServiceClient({
   rootUrl: 'http://api.wavesplatform.com/v0',
-  fetch: window.fetch, // or fetch shim for nodejs
-  parse: res => res.json(),
+  fetch: req => window.fetch(req).then(res => res.text()), // fetch must return string
+  parse: str => JSON.parse(str),
 });
 
 // Fetching
 (async () => {
-  await client.getAssets('WAVES'); // Asset {}
+  const { data } = await client.getAssets('WAVES'); // data: Asset {}
 })();
 ```
 
 ## Methods
 
+### Response format
+
+`{ data, ...meta }`
+
 - getAssets:
 
 ```typescript
-await client.getAssets('WAVES'); // One
-await client.getAssets('WAVES', '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // Or many
-
-type getAssets = (...ids: TAssetId[]) => Promise<Asset[]>;
+await client.getAssets('WAVES'); // One { data: Asset }
+await client.getAssets('WAVES', '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // Or many { data: Asset[] }
 ```
 
 - getPairs
 
 ```typescript
-await client.getPairs('WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // One
-await client.getPairs('WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS', 'WAVES/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu'); // Many
-
-type getPairs = (...pairs: AssetPair[]) => Promise<IPairJSON[]>;
-type AssetPair =  AssetPair from data-entities | 'assetId1/assetId2';
+await client.getPairs('WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // One { data: {} }
+await client.getPairs(
+  'WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
+  'WAVES/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu'
+); // Many { data: Object[] }
 ```
 
 - getExchangeTxs:
 
 ```typescript
-await client.getExchangeTxs('8rEwYY4wQ4bkEkk95EiyeQnvnonX6TAnU6eiBAbVSADk'); // By id
+await client.getExchangeTxs('8rEwYY4wQ4bkEkk95EiyeQnvnonX6TAnU6eiBAbVSADk'); // By id { data: Tx }
 await client.getExchangeTxs({
   timeStart?: string | Date | number;
   timeEnd?: string | Date | number;
@@ -51,15 +53,23 @@ await client.getExchangeTxs({
   amountAsset?: string | Asset;
   priceAsset?: string | Asset;
   limit?: number;
-  sort?: string; // not working before pagination
-}); // With filters
-await client.getExchangeTxs(); // Top 100 with default filters (timeStart = day ago, timeEnd = now)
+  sort?: 'asc'|'desc';
+}); // With filters { data: Tx[] }
+await client.getExchangeTxs(); // Top 100 with default filters (timeStart = timestamp of first entry in db, timeEnd = now)
+```
 
-interface getExchangeTxs {
-  (filters: TransactionFilters): Promise<Transaction[]>;
-  (id: string): Promise<Transaction>;
-  (): Promise<Transaction[]>;
-}
+## Pagination
+
+```typescript
+type Response<T> = {
+  data: T;
+  fetchMore?: TFunction;
+};
+const response1 = await client.getExchangeTxs({ limit: 1, sort: 'asc' });
+const data1 = response1.data;
+// Process data
+
+const response2 = await res1.fetchMore(2); // 2 more
 ```
 
 ## Custom init params
@@ -84,6 +94,13 @@ Fetch by default is `fetch(...).then(res => res.text())`
 Parse by default is `JSON.parse.bind(JSON)` , you can use `json-bigint`'s parse if you want to add support for bignumbers.
 
 Transform function has next signature by default (it depends on your parse function):
-`({ __type, data, ...rest }) => any`
+
+```
+({
+  __type,
+  data,
+  ...rest
+}) => any
+```
 
 Basically you can switch on \_\_type and do transformations.

@@ -1,15 +1,6 @@
-import {
-  TAssetId,
-  TAssetsResponseJSON,
-  TLibOptions,
-  TCreateGetFn,
-  Transaction,
-  TransactionFilters,
-  IGetExchangeTxs,
-} from '../types';
-import { Asset } from '@waves/data-entities';
+import { TCreateGetFn, TransactionFilters, IGetExchangeTxs } from '../types';
 
-import { some, isNotString, createQS, pipeP, fetchData } from '../utils';
+import { createQS } from '../utils';
 import { createMethod } from './createMethod';
 
 // One
@@ -19,7 +10,6 @@ const generateUrlOne = (rootUrl: string) => (id: string) =>
   `${rootUrl}/transactions/exchange/${id}`;
 
 //Many
-
 const isFilters = (filters: any): filters is TransactionFilters => {
   const possibleFilters = [
     'timeStart',
@@ -30,6 +20,7 @@ const isFilters = (filters: any): filters is TransactionFilters => {
     'sender',
     'amountAsset',
     'priceAsset',
+    'after',
   ];
   return (
     typeof filters === 'object' &&
@@ -54,6 +45,11 @@ const createGetExchangeTxs: TCreateGetFn<IGetExchangeTxs> = libOptions => {
     validate: validateFilters,
     generateUrl: generateUrlMany,
     libOptions,
+    addPaginationToArgs: ({ args: [filters], cursor, count }) => ({
+      ...filters,
+      after: cursor,
+      ...(count ? { limit: count } : {}),
+    }),
   });
 
   const getExchangeTxs: IGetExchangeTxs = (

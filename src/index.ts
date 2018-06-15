@@ -1,26 +1,18 @@
-import { Asset, IAssetJSON, AssetPair } from '@waves/data-entities';
-import { pipeP, defaultFetch, defaultParse } from './utils';
+import { defaultFetch, defaultParse } from './utils';
 import defaultTransform from './transform';
 
 import createGetAssets from './methods/getAssets';
 import createGetPairs from './methods/getPairs';
 import createGetExchangeTxs from './methods/getExchangeTxs';
 
-import {
-  TAssetId,
-  TLibOptions,
-  IPairJSON,
-  TGetAssets,
-  TGetPairs,
-  IGetExchangeTxs,
-} from './types';
+import { LibOptions, TGetAssets, TGetPairs, IGetExchangeTxs } from './types';
 
 export default class DataServiceClient {
   public getPairs: TGetPairs;
   public getAssets: TGetAssets;
   public getExchangeTxs: IGetExchangeTxs;
 
-  constructor(params: TLibOptions) {
+  constructor(params: LibOptions) {
     let options = { ...params };
     if (!options.rootUrl) {
       throw new Error(

@@ -1,12 +1,6 @@
-import {
-  TAssetId,
-  TAssetsResponseJSON,
-  TLibOptions,
-  TGetAssets,
-  TCreateGetFn,
-} from '../types';
+import { TAssetId, TGetAssets, TCreateGetFn, LibOptions } from '../types';
 
-import { some, isNotString, createQS, pipeP, fetchData } from '../utils';
+import { isNotString, createQS } from '../utils';
 import { createMethod } from './createMethod';
 
 const validateIds = (idOrIds: TAssetId[] | TAssetId): Promise<TAssetId[]> => {
@@ -19,7 +13,7 @@ const validateIds = (idOrIds: TAssetId[] | TAssetId): Promise<TAssetId[]> => {
 const createUrlForMany = (rootUrl: string) => (ids: TAssetId[]): string =>
   `${rootUrl}/assets${createQS({ ids })}`;
 
-const createGetAssets: TCreateGetFn<TGetAssets> = libOptions =>
+const createGetAssets: TCreateGetFn<TGetAssets> = (libOptions: LibOptions) =>
   createMethod({
     validate: validateIds,
     generateUrl: createUrlForMany,

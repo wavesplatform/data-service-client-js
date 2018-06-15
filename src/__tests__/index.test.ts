@@ -147,6 +147,37 @@ describe('ExchangeTxs endpoint: ', async () => {
     });
   });
 });
+
+describe('Pagination: ', () => {
+  it('works', async () => {
+    const customFetch = jest.fn(() =>
+      Promise.resolve(
+        '{"__type": "list","lastCursor": "cursor", "data": [{ "data": 1 }]}'
+      )
+    );
+    const customClient = new DataServiceClient({
+      rootUrl: NODE_URL,
+      parse: parser,
+      fetch: customFetch,
+    });
+
+    const result = await customClient.getAssets('test');
+    expect(result).toHaveProperty('data');
+    expect(result).not.toHaveProperty('fetchMore');
+
+    const result2 = await customClient.getExchangeTxs({
+      sort: 'asc',
+      limit: 1,
+    });
+    expect(result2).toHaveProperty('data');
+    expect(result2).toHaveProperty('fetchMore');
+    const result3 = await result2.fetchMore(1);
+    expect(result3).toHaveProperty('data');
+    expect(result3).toHaveProperty('fetchMore');
+    expect(customFetch.mock.calls).toMatchSnapshot();
+  });
+});
+
 describe('Custom transformer: ', () => {
   const fetchMocks = {
     assets: JSON.stringify({
