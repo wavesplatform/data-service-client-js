@@ -10,7 +10,7 @@
     "build": "tsc",
     "build:browser:dev": "tsc && browserify ./dist/index.js -o ./dist/umd.js",
     "build:browser": "browserify ./dist/index.js -o ./dist/umd.js -u bignumber.js -u @waves/json-bigint",
-    "build:all": "npm run build && npm run build:browser",
+    "build:all": "rimraf ./dist/* && npm run build && npm run build:browser",
     "test": "jest",
     "prepare": "npm run build:all && npm test"
   },
@@ -25,6 +25,7 @@
     "jest": "^22.4.3",
     "node-fetch": "^2.1.2",
     "parse-json-bignumber": "^0.0.2",
+    "rimraf": "^2.6.2",
     "ts-jest": "^22.4.6",
     "typescript": "^2.8.3"
   },
