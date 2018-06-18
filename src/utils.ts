@@ -1,5 +1,6 @@
 import { TParser, TPredicate, TFunction } from './types';
 
+export const noop = () => {};
 export const defaultFetch = (url: string): Promise<string> => {
   return fetch(url).then(
     (res: Response) =>

@@ -1,7 +1,6 @@
 import { Asset, IAssetJSON } from '@waves/data-entities';
-import { TAssetResponseJSON, ApiTypes } from './types';
+import { ApiTypes } from './types';
 import { id } from './utils';
-
 const transformer = ({ __type, data, ...rest }) => {
   switch (__type) {
     case ApiTypes.List:

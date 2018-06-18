@@ -1,14 +1,6 @@
-import {
-  TLibOptions,
-  TAssetId,
-  TListResponseJSON,
-  TPairsResponseJSON,
-  IPairJSON,
-  TGetPairs,
-  TCreateGetFn,
-} from '../types';
-import { BigNumber, AssetPair } from '@waves/data-entities';
-import { some, isNotString, createQS } from '../utils';
+import { TGetPairs, TCreateGetFn, LibOptions } from '../types';
+import { AssetPair } from '@waves/data-entities';
+import { createQS } from '../utils';
 import { createMethod } from './createMethod';
 
 const validatePairs = (
@@ -27,7 +19,7 @@ const validatePairs = (
 const createUrlForMany = (nodeUrl: string) => (pairs: AssetPair[]): string =>
   `${nodeUrl}/pairs${createQS({ pairs })}`;
 
-const getPairs: TCreateGetFn<TGetPairs> = libOptions =>
+const getPairs: TCreateGetFn<TGetPairs> = (libOptions: LibOptions) =>
   createMethod({
     validate: validatePairs,
     generateUrl: createUrlForMany,

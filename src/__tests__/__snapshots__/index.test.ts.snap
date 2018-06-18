@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination:  works 1`] = `
+Array [
+  Array [
+    "NODE_URL/assets?ids=test",
+  ],
+  Array [
+    "NODE_URL/transactions/exchange?sort=asc&limit=1",
+  ],
+  Array [
+    "NODE_URL/transactions/exchange?sort=asc&limit=1&after=cursor",
+  ],
+]
+`;
