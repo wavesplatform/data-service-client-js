@@ -5,9 +5,19 @@ test('Create querystring utils works #1', () => {
   const qs = createQS(obj);
   expect(qs).toBe('?a=true&b=1&c=string&e=9&e=8&e=7');
 });
+test('Create querystring utils works with Date (custom serialization)', () => {
+  const now = new Date();
+  const obj = { a: true, b: 1, c: 'string', d: now, e: [9, 8, 7] };
+
+  const qs = createQS(obj);
+  expect(qs).toBe(`?a=true&b=1&c=string&d=${now.toISOString()}&e=9&e=8&e=7`);
+});
 
 describe('PipeP ', () => {
-  const fn = pipeP(a => [a], b => [...b, 3]);
+  const fn = pipeP(
+    a => [a],
+    b => [...b, 3]
+  );
   it('wraps 2 args in array', async () => {
     const result = await fn(1, 2);
     expect(result).toEqual([[1, 2], 3]);

@@ -23,12 +23,24 @@ export const some = (predicate: TPredicate) => (arr: any[]): boolean =>
  * @param obj flat object with primitives or arrays of primitives as values
  * @returns query string for obj
  */
+/**
+ * customSerialize :: a -> string
+ */
+const customSerialize = v => {
+  switch (true) {
+    case v instanceof Date:
+      return v.toISOString();
+    default:
+      return v;
+  }
+};
+const createKeyValue = (key, v) => `${key}=${customSerialize(v)}`;
 export const createQS = (obj: Object): string => {
   const qs = Object.entries(obj)
     .map(([key, valueOrValues]) => {
       return Array.isArray(valueOrValues)
-        ? valueOrValues.map(v => `${key}=${v}`).join('&')
-        : `${key}=${valueOrValues}`;
+        ? valueOrValues.map(v => createKeyValue(key, v)).join('&')
+        : createKeyValue(key, valueOrValues);
     })
     .join('&');
   return qs === '' ? qs : `?${qs}`;
