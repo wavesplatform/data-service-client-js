@@ -1,5 +1,4 @@
 import { Asset, IAssetJSON, BigNumber, AssetPair } from '@waves/data-entities';
-import DataServiceClient from '.';
 
 export type TListResponseJSON<T> = {
   __type: ApiTypes.List;
@@ -10,6 +9,7 @@ export enum ApiTypes {
   Asset = 'asset',
   Pair = 'pair',
   Transaction = 'transaction',
+  Alias = 'alias',
 }
 
 export interface Transaction {
@@ -35,11 +35,16 @@ export type Response<T> = Promise<{
   fetchMore?: TFunction;
 }>;
 export type TGetAssets = (...ids: TAssetId[]) => Response<Asset[]>;
+export type getAliasById = (id: AliasId) => Response<Alias>;
+export type getAliasesByAddress = (address: string) => Response<Alias[]>;
 export type TCreateGetFn<T> = (libOptions: LibOptions) => T;
 export type TPredicate = (...args: any[]) => boolean;
 export type TFunction = (...args: any[]) => any;
 export type TParser = (text: string) => any;
-
+export type aliases = {
+  getById: TCreateGetFn<getAliasById>;
+  getByAddress: TCreateGetFn<getAliasesByAddress>;
+};
 export interface LibOptions {
   rootUrl: string;
   parse?: TParser;
@@ -47,7 +52,11 @@ export interface LibOptions {
   transform?: TFunction;
 }
 export type TAssetId = string;
-
+export type AliasId = string;
+export type Alias = {
+  address: string;
+  alias: string;
+};
 export type TGetAssetsFn = (...ids: TAssetId[]) => Response<Asset[]>;
 
 export type TAssetResponseJSON = {

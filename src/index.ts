@@ -4,13 +4,21 @@ import defaultTransform from './transform';
 import createGetAssets from './methods/getAssets';
 import createGetPairs from './methods/getPairs';
 import createGetExchangeTxs from './methods/getExchangeTxs';
+import createGetAliases from './methods/getAliases';
 
-import { LibOptions, TGetAssets, TGetPairs, IGetExchangeTxs } from './types';
+import {
+  LibOptions,
+  TGetAssets,
+  TGetPairs,
+  IGetExchangeTxs,
+  aliases,
+} from './types';
 
 export default class DataServiceClient {
   public getPairs: TGetPairs;
   public getAssets: TGetAssets;
   public getExchangeTxs: IGetExchangeTxs;
+  public aliases: aliases;
 
   constructor(params: LibOptions) {
     let options = { ...params };
@@ -34,6 +42,7 @@ export default class DataServiceClient {
     this.getAssets = createGetAssets(options);
     this.getPairs = createGetPairs(options);
     this.getExchangeTxs = createGetExchangeTxs(options);
+    this.aliases = createGetAliases(options);
   }
 }
 
