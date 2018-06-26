@@ -7,6 +7,8 @@ const transformer = ({ __type, data, ...rest }) => {
       return data.map(transformer);
     case ApiTypes.Asset:
       return transformAsset(data);
+    case ApiTypes.Alias:
+      return data;
     case ApiTypes.Pair:
       return transformPair(data);
     case ApiTypes.Transaction:

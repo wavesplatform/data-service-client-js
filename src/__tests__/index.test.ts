@@ -85,6 +85,27 @@ describe('Pairs endpoint: ', () => {
   });
 });
 
+describe('Aliases endpoint: ', () => {
+  it('fetch is called with correct params#1', async () => {
+    await client.aliases.getByAddress('address');
+    expect(fetch).toHaveBeenLastCalledWith(
+      `${NODE_URL}/aliases?address=address`
+    );
+  });
+  it('fetch is called with correct params#2', async () => {
+    await client.aliases.getById('id');
+    expect(fetch).toHaveBeenLastCalledWith(`${NODE_URL}/aliases/id`);
+  });
+
+  it('throws, if called with wrong types', async () => {
+    const wrongTypes: any = [1, null, NaN, undefined, {}];
+    wrongTypes.map(async t => {
+      await expect(client.aliases.getByAddress(t)).rejects.toBeDefined();
+      await expect(client.aliases.getById(t)).rejects.toBeDefined();
+    });
+  });
+});
+
 describe('ExchangeTxs endpoint: ', async () => {
   type Case = { label: string; params: any[]; expectedUrl?: string };
   const goodCases: Case[] = [

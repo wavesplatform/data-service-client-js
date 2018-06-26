@@ -58,6 +58,29 @@ await client.getExchangeTxs({
 await client.getExchangeTxs(); // Top 100 with default filters (timeStart = timestamp of first entry in db, timeEnd = now)
 ```
 
+-- aliases:
+
+```typescript
+const alias1 = await client.aliases.getById('@askerych');
+/*
+  { data: {
+      address: '3P5uMgn1xvrm7g3sbUVAGLtetkNUa1AHn2M',
+      alias: '@askerych'
+    }
+  }
+  */
+const alias2 = await client.aliases.getByAddress(
+  '3P5uMgn1xvrm7g3sbUVAGLtetkNUa1AHn2M'
+);
+/*
+  { data: [{
+      address: '3P5uMgn1xvrm7g3sbUVAGLtetkNUa1AHn2M',
+      alias: '@askerych'
+    }]
+  }
+  */
+```
+
 ## Pagination
 
 ```typescript
