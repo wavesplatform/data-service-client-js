@@ -42,8 +42,8 @@ export type TPredicate = (...args: any[]) => boolean;
 export type TFunction = (...args: any[]) => any;
 export type TParser = (text: string) => any;
 export type aliases = {
-  getById: TCreateGetFn<getAliasById>;
-  getByAddress: TCreateGetFn<getAliasesByAddress>;
+  getById: getAliasById;
+  getByAddress: getAliasesByAddress;
 };
 export interface LibOptions {
   rootUrl: string;
