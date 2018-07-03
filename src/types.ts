@@ -1,5 +1,7 @@
 import { Asset, IAssetJSON, BigNumber, AssetPair } from '@waves/data-entities';
 
+import { AliasesByAddressOptions } from './methods/getAliases';
+
 export type TListResponseJSON<T> = {
   __type: ApiTypes.List;
   data: T[];
@@ -36,7 +38,10 @@ export type Response<T> = Promise<{
 }>;
 export type TGetAssets = (...ids: TAssetId[]) => Response<Asset[]>;
 export type getAliasById = (id: AliasId) => Response<Alias>;
-export type getAliasesByAddress = (address: string) => Response<Alias[]>;
+export type getAliasesByAddress = (
+  address: string,
+  options?: AliasesByAddressOptions
+) => Response<Alias[]>;
 export type TCreateGetFn<T> = (libOptions: LibOptions) => T;
 export type TPredicate = (...args: any[]) => boolean;
 export type TFunction = (...args: any[]) => any;

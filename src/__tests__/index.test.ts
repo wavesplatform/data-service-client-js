@@ -92,6 +92,12 @@ describe('Aliases endpoint: ', () => {
       `${NODE_URL}/aliases?address=address`
     );
   });
+  it('fetch is called with correct params#1', async () => {
+    await client.aliases.getByAddress('address', { showBlocked: true });
+    expect(fetch).toHaveBeenLastCalledWith(
+      `${NODE_URL}/aliases?address=address&showBlocked=true`
+    );
+  });
   it('fetch is called with correct params#2', async () => {
     await client.aliases.getById('id');
     expect(fetch).toHaveBeenLastCalledWith(`${NODE_URL}/aliases/id`);
