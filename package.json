@@ -1,6 +1,6 @@
 {
   "name": "@waves/data-service-client-js",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "author": "Ivan Shmidt <bahoc47@gmail.com>",
@@ -34,7 +34,10 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(src/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "testPathIgnorePatterns": ["/node_modules/", ".history"],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".history"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
