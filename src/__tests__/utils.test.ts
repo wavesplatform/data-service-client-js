@@ -1,16 +1,23 @@
 import { createQS, pipeP } from '../utils';
 
-test('Create querystring utils works #1', () => {
-  const obj = { a: true, b: 1, c: 'string', e: [9, 8, 7] };
-  const qs = createQS(obj);
-  expect(qs).toBe('?a=true&b=1&c=string&e=9&e=8&e=7');
-});
-test('Create querystring utils works with Date (custom serialization)', () => {
-  const now = new Date();
-  const obj = { a: true, b: 1, c: 'string', d: now, e: [9, 8, 7] };
+describe('Create querystring util', () => {
+  it('works #1', () => {
+    const obj = { a: true, b: 1, c: 'string', e: [9, 8, 7] };
+    const qs = createQS(obj);
+    expect(qs).toBe('?a=true&b=1&c=string&e=9&e=8&e=7');
+  });
+  it('works with Date (custom serialization)', () => {
+    const now = new Date();
+    const obj = { a: true, b: 1, c: 'string', d: now, e: [9, 8, 7] };
 
-  const qs = createQS(obj);
-  expect(qs).toBe(`?a=true&b=1&c=string&d=${now.toISOString()}&e=9&e=8&e=7`);
+    const qs = createQS(obj);
+    expect(qs).toBe(`?a=true&b=1&c=string&d=${now.toISOString()}&e=9&e=8&e=7`);
+  });
+  it('ignores undefined fields', () => {
+    const obj = { a: true, b: 1, c: 'string', e: [9, 8, 7], d: undefined };
+    const qs = createQS(obj);
+    expect(qs).toBe('?a=true&b=1&c=string&e=9&e=8&e=7');
+  });
 });
 
 describe('PipeP ', () => {

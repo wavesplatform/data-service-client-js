@@ -1,4 +1,4 @@
-import { TParser, TPredicate, TFunction } from './types';
+import { TPredicate, TFunction } from './types';
 
 export const noop = () => {};
 export const defaultFetch = (url: string): Promise<string> => {
@@ -37,6 +37,7 @@ const customSerialize = v => {
 const createKeyValue = (key, v) => `${key}=${customSerialize(v)}`;
 export const createQS = (obj: Object): string => {
   const qs = Object.entries(obj)
+    .filter(([_, value]) => value !== undefined)
     .map(([key, valueOrValues]) => {
       return Array.isArray(valueOrValues)
         ? valueOrValues.map(v => createKeyValue(key, v)).join('&')
