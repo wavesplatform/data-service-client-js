@@ -3,7 +3,7 @@ import { AliasId, aliases, TCreateGetFn, LibOptions } from '../types';
 import { isNotString, createQS } from '../utils';
 import { createMethod } from './createMethod';
 
-export type AliasesByAddressOptions = { showBlocked?: boolean };
+export type AliasesByAddressOptions = { showBroken?: boolean };
 type AliasesByAddressParams = [string, AliasesByAddressOptions];
 
 const validateId = (id: string): Promise<string> =>
@@ -24,11 +24,11 @@ const createUrlForId = (rootUrl: string) => (id: AliasId): string =>
 
 const createUrlForAddress = (rootUrl: string) => ([
   address,
-  { showBlocked },
+  { showBroken },
 ]: AliasesByAddressParams): string =>
   `${rootUrl}/aliases${createQS({
     address,
-    showBlocked,
+    showBroken,
   })}`;
 
 const createGetAliases: TCreateGetFn<aliases> = (libOptions: LibOptions) => ({
