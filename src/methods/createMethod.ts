@@ -3,14 +3,14 @@ import { TFunction, LibOptions } from '../types';
 
 const createMethod = ({
   validate = T,
-  generateUrl,
+  generateRequest,
   libOptions,
   addPaginationToArgs,
 }: TCreateMethodParams): TFunction => {
   function method(...args) {
     return pipeP(
       validate,
-      generateUrl(libOptions.rootUrl),
+      generateRequest(libOptions.rootUrl),
       libOptions.fetch,
       libOptions.parse,
       rawData =>
@@ -42,7 +42,7 @@ const addPagination = ({
 export { createMethod };
 type TCreateMethodParams = {
   validate: TFunction;
-  generateUrl: TFunction;
+  generateRequest: TFunction;
   libOptions: LibOptions;
   addPaginationToArgs?: TFunction;
 };

@@ -13,7 +13,16 @@ export enum ApiTypes {
   Transaction = 'transaction',
   Alias = 'alias',
 }
-
+export enum HttpMethods {
+  Get = 'GET',
+  Post = 'POST',
+}
+export interface LibRequest {
+  url: string;
+  method: HttpMethods;
+  headers?: {};
+  body?: {};
+}
 export interface Transaction {
   // @TODO add txs interfaces
 }

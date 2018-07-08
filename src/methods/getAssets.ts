@@ -1,7 +1,14 @@
-import { TAssetId, TGetAssets, TCreateGetFn, LibOptions } from '../types';
+import {
+  TAssetId,
+  TGetAssets,
+  TCreateGetFn,
+  LibOptions,
+  LibRequest,
+} from '../types';
 
-import { isNotString, createQS } from '../utils';
+import { isNotString } from '../utils';
 import { createMethod } from './createMethod';
+import { createRequest } from '../createRequest';
 
 const validateIds = (idOrIds: TAssetId[] | TAssetId): Promise<TAssetId[]> => {
   const arrayToCheck = Array.isArray(idOrIds) ? idOrIds : [idOrIds];
@@ -10,13 +17,14 @@ const validateIds = (idOrIds: TAssetId[] | TAssetId): Promise<TAssetId[]> => {
     : Promise.resolve(arrayToCheck);
 };
 
-const createUrlForMany = (rootUrl: string) => (ids: TAssetId[]): string =>
-  `${rootUrl}/assets${createQS({ ids })}`;
+const createRequestForMany = (rootUrl: string) => (
+  ids: TAssetId[]
+): LibRequest => createRequest(`${rootUrl}/assets`, { ids });
 
 const createGetAssets: TCreateGetFn<TGetAssets> = (libOptions: LibOptions) =>
   createMethod({
     validate: validateIds,
-    generateUrl: createUrlForMany,
+    generateRequest: createRequestForMany,
     libOptions,
   });
 

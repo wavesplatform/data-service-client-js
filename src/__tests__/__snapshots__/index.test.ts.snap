@@ -1,15 +1,442 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Aliases endpoint:  fetch is called with correct params#1 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/aliases?address=address",
+  },
+]
+`;
+
+exports[`Aliases endpoint:  fetch is called with correct params#1 2`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/aliases?address=address&showBroken=true",
+  },
+]
+`;
+
+exports[`Aliases endpoint:  fetch is called with correct params#2 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/aliases/id",
+  },
+]
+`;
+
+exports[`Asssets endpoint:  fetch is called with correct params#1 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/assets?ids=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca&ids=AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+  },
+]
+`;
+
+exports[`Asssets endpoint:  fetch is called with correct params#2 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/assets?ids=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca",
+  },
+]
+`;
+
+exports[`Asssets endpoint:  fetch is called with correct params#3 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/assets",
+  },
+]
+`;
+
+exports[`ExchangeTxs endpoint:  works with (empty call) 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/transactions/exchange",
+  },
+]
+`;
+
+exports[`ExchangeTxs endpoint:  works with (single string) 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/transactions/exchange/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS",
+  },
+]
+`;
+
+exports[`ExchangeTxs endpoint:  works with (with all filters) 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/transactions/exchange?timeStart=2016-02-01&timeEnd=2016-03-01&matcher=matcher&sender=sender&amountAsset=asset1&priceAsset=priceAsset&limit=5&sort=-some",
+  },
+]
+`;
+
+exports[`ExchangeTxs endpoint:  works with (with one filter) 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/transactions/exchange?timeStart=2016-01-01",
+  },
+]
+`;
+
+exports[`Long params transforms into POST request works 1`] = `
+Array [
+  Object {
+    "body": Object {
+      "ids": Array [
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+        "AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa",
+      ],
+    },
+    "headers": Object {
+      "Content-Type": "application/json",
+    },
+    "method": "POST",
+    "url": "NODE_URL/assets",
+  },
+]
+`;
+
 exports[`Pagination:  works 1`] = `
 Array [
   Array [
-    "NODE_URL/assets?ids=test",
+    Object {
+      "method": "GET",
+      "url": "NODE_URL/transactions/exchange?sort=asc&limit=1",
+    },
   ],
   Array [
-    "NODE_URL/transactions/exchange?sort=asc&limit=1",
+    Object {
+      "method": "GET",
+      "url": "NODE_URL/transactions/exchange?sort=asc&limit=1&after=cursor",
+    },
   ],
-  Array [
-    "NODE_URL/transactions/exchange?sort=asc&limit=1&after=cursor",
-  ],
+]
+`;
+
+exports[`Pairs endpoint:  fetch is called with correct params#1 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/pairs?pairs=WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&pairs=WAVES/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu",
+  },
+]
+`;
+
+exports[`Pairs endpoint:  fetch is called with correct params#2 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "url": "NODE_URL/pairs",
+  },
 ]
 `;

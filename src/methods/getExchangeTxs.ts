@@ -1,13 +1,18 @@
-import { TCreateGetFn, TransactionFilters, IGetExchangeTxs } from '../types';
+import {
+  TCreateGetFn,
+  TransactionFilters,
+  IGetExchangeTxs,
+  LibRequest,
+} from '../types';
 
-import { createQS } from '../utils';
 import { createMethod } from './createMethod';
+import { createRequest } from '../createRequest';
 
 // One
 const validateId = id =>
   typeof id === 'string' ? Promise.resolve(id) : Promise.reject('Wrong id');
-const generateUrlOne = (rootUrl: string) => (id: string) =>
-  `${rootUrl}/transactions/exchange/${id}`;
+const generateRequestOne = (rootUrl: string) => (id: string): LibRequest =>
+  createRequest(`${rootUrl}/transactions/exchange/${id}`);
 
 //Many
 const isFilters = (filters: any): filters is TransactionFilters => {
@@ -32,18 +37,19 @@ const validateFilters = (filters: any) =>
     ? Promise.resolve(filters)
     : Promise.reject('Wrong filters object');
 
-const generateUrlMany = (rootUrl: string) => (filters: TransactionFilters) =>
-  `${rootUrl}/transactions/exchange${createQS(filters)}`;
+const generateRequestMany = (rootUrl: string) => (
+  filters: TransactionFilters
+): LibRequest => createRequest(`${rootUrl}/transactions/exchange`, filters);
 
 const createGetExchangeTxs: TCreateGetFn<IGetExchangeTxs> = libOptions => {
   const getExchangeTxsOne = createMethod({
     validate: validateId,
-    generateUrl: generateUrlOne,
+    generateRequest: generateRequestOne,
     libOptions,
   });
   const getExchangeTxsMany = createMethod({
     validate: validateFilters,
-    generateUrl: generateUrlMany,
+    generateRequest: generateRequestMany,
     libOptions,
     addPaginationToArgs: ({ args: [filters], cursor, count }) => ({
       ...filters,

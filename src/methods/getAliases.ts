@@ -1,7 +1,14 @@
-import { AliasId, aliases, TCreateGetFn, LibOptions } from '../types';
+import {
+  AliasId,
+  aliases,
+  TCreateGetFn,
+  LibOptions,
+  LibRequest,
+} from '../types';
 
-import { isNotString, createQS } from '../utils';
+import { isNotString } from '../utils';
 import { createMethod } from './createMethod';
+import { createRequest } from '../createRequest';
 
 export type AliasesByAddressOptions = { showBroken?: boolean };
 type AliasesByAddressParams = [string, AliasesByAddressOptions];
@@ -19,28 +26,28 @@ const validateByAddressParams = ([
     ? Promise.reject(new Error('ArgumentsError: address should be string'))
     : Promise.resolve([address, options] as AliasesByAddressParams);
 
-const createUrlForId = (rootUrl: string) => (id: AliasId): string =>
-  `${rootUrl}/aliases/${id}`;
+const createRequestForId = (rootUrl: string) => (id: AliasId): LibRequest =>
+  createRequest(`${rootUrl}/aliases/${id}`);
 
-const createUrlForAddress = (rootUrl: string) => ([
+const createRequestForAddress = (rootUrl: string) => ([
   address,
   { showBroken },
-]: AliasesByAddressParams): string =>
-  `${rootUrl}/aliases${createQS({
+]: AliasesByAddressParams): LibRequest =>
+  createRequest(`${rootUrl}/aliases`, {
     address,
     showBroken,
-  })}`;
+  });
 
 const createGetAliases: TCreateGetFn<aliases> = (libOptions: LibOptions) => ({
   getById: createMethod({
     validate: validateId,
-    generateUrl: createUrlForId,
+    generateRequest: createRequestForId,
     libOptions,
   }),
   getByAddress: (address, options = {}) =>
     createMethod({
       validate: validateByAddressParams,
-      generateUrl: createUrlForAddress,
+      generateRequest: createRequestForAddress,
       libOptions,
     })(address, options),
 });
