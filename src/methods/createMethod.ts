@@ -11,7 +11,7 @@ const createMethod = ({
     return pipeP(
       validate,
       generateRequest(libOptions.rootUrl),
-      libOptions.fetch,
+      ({url, ...options}) => libOptions.fetch(url, options),
       libOptions.parse,
       rawData =>
         pipeP(

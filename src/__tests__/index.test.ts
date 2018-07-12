@@ -41,7 +41,7 @@ describe('Asssets endpoint: ', () => {
   });
 });
 
-describe('Pairs endpoint: ', () => {
+describe.only('Pairs endpoint: ', () => {
   it('fetch is called with correct params#1', async () => {
     const pair1 = new AssetPair(
       'WAVES' as any,
