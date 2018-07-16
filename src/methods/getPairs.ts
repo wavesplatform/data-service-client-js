@@ -1,7 +1,7 @@
-import { TGetPairs, TCreateGetFn, LibOptions } from '../types';
+import { TGetPairs, TCreateGetFn, LibOptions, LibRequest } from '../types';
 import { AssetPair } from '@waves/data-entities';
-import { createQS } from '../utils';
 import { createMethod } from './createMethod';
+import { createRequest } from '../createRequest';
 
 const validatePairs = (
   pairOrPairs: AssetPair[] | AssetPair
@@ -16,13 +16,15 @@ const validatePairs = (
       );
 };
 
-const createUrlForMany = (nodeUrl: string) => (pairs: AssetPair[]): string =>
-  `${nodeUrl}/pairs${createQS({ pairs })}`;
+const createRequestForMany = (nodeUrl: string) => (
+  pairs: AssetPair[]
+): LibRequest =>
+  createRequest(`${nodeUrl}/pairs`, { pairs: pairs.map(p => p.toString()) });
 
 const getPairs: TCreateGetFn<TGetPairs> = (libOptions: LibOptions) =>
   createMethod({
     validate: validatePairs,
-    generateUrl: createUrlForMany,
+    generateRequest: createRequestForMany,
     libOptions,
   });
 

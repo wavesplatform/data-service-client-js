@@ -24,6 +24,8 @@ const client = new DataServiceClient({
 
 `{ data, ...meta }`
 
+### All methods do GET requests, until query is under 2k symbols, then automatically switch to POST
+
 - getAssets:
 
 ```typescript
@@ -112,6 +114,7 @@ The path is fetch -> parse -> transform
 
 ### Fetch must return string!
 
+Fetch accepts (url, options)
 Fetch by default is `fetch(...).then(res => res.text())`
 
 Parse by default is `JSON.parse.bind(JSON)` , you can use `json-bigint`'s parse if you want to add support for bignumbers.

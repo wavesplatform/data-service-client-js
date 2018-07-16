@@ -1,6 +1,6 @@
 const parser = require('parse-json-bignumber')();
 import DataServiceClient from '../index';
-import { AssetPair } from '@waves/data-entities';
+import { AssetPair, Asset } from '@waves/data-entities';
 
 const fetch = jest.fn(() => Promise.resolve('{"data":[{ "data": 1 }]}'));
 const NODE_URL = 'NODE_URL';
@@ -17,24 +17,20 @@ describe('Asssets endpoint: ', () => {
       'AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa',
     ];
     await client.getAssets(...ids);
-    expect(fetch).toHaveBeenLastCalledWith(
-      `${NODE_URL}/assets?ids=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca&ids=AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa`
-    );
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
   it('fetch is called with correct params#2', async () => {
     const ids = ['4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca'];
     await client.getAssets(...ids);
-    expect(fetch).toHaveBeenLastCalledWith(
-      `${NODE_URL}/assets?ids=4CYRBpSmNKqmw1PoKFoZADv5FaciyJcusqrHyPrAQ4Ca`
-    );
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
   it('fetch is called with correct params#3', async () => {
     const ids = [];
     await client.getAssets(...ids);
 
-    expect(fetch).toHaveBeenLastCalledWith(`${NODE_URL}/assets`);
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
   it('throws, if called with wrong types', async () => {
@@ -56,16 +52,14 @@ describe('Pairs endpoint: ', () => {
       '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu' as any
     );
     await client.getPairs(pair1, pair2);
-    expect(fetch).toHaveBeenLastCalledWith(
-      `${NODE_URL}/pairs?pairs=WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS&pairs=WAVES/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu`
-    );
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
   it('fetch is called with correct params#2', async () => {
     const pairs = [];
     await client.getPairs(...pairs);
 
-    expect(fetch).toHaveBeenLastCalledWith(`${NODE_URL}/pairs`);
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
   it('throws, if called with wrong types', async () => {
@@ -88,19 +82,15 @@ describe('Pairs endpoint: ', () => {
 describe('Aliases endpoint: ', () => {
   it('fetch is called with correct params#1', async () => {
     await client.aliases.getByAddress('address');
-    expect(fetch).toHaveBeenLastCalledWith(
-      `${NODE_URL}/aliases?address=address`
-    );
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
   it('fetch is called with correct params#1', async () => {
     await client.aliases.getByAddress('address', { showBroken: true });
-    expect(fetch).toHaveBeenLastCalledWith(
-      `${NODE_URL}/aliases?address=address&showBroken=true`
-    );
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
   it('fetch is called with correct params#2', async () => {
     await client.aliases.getById('id');
-    expect(fetch).toHaveBeenLastCalledWith(`${NODE_URL}/aliases/id`);
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
   it('throws, if called with wrong types', async () => {
@@ -165,7 +155,7 @@ describe('ExchangeTxs endpoint: ', async () => {
   goodCases.forEach((c, i) => {
     it(`works with (${c.label})`, async () => {
       const result = await client.getExchangeTxs(c.params[0]);
-      expect(fetch).toHaveBeenLastCalledWith(c.expectedUrl);
+      expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
     });
   });
   badCases.forEach((c, i) => {
@@ -201,7 +191,7 @@ describe('Pagination: ', () => {
     const result3 = await result2.fetchMore(1);
     expect(result3).toHaveProperty('data');
     expect(result3).toHaveProperty('fetchMore');
-    expect(customFetch.mock.calls).toMatchSnapshot();
+    expect(customFetch.mock.calls.slice(-2)).toMatchSnapshot();
   });
 });
 
@@ -256,5 +246,28 @@ describe('Custom transformer: ', () => {
     expect(transformMocks.list).toHaveBeenCalledTimes(1);
     expect(transformMocks.asset).toHaveBeenCalledTimes(2);
     expect(transformMocks.pair).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe('Long params transforms into POST request', () => {
+  it('works', async () => {
+    const ids = new Array(300)
+      .fill(1)
+      .map(() => 'AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa');
+    await client.getAssets(...ids);
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+  it('works for pairs', async () => {
+    const pairs = new Array(300).fill(1).map(
+      () =>
+        new AssetPair(
+          new Asset({ id: 'WAVES' } as any),
+          new Asset({
+            id: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
+          } as any)
+        )
+    );
+    await client.getPairs(...pairs);
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 });

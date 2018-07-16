@@ -34,11 +34,11 @@
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.0.tgz#acaa89247afddc7967e9902fd11761dadea1a555"
 
-"@waves/data-entities@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@waves/data-entities/-/data-entities-1.0.2.tgz#60fe4787fca21b8e8a45c034694a5041b5701e94"
+"@waves/data-entities@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@waves/data-entities/-/data-entities-1.6.0.tgz#cb98a710a0dae5a3f82dba9ef1e558e9a310f112"
   dependencies:
-    bignumber.js "6.0.0"
+    bignumber.js "7.0.1"
 
 JSONStream@^1.0.3:
   version "1.3.2"
@@ -459,9 +459,9 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bignumber.js@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-6.0.0.tgz#bbfa047644609a5af093e9cbd83b0461fa3f6002"
+bignumber.js@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.0.1.tgz#8d2ff74fb2e7a78cbfc3a57bd63cd6106bf8903a"
 
 binary-extensions@^1.0.0:
   version "1.11.0"
