@@ -18,7 +18,8 @@ const validatePairs = (
 
 const createRequestForMany = (nodeUrl: string) => (
   pairs: AssetPair[]
-): LibRequest => createRequest(`${nodeUrl}/pairs`, { pairs });
+): LibRequest =>
+  createRequest(`${nodeUrl}/pairs`, { pairs: pairs.map(p => p.toString()) });
 
 const getPairs: TCreateGetFn<TGetPairs> = (libOptions: LibOptions) =>
   createMethod({

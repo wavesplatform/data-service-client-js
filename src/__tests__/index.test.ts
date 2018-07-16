@@ -1,6 +1,6 @@
 const parser = require('parse-json-bignumber')();
 import DataServiceClient from '../index';
-import { AssetPair } from '@waves/data-entities';
+import { AssetPair, Asset } from '@waves/data-entities';
 
 const fetch = jest.fn(() => Promise.resolve('{"data":[{ "data": 1 }]}'));
 const NODE_URL = 'NODE_URL';
@@ -41,7 +41,7 @@ describe('Asssets endpoint: ', () => {
   });
 });
 
-describe.only('Pairs endpoint: ', () => {
+describe('Pairs endpoint: ', () => {
   it('fetch is called with correct params#1', async () => {
     const pair1 = new AssetPair(
       'WAVES' as any,
@@ -255,6 +255,19 @@ describe('Long params transforms into POST request', () => {
       .fill(1)
       .map(() => 'AENTt5heWujAzcw7PmGXi1ekRc7CAmNm87Q1xZMYXGLa');
     await client.getAssets(...ids);
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+  it('works for pairs', async () => {
+    const pairs = new Array(300).fill(1).map(
+      () =>
+        new AssetPair(
+          new Asset({ id: 'WAVES' } as any),
+          new Asset({
+            id: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
+          } as any)
+        )
+    );
+    await client.getPairs(...pairs);
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 });

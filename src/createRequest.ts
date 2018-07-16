@@ -11,9 +11,10 @@ export const createRequest = (methodUrl: string, params?: any): LibRequest => {
     ? {
         url: methodUrl,
         method: HttpMethods.Post,
-        body: params,
+        body: JSON.stringify(params),
         headers: {
           'Content-Type': 'application/json',
+          Accept: 'application/json, text/plain, */*',
         },
       }
     : { url: getUrl, method: HttpMethods.Get };
