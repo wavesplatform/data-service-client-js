@@ -3,11 +3,22 @@ import { AssetPair } from '@waves/data-entities';
 import { createMethod } from './createMethod';
 import { createRequest } from '../createRequest';
 
+const isAssetPair = pair => {
+  switch (true) {
+    case typeof pair === 'string':
+      return pair.split('/').length === 2;
+    case typeof pair === 'object':
+      return AssetPair.isAssetPair(pair);
+    default:
+      return false;
+  }
+};
+
 const validatePairs = (
   pairOrPairs: AssetPair[] | AssetPair
 ): Promise<AssetPair[]> => {
   const arrayToCheck = Array.isArray(pairOrPairs) ? pairOrPairs : [pairOrPairs];
-  return arrayToCheck.every(AssetPair.isAssetPair)
+  return arrayToCheck.every(isAssetPair)
     ? Promise.resolve(arrayToCheck)
     : Promise.reject(
         new Error(
