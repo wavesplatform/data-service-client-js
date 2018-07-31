@@ -165,6 +165,64 @@ describe('ExchangeTxs endpoint: ', async () => {
   });
 });
 
+describe('TransferTxs endpoint: ', async () => {
+  type Case = { label: string; params: any[]; expectedUrl?: string };
+  const goodCases: Case[] = [
+    {
+      label: 'single string',
+      params: ['some id'],
+    },
+    {
+      label: 'empty call',
+      params: [],
+    },
+    {
+      label: 'with one filter',
+      params: [{ timeStart: '2016-01-01' }],
+    },
+    {
+      label: 'with all filters',
+      params: [
+        {
+          assetId: 'assetId',
+          sender: 'sender',
+          recipient: 'recipient',
+          timeStart: '2016-02-01',
+          timeEnd: '2016-03-01',
+          limit: 5,
+          sort: '-some',
+        },
+      ],
+    },
+  ];
+  const badCases: Case[] = [
+    {
+      label: 'with wrong filters',
+      params: [{ incorrectField: '' }],
+    },
+    {
+      label: 'with number',
+      params: [1],
+    },
+    {
+      label: 'with null',
+      params: [null],
+    },
+  ];
+
+  goodCases.forEach((c, i) => {
+    it(`works with (${c.label})`, async () => {
+      const result = await client.getTransferTxs(c.params[0]);
+      expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+    });
+  });
+  badCases.forEach((c, i) => {
+    it(`fails with (${c.label})`, async () => {
+      await expect(client.getTransferTxs(c.params[0])).rejects.toBeDefined();
+    });
+  });
+});
+
 describe('Pagination: ', () => {
   it('works', async () => {
     const customFetch = jest.fn(() =>

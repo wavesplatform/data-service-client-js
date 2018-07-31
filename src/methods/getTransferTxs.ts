@@ -1,7 +1,7 @@
 import {
   TCreateGetFn,
-  ExchangeTxFilters,
-  GetExchangeTxs,
+  TransferTxFilters,
+  GetTransferTxs,
   LibRequest,
 } from '../types';
 
@@ -12,20 +12,19 @@ import { createRequest } from '../createRequest';
 const validateId = id =>
   typeof id === 'string' ? Promise.resolve(id) : Promise.reject('Wrong id');
 const generateRequestOne = (rootUrl: string) => (id: string): LibRequest =>
-  createRequest(`${rootUrl}/transactions/exchange/${id}`);
+  createRequest(`${rootUrl}/transactions/transfer/${id}`);
 
 //Many
-const isFilters = (filters: any): filters is ExchangeTxFilters => {
+const isFilters = (filters: any): filters is TransferTxFilters => {
   const possibleFilters = [
+    'sender',
+    'assetId',
+    'recipient',
+    'after',
     'timeStart',
     'timeEnd',
-    'limit',
     'sort',
-    'matcher',
-    'sender',
-    'amountAsset',
-    'priceAsset',
-    'after',
+    'limit',
   ];
   return (
     typeof filters === 'object' &&
@@ -38,16 +37,16 @@ const validateFilters = (filters: any) =>
     : Promise.reject('Wrong filters object');
 
 const generateRequestMany = (rootUrl: string) => (
-  filters: ExchangeTxFilters
-): LibRequest => createRequest(`${rootUrl}/transactions/exchange`, filters);
+  filters: TransferTxFilters
+): LibRequest => createRequest(`${rootUrl}/transactions/transfer`, filters);
 
-const createGetExchangeTxs: TCreateGetFn<GetExchangeTxs> = libOptions => {
-  const getExchangeTxsOne = createMethod({
+const createGetTransferTxs: TCreateGetFn<GetTransferTxs> = libOptions => {
+  const getTransferTxsOne = createMethod({
     validate: validateId,
     generateRequest: generateRequestOne,
     libOptions,
   });
-  const getExchangeTxsMany = createMethod({
+  const getTransferTxsMany = createMethod({
     validate: validateFilters,
     generateRequest: generateRequestMany,
     libOptions,
@@ -58,14 +57,14 @@ const createGetExchangeTxs: TCreateGetFn<GetExchangeTxs> = libOptions => {
     }),
   });
 
-  const getExchangeTxs: GetExchangeTxs = (
-    idOrFilters: string | ExchangeTxFilters = {}
+  const getTransferTxs: GetTransferTxs = (
+    idOrFilters: string | TransferTxFilters = {}
   ) =>
     typeof idOrFilters === 'string'
-      ? getExchangeTxsOne(idOrFilters)
-      : getExchangeTxsMany(idOrFilters);
+      ? getTransferTxsOne(idOrFilters)
+      : getTransferTxsMany(idOrFilters);
 
-  return getExchangeTxs;
+  return getTransferTxs;
 };
 
-export default createGetExchangeTxs;
+export default createGetTransferTxs;

@@ -152,3 +152,39 @@ Array [
   },
 ]
 `;
+
+exports[`TransferTxs endpoint:  works with (empty call) 1`] = `
+Array [
+  "NODE_URL/transactions/transfer",
+  Object {
+    "method": "GET",
+  },
+]
+`;
+
+exports[`TransferTxs endpoint:  works with (single string) 1`] = `
+Array [
+  "NODE_URL/transactions/transfer/some id",
+  Object {
+    "method": "GET",
+  },
+]
+`;
+
+exports[`TransferTxs endpoint:  works with (with all filters) 1`] = `
+Array [
+  "NODE_URL/transactions/transfer?assetId=assetId&sender=sender&recipient=recipient&timeStart=2016-02-01&timeEnd=2016-03-01&limit=5&sort=-some",
+  Object {
+    "method": "GET",
+  },
+]
+`;
+
+exports[`TransferTxs endpoint:  works with (with one filter) 1`] = `
+Array [
+  "NODE_URL/transactions/transfer?timeStart=2016-01-01",
+  Object {
+    "method": "GET",
+  },
+]
+`;

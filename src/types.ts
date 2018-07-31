@@ -26,7 +26,7 @@ export interface LibRequest {
 export interface Transaction {
   // @TODO add txs interfaces
 }
-export interface TransactionFilters {
+export interface ExchangeTxFilters {
   timeStart?: string | Date | number;
   timeEnd?: string | Date | number;
   matcher?: string;
@@ -36,8 +36,22 @@ export interface TransactionFilters {
   limit?: number;
   sort?: string;
 }
-export interface IGetExchangeTxs {
-  (filters: TransactionFilters): Response<Transaction[]>;
+export interface TransferTxFilters {
+  sender?: string;
+  recipient?: string;
+  assetId?: string;
+  timeStart?: string | Date | number;
+  timeEnd?: string | Date | number;
+  limit?: number;
+  sort?: string;
+}
+export interface GetExchangeTxs {
+  (filters: ExchangeTxFilters): Response<Transaction[]>;
+  (id: string): Response<Transaction>;
+  (): Response<Transaction[]>;
+}
+export interface GetTransferTxs {
+  (filters: TransferTxFilters): Response<Transaction[]>;
   (id: string): Response<Transaction>;
   (): Response<Transaction[]>;
 }
