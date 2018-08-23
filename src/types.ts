@@ -45,6 +45,17 @@ export interface TransferTxFilters {
   limit?: number;
   sort?: string;
 }
+
+export interface MassTransferTxFilters {
+  sender?: string;
+  recipient?: string;
+  assetId?: string;
+  timeStart?: string | Date | number;
+  timeEnd?: string | Date | number;
+  limit?: number;
+  sort?: string;
+}
+
 export interface GetExchangeTxs {
   (filters: ExchangeTxFilters): Response<Transaction[]>;
   (id: string): Response<Transaction>;
@@ -52,6 +63,11 @@ export interface GetExchangeTxs {
 }
 export interface GetTransferTxs {
   (filters: TransferTxFilters): Response<Transaction[]>;
+  (id: string): Response<Transaction>;
+  (): Response<Transaction[]>;
+}
+export interface GetMassTransferTxs {
+  (filters: MassTransferTxFilters): Response<Transaction[]>;
   (id: string): Response<Transaction>;
   (): Response<Transaction[]>;
 }
