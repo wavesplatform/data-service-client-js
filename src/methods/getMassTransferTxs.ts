@@ -41,13 +41,13 @@ const generateRequestMany = (rootUrl: string) => (
 ): LibRequest =>
   createRequest(`${rootUrl}/transactions/mass-transfer`, filters);
 
-const createGetTransferTxs: TCreateGetFn<GetMassTransferTxs> = libOptions => {
-  const getTransferTxsOne = createMethod({
+const createGetMassTransferTxs: TCreateGetFn<GetMassTransferTxs> = libOptions => {
+  const getMassTransferTxsOne = createMethod({
     validate: validateId,
     generateRequest: generateRequestOne,
     libOptions,
   });
-  const getTransferTxsMany = createMethod({
+  const getMassTransferTxsMany = createMethod({
     validate: validateFilters,
     generateRequest: generateRequestMany,
     libOptions,
@@ -58,14 +58,14 @@ const createGetTransferTxs: TCreateGetFn<GetMassTransferTxs> = libOptions => {
     }),
   });
 
-  const getTransferTxs: GetMassTransferTxs = (
+  const getMassTransferTxs: GetMassTransferTxs = (
     idOrFilters: string | MassTransferTxFilters = {}
   ) =>
     typeof idOrFilters === 'string'
-      ? getTransferTxsOne(idOrFilters)
-      : getTransferTxsMany(idOrFilters);
+      ? getMassTransferTxsOne(idOrFilters)
+      : getMassTransferTxsMany(idOrFilters);
 
-  return getTransferTxs;
+  return getMassTransferTxs;
 };
 
-export default createGetTransferTxs;
+export default createGetMassTransferTxs;
