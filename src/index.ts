@@ -50,4 +50,5 @@ export default class DataServiceClient {
   }
 }
 
+export * from './types';
 export { defaultTransform };
