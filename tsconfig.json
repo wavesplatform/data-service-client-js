@@ -1,12 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es5",
     "module": "commonjs",
     "declaration": false,
     "outDir": "dist/",
     "moduleResolution": "node",
-    "lib": ["es2017", "dom"]
+    "lib": [
+      "es2017",
+      "es2015.promise",
+      "dom"
+    ]
   },
-  "exclude": ["*.sandbox.js", "*.sandbox.ts", "**/__tests__/**"],
-  "include": ["src/**/*", "node_modules/*"]
+  "exclude": [
+    "*.sandbox.js",
+    "*.sandbox.ts",
+    "**/__tests__/**"
+  ],
+  "include": [
+    "src/**/*",
+    "node_modules/*"
+  ]
 }
