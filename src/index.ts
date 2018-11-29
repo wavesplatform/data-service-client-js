@@ -5,6 +5,7 @@ import createGetAssets from './methods/getAssets';
 import createGetPairs from './methods/getPairs';
 import createGetExchangeTxs from './methods/getExchangeTxs';
 import createGetTransferTxs from './methods/getTransferTxs';
+import createGetMassTransferTxs from './methods/getMassTransferTxs';
 import createGetAliases from './methods/getAliases';
 
 import {
@@ -13,6 +14,7 @@ import {
   TGetPairs,
   GetExchangeTxs,
   GetTransferTxs,
+  GetMassTransferTxs,
   aliases,
 } from './types';
 
@@ -21,6 +23,7 @@ export default class DataServiceClient {
   public getAssets: TGetAssets;
   public getExchangeTxs: GetExchangeTxs;
   public getTransferTxs: GetTransferTxs;
+  public getMassTransferTxs: GetMassTransferTxs;
   public aliases: aliases;
 
   constructor(params: LibOptions) {
@@ -46,6 +49,7 @@ export default class DataServiceClient {
     this.getPairs = createGetPairs(options);
     this.getExchangeTxs = createGetExchangeTxs(options);
     this.getTransferTxs = createGetTransferTxs(options);
+    this.getMassTransferTxs = createGetMassTransferTxs(options);
     this.aliases = createGetAliases(options);
   }
 }
