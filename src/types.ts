@@ -76,6 +76,7 @@ export type Response<T> = Promise<{
   fetchMore?: TFunction;
 }>;
 export type TGetAssets = (...ids: TAssetId[]) => Response<Asset[]>;
+export type TGetAssetsByTicker = (ticker: string) => Response<Asset[]>;
 export type getAliasById = (id: AliasId) => Response<Alias>;
 export type getAliasesByAddress = (
   address: string,

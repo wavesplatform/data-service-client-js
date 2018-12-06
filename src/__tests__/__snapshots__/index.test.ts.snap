@@ -54,6 +54,24 @@ Array [
 ]
 `;
 
+exports[`Asssets endpoint:  fetch is called with correct params#4 1`] = `
+Array [
+  "NODE_URL/assets?ticker=WAVES",
+  Object {
+    "method": "GET",
+  },
+]
+`;
+
+exports[`Asssets endpoint:  fetch is called with correct params#5 1`] = `
+Array [
+  "NODE_URL/assets?ticker=*",
+  Object {
+    "method": "GET",
+  },
+]
+`;
+
 exports[`ExchangeTxs endpoint:  works with (empty call) 1`] = `
 Array [
   "NODE_URL/transactions/exchange",
