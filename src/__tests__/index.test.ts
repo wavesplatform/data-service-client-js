@@ -33,6 +33,20 @@ describe('Asssets endpoint: ', () => {
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
+  it('fetch is called with correct params#4', async () => {
+    const ticker = 'WAVES';
+    await client.getAssetsByTicker(ticker);
+
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+
+  it('fetch is called with correct params#5', async () => {
+    const ticker = '*';
+    await client.getAssetsByTicker(ticker);
+
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+
   it('throws, if called with wrong types', async () => {
     const wrongTypes: any[] = [1, null, NaN, undefined, {}];
     wrongTypes.map(
