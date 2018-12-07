@@ -12,6 +12,7 @@ export enum ApiTypes {
   Pair = 'pair',
   Transaction = 'transaction',
   Alias = 'alias',
+  Candle = 'candle',
 }
 export enum HttpMethods {
   Get = 'GET',
@@ -110,6 +111,29 @@ export type TAssetResponseJSON = {
 };
 
 export type TAssetsResponseJSON = TListResponseJSON<TAssetResponseJSON>;
+
+export type TCandleJSON = {
+  time: Date;
+  open: BigNumber;
+  close: BigNumber;
+  high: BigNumber;
+  low: BigNumber;
+  volume: BigNumber;
+  priceVolume: BigNumber;
+  weightedAveragePrice: BigNumber;
+  maxHeight: number;
+  txsCoung: number;
+};
+export type TCandlesParams = {
+  timeStart: string | Date | number;
+  timeEnd?: string | Date | number;
+  interval: string;
+}
+export type TCandleReponseJSON = {
+  __type: ApiTypes.Candle;
+  data: TCandleJSON;
+}
+export type TGetCandles = (amountAsset: string, priceAsset: string, params: TCandlesParams) => TListResponseJSON<TCandleReponseJSON>;
 
 export type TGetPairs = (...pairs: AssetPair[]) => Response<IPairJSON[]>;
 
