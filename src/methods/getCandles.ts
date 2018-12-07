@@ -14,7 +14,7 @@ type CandlesRequestFilters = [string, string, TCandlesParams];
 const isFilters = (filters: any): filters is CandlesRequestFilters => {
   const possibleParams = ["timeStart", "timeEnd", "interval"];
   return (
-    typeof filters === "object" && filters.length === 3 &&
+    Array.isArray(filters) && filters.length === 3 &&
     typeof filters[0] === "string" && typeof filters[1] === "string" &&
     typeof filters[2] === "object" && 
     Object.keys(filters[2]).every(k => possibleParams.includes(k))
