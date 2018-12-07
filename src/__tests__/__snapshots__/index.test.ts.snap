@@ -72,6 +72,24 @@ Array [
 ]
 `;
 
+exports[`Candles endpoint:  fetch is called with correct params#1 1`] = `
+Array [
+  "NODE_URL/candles/AMOUNTASSETID/PRICEASSETID?timeStart=2018-12-01&timeEnd=2018-12-31&interval=1h",
+  Object {
+    "method": "GET",
+  },
+]
+`;
+
+exports[`Candles endpoint:  fetch is called with correct params#2 1`] = `
+Array [
+  "NODE_URL/candles/AMOUNTASSETID/PRICEASSETID?timeStart=2018-12-01&interval=1h",
+  Object {
+    "method": "GET",
+  },
+]
+`;
+
 exports[`ExchangeTxs endpoint:  works with (empty call) 1`] = `
 Array [
   "NODE_URL/transactions/exchange",
