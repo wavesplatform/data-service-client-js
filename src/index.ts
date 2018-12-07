@@ -2,6 +2,8 @@ import { defaultFetch, defaultParse } from './utils';
 import defaultTransform from './transform';
 
 import createGetAssets from './methods/getAssets';
+import createGetAssetsByTicker from './methods/getAssetsByTicker';
+import createGetCandles from './methods/getCandles';
 import createGetPairs from './methods/getPairs';
 import createGetExchangeTxs from './methods/getExchangeTxs';
 import createGetTransferTxs from './methods/getTransferTxs';
@@ -11,6 +13,8 @@ import createGetAliases from './methods/getAliases';
 import {
   LibOptions,
   TGetAssets,
+  TGetAssetsByTicker,
+  TGetCandles,
   TGetPairs,
   GetExchangeTxs,
   GetTransferTxs,
@@ -21,6 +25,8 @@ import {
 export default class DataServiceClient {
   public getPairs: TGetPairs;
   public getAssets: TGetAssets;
+  public getAssetsByTicker: TGetAssetsByTicker;
+  public getCandles: TGetCandles;
   public getExchangeTxs: GetExchangeTxs;
   public getTransferTxs: GetTransferTxs;
   public getMassTransferTxs: GetMassTransferTxs;
@@ -46,6 +52,8 @@ export default class DataServiceClient {
 
     // Create methods
     this.getAssets = createGetAssets(options);
+    this.getAssetsByTicker = createGetAssetsByTicker(options);
+    this.getCandles = createGetCandles(options);
     this.getPairs = createGetPairs(options);
     this.getExchangeTxs = createGetExchangeTxs(options);
     this.getTransferTxs = createGetTransferTxs(options);
