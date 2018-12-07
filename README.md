@@ -31,6 +31,8 @@ const client = new DataServiceClient({
 ```typescript
 await client.getAssets('WAVES'); // One { data: Asset }
 await client.getAssets('WAVES', '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // Or many { data: Asset[] }
+await client.getAssetsByTicker('WAVES');  // Many { data: Asset[] }
+await client.getAssetsByTicker('*');  // Many { data: Asset[] } - all assets
 ```
 
 - getPairs
@@ -60,7 +62,7 @@ await client.getExchangeTxs({
 await client.getExchangeTxs(); // Top 100 with default filters (timeStart = timestamp of first entry in db, timeEnd = now)
 ```
 
--- aliases:
+- aliases:
 
 ```typescript
 const alias1 = await client.aliases.getById('@askerych');
@@ -81,6 +83,21 @@ const alias2 = await client.aliases.getByAddress(
     }]
   }
   */
+```
+
+- getCandles:
+
+```typescript
+await client.getCandles(amountAsset: string, priceAsset: string, {
+  timeStart: string | Date | number;
+  timeEnd?: string | Date | number;
+  interval: string; // interval pattern is xy, where x - number, y - one of m (minutes), h (hours), d (days), M (Month)
+});
+await client.getCandles('WAVES', '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS', {
+  timeStart: '2018-12-01',
+  timeEnd: '2018-12-31',
+  interval: '1d'
+});
 ```
 
 ## Pagination

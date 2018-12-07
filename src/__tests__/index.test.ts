@@ -33,6 +33,20 @@ describe('Asssets endpoint: ', () => {
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
+  it('fetch is called with correct params#4', async () => {
+    const ticker = 'WAVES';
+    await client.getAssetsByTicker(ticker);
+
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+
+  it('fetch is called with correct params#5', async () => {
+    const ticker = '*';
+    await client.getAssetsByTicker(ticker);
+
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+
   it('throws, if called with wrong types', async () => {
     const wrongTypes: any[] = [1, null, NaN, undefined, {}];
     wrongTypes.map(
@@ -98,6 +112,31 @@ describe('Aliases endpoint: ', () => {
     wrongTypes.map(async t => {
       await expect(client.aliases.getByAddress(t)).rejects.toBeDefined();
       await expect(client.aliases.getById(t)).rejects.toBeDefined();
+    });
+  });
+});
+
+describe('Candles endpoint: ', () => {
+  it('fetch is called with correct params#1', async () => {
+    await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', {
+      timeStart: '2018-12-01',
+      timeEnd: '2018-12-31',
+      interval: '1h'
+    });
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+  it('fetch is called with correct params#2', async () => {
+    await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', { 
+      timeStart: '2018-12-01',
+      interval: '1h'
+     });
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+  it('throws, if called with wrong types', async () => {
+    const wrongTypes: any = [null, NaN, {}];
+    wrongTypes.map(async t => {
+      await expect(client.getCandles(null, null, null)).rejects.toBeDefined();
+      await expect(client.getCandles(null, null, t)).rejects.toBeDefined();
     });
   });
 });
