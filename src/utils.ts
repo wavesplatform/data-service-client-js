@@ -1,8 +1,9 @@
 import { TPredicate, TFunction } from './types';
 
+
 export const noop = () => {};
-export const defaultFetch = (...args): Promise<string> => {
-  return fetch(...args).then(
+export const defaultFetch = (url: RequestInfo, options?: RequestInit): Promise<string> => {
+  return fetch(url, options).then(
     (res: Response) =>
       res.ok
         ? res.text()
