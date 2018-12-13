@@ -1,6 +1,6 @@
-import { Asset, IAssetJSON, BigNumber } from "@waves/data-entities";
-import { ApiTypes, TCandleBase, TCandle } from "./types";
-import { id } from "./utils";
+import { Asset, IAssetJSON, BigNumber } from '@waves/data-entities';
+import { ApiTypes, TCandleBase, TCandle } from './types';
+import { id } from './utils';
 const transformer = ({ __type, data, ...rest }) => {
   switch (__type) {
     case ApiTypes.List:

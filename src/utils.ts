@@ -1,13 +1,12 @@
 import { TPredicate, TFunction } from './types';
 
-
 export const noop = () => {};
-export const defaultFetch = (url: RequestInfo, options?: RequestInit): Promise<string> => {
-  return fetch(url, options).then(
-    (res: Response) =>
-      res.ok
-        ? res.text()
-        : res.text().then(str => Promise.reject(new Error(str)))
+export const defaultFetch = (
+  url: RequestInfo,
+  options?: RequestInit
+): Promise<string> => {
+  return fetch(url, options).then((res: Response) =>
+    res.ok ? res.text() : res.text().then(str => Promise.reject(new Error(str)))
   );
 };
 export const defaultParse = JSON.parse.bind(JSON);

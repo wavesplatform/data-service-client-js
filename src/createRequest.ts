@@ -14,8 +14,8 @@ export const createRequest = (methodUrl: string, params?: any): LibRequest => {
         body: JSON.stringify(params),
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json, text/plain, */*',
-        },
+          Accept: 'application/json, text/plain, */*'
+        }
       }
     : { url: getUrl, method: HttpMethods.Get };
 };

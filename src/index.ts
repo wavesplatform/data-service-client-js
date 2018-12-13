@@ -19,7 +19,7 @@ import {
   GetExchangeTxs,
   GetTransferTxs,
   GetMassTransferTxs,
-  aliases,
+  aliases
 } from './types';
 
 export default class DataServiceClient {
