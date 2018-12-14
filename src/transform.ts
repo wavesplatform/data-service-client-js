@@ -1,8 +1,8 @@
 import { Asset, IAssetJSON, BigNumber } from '@waves/data-entities';
-import { ApiTypes, TCandleBase, TApiResponse, TApiElement } from './types';
+import { ApiTypes, TCandleBase, TApiResponse, TApiElement, TransformationResult } from './types';
 import { id } from './utils';
 
-const transformer = (response: TApiResponse): any => {
+const transformer = (response: TApiResponse): TransformationResult | TransformationResult[] => {
   switch (response.__type) {
     case ApiTypes.List:
       return response.data.map(transformSingleElement);
@@ -11,7 +11,7 @@ const transformer = (response: TApiResponse): any => {
   }
 };
 
-const transformSingleElement = (el: TApiElement): any => {
+const transformSingleElement = (el: TApiElement): TransformationResult => {
   if (el === null) return null;
   else {
     switch (el.__type) {
@@ -26,9 +26,7 @@ const transformSingleElement = (el: TApiElement): any => {
       case ApiTypes.Transaction:
         return el.data;
       default:
-        console.log(el);
         throw 'Transformation Error';
-      // return el.data;
     }
   }
 };
@@ -40,20 +38,18 @@ const transformPair = id;
 
 const toBigNumber = (v: string | number | null) =>
   v ? new BigNumber(v) : null;
+
 const transformCandle = (
-  candle: TCandleBase<string | number> | null
-): TCandleBase<BigNumber | null> | null =>
-  candle === null
-    ? null
-    : {
-        ...candle,
-        open: toBigNumber(candle.open),
-        close: toBigNumber(candle.close),
-        high: toBigNumber(candle.high),
-        low: toBigNumber(candle.low),
-        weightedAveragePrice: toBigNumber(candle.weightedAveragePrice),
-        volume: toBigNumber(candle.volume),
-        quoteVolume: toBigNumber(candle.quoteVolume),
-      };
+  candle: TCandleBase<string | number>
+): TCandleBase<BigNumber | null> => ({
+  ...candle,
+  open: toBigNumber(candle.open),
+  close: toBigNumber(candle.close),
+  high: toBigNumber(candle.high),
+  low: toBigNumber(candle.low),
+  weightedAveragePrice: toBigNumber(candle.weightedAveragePrice),
+  volume: toBigNumber(candle.volume),
+  quoteVolume: toBigNumber(candle.quoteVolume),
+});
 
 export default transformer;

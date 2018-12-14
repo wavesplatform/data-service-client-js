@@ -1,5 +1,5 @@
 import { T, pipeP, id } from '../utils';
-import { TFunction, LibOptions } from '../types';
+import { TFunction, LibOptions, PaginationOptions } from '../types';
 
 const createMethod = ({
   validate = T,
@@ -7,7 +7,7 @@ const createMethod = ({
   libOptions,
   addPaginationToArgs,
 }: TCreateMethodParams): TFunction => {
-  function method(...args: any[]) {
+  function method(...args: any[]): any {
     return pipeP(
       validate,
       generateRequest(libOptions.rootUrl),
@@ -23,7 +23,7 @@ const createMethod = ({
   return method;
 };
 
-const addPagination = ({ method, args, addPaginationToArgs, rawData }: any) => (
+const addPagination = ({ method, args, addPaginationToArgs, rawData }: PaginationOptions) => (
   data: any
 ) => {
   if (!data || !addPaginationToArgs || !rawData || !rawData.lastCursor) {

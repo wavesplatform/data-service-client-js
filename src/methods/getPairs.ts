@@ -3,15 +3,10 @@ import { AssetPair } from '@waves/data-entities';
 import { createMethod } from './createMethod';
 import { createRequest } from '../createRequest';
 
-const isAssetPair = (pair: string | object | any) => {
-  switch (true) {
-    case typeof pair === 'string':
-      return pair.split('/').length === 2;
-    case typeof pair === 'object':
-      return AssetPair.isAssetPair(pair);
-    default:
-      return false;
-  }
+const isAssetPair = (pair: unknown) => {
+  if (typeof pair === 'string') return pair.split('/').length === 2;
+  else if (typeof pair === 'object' && pair !== null) return AssetPair.isAssetPair(pair);
+  return false;
 };
 
 const validatePairs = (

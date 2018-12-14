@@ -56,6 +56,15 @@ export type TApiResponse =
   | TPairResponse
   | TTransactionResponse;
 
+export type TransformationResult =
+  | Asset
+  | Alias
+  | PairBase
+  | Transaction
+  | TCandleBase<BigNumber | null>
+  | null
+  | unknown;
+
 export type TCandlesParams = {
   timeStart: string | Date | number;
   timeEnd?: string | Date | number;
@@ -162,6 +171,14 @@ export interface LibOptions {
   parse?: TParser;
   fetch: TFunction;
   transform?: TFunction;
+}
+export interface PaginationOptions {
+  method: TFunction;
+  rawData: {
+    lastCursor: string;
+  };
+  args: any;
+  addPaginationToArgs: TFunction | undefined;
 }
 export type TAssetId = string;
 export type AliasId = string;
