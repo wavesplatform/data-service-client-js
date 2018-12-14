@@ -5,6 +5,7 @@
     "declaration": false,
     "outDir": "dist/",
     "moduleResolution": "node",
+    "strict": true,
     "lib": [
       "es2017",
       "es2015.promise",

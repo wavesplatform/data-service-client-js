@@ -2,7 +2,7 @@ const parser = require('parse-json-bignumber')();
 import DataServiceClient from '../index';
 import { AssetPair, Asset } from '@waves/data-entities';
 
-const fetch = jest.fn(() => Promise.resolve('{"data":[{ "data": 1 }]}'));
+const fetch = jest.fn(() => Promise.resolve('{"__type":"list", "data": []}'));
 const NODE_URL = 'NODE_URL';
 const client = new DataServiceClient({
   rootUrl: NODE_URL,
@@ -29,6 +29,20 @@ describe('Asssets endpoint: ', () => {
   it('fetch is called with correct params#3', async () => {
     const ids = [];
     await client.getAssets(...ids);
+
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+
+  it('fetch is called with correct params#4', async () => {
+    const ticker = 'WAVES';
+    await client.getAssetsByTicker(ticker);
+
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+
+  it('fetch is called with correct params#5', async () => {
+    const ticker = '*';
+    await client.getAssetsByTicker(ticker);
 
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
@@ -98,6 +112,31 @@ describe('Aliases endpoint: ', () => {
     wrongTypes.map(async t => {
       await expect(client.aliases.getByAddress(t)).rejects.toBeDefined();
       await expect(client.aliases.getById(t)).rejects.toBeDefined();
+    });
+  });
+});
+
+describe('Candles endpoint: ', () => {
+  it('fetch is called with correct params#1', async () => {
+    await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', {
+      timeStart: '2018-12-01',
+      timeEnd: '2018-12-31',
+      interval: '1h',
+    });
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+  it('fetch is called with correct params#2', async () => {
+    await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', {
+      timeStart: '2018-12-01',
+      interval: '1h',
+    });
+    expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
+  });
+  it('throws, if called with wrong types', async () => {
+    const wrongTypes: any = [null, NaN, {}];
+    wrongTypes.map(async t => {
+      await expect(client.getCandles(null, null, null)).rejects.toBeDefined();
+      await expect(client.getCandles(null, null, t)).rejects.toBeDefined();
     });
   });
 });
@@ -226,9 +265,7 @@ describe('TransferTxs endpoint: ', async () => {
 describe('Pagination: ', () => {
   it('works', async () => {
     const customFetch = jest.fn(() =>
-      Promise.resolve(
-        '{"__type": "list","lastCursor": "cursor", "data": [{ "data": 1 }]}'
-      )
+      Promise.resolve('{"__type": "list","lastCursor": "cursor", "data": []}')
     );
     const customClient = new DataServiceClient({
       rootUrl: NODE_URL,

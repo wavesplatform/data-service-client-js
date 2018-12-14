@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Candles transformation should transform correct 1`] = `
+Object {
+  "close": "0.9",
+  "high": "1",
+  "low": "0.001",
+  "maxHeight": 1832,
+  "open": "0.1",
+  "quoteVolume": "0.001",
+  "time": 2018-12-14T15:15:00.076Z,
+  "txsCoung": 12,
+  "volume": "100.2",
+  "weightedAveragePrice": "0.11",
+}
+`;

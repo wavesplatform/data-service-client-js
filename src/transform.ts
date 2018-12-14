@@ -1,39 +1,31 @@
-import { Asset, IAssetJSON, BigNumber } from "@waves/data-entities";
+import { Asset, IAssetJSON, BigNumber } from '@waves/data-entities';
 import { TRANSACTION_TYPE } from "@waves/ts-types";
-import {
-  ApiTypes,
-  ExchangeTransaction,
-  ExchangeTransactionJSON
-} from "./types";
-import { id } from "./utils";
-const transformer = ({ __type, data, ...rest }) => {
-  switch (__type) {
-    case ApiTypes.List:
-      return data.map(transformer);
-    case ApiTypes.Asset:
-      return transformAsset(data);
-    case ApiTypes.Alias:
-      return data;
-    case ApiTypes.Pair:
-      return transformPair(data);
-    case ApiTypes.Transaction:
-      /** @var ITransaction data */
-      switch (data.type) {
-        case TRANSACTION_TYPE.EXCHANGE:
-          return transformExchangeTransaction(data);
-        default:
-          return data;
-      }
-    default:
-      return { __type, data, ...rest };
-  }
-};
+import { ApiTypes, TCandleBase, TApiResponse, TApiElement, TransformationResult, ExchangeTransaction, ExchangeTransactionJSON } from './types';
+import { id } from './utils';
 
-const transformAsset = (data: IAssetJSON): Asset =>
+const transformAsset = (data: IAssetJSON | null): Asset | null =>
   data === null ? null : new Asset(data);
+
 const transformPair = id;
 
-const transformExchangeTransaction = (
+const toBigNumber = (v: string | number | null) =>
+  v ? new BigNumber(v) : null;
+
+export const transformCandle = (
+  candle: TCandleBase<string | number>
+): TCandleBase<BigNumber | null> => ({
+  ...candle,
+  open: toBigNumber(candle.open),
+  close: toBigNumber(candle.close),
+  high: toBigNumber(candle.high),
+  low: toBigNumber(candle.low),
+  weightedAveragePrice: toBigNumber(candle.weightedAveragePrice),
+  volume: toBigNumber(candle.volume),
+  quoteVolume: toBigNumber(candle.quoteVolume),
+});
+
+
+export const transformExchangeTransaction = (
   data: ExchangeTransactionJSON
 ): ExchangeTransaction => ({
   ...data,
@@ -55,5 +47,40 @@ const transformExchangeTransaction = (
     matcherFee: new BigNumber(data.order2.matcherFee)
   }
 });
+
+const transformer = (response: TApiResponse): TransformationResult | TransformationResult[] => {
+  switch (response.__type) {
+    case ApiTypes.List:
+      return response.data.map(transformSingleElement);
+    default:
+      return transformSingleElement(response);
+  }
+};
+
+const transformSingleElement = (el: TApiElement): TransformationResult => {
+  if (el === null) return null;
+  else {
+    switch (el.__type) {
+      case ApiTypes.Asset:
+        return transformAsset(el.data);
+      case ApiTypes.Alias:
+        return el.data;
+      case ApiTypes.Pair:
+        return transformPair(el.data);
+      case ApiTypes.Candle:
+        return transformCandle(el.data);
+      case ApiTypes.Transaction:
+        /** @var ITransaction data */
+        switch (el.data.type) {
+          case TRANSACTION_TYPE.EXCHANGE:
+            return transformExchangeTransaction(el.data);
+          default:
+            return el.data;
+        }
+      default:
+        throw 'Transformation Error';
+    }
+  }
+};
 
 export default transformer;
