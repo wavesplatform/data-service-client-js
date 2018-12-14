@@ -18,7 +18,9 @@ const createRequestForMany = (rootUrl: string) => (
   ticker: string
 ): LibRequest => createRequest(`${rootUrl}/assets`, { ticker });
 
-const createGetAssetsByTicker: TCreateGetFn<TGetAssetsByTicker> = (libOptions: LibOptions) =>
+const createGetAssetsByTicker: TCreateGetFn<TGetAssetsByTicker> = (
+  libOptions: LibOptions
+) =>
   createMethod({
     validate: validateTicker,
     generateRequest: createRequestForMany,

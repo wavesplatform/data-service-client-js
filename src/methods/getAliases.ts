@@ -13,10 +13,10 @@ import { createRequest } from '../createRequest';
 export type AliasesByAddressOptions = { showBroken?: boolean };
 type AliasesByAddressParams = [string, AliasesByAddressOptions];
 
-const validateId = (id: string): Promise<string> =>
-  isNotString(id)
-    ? Promise.reject(new Error('ArgumentsError: aliasId should be string'))
-    : Promise.resolve(id);
+const validateId = (id: unknown): Promise<string> =>
+  typeof id === 'string'
+    ? Promise.resolve(id)
+    : Promise.reject(new Error('ArgumentsError: aliasId should be string'));
 
 const validateByAddressParams = ([
   address,
