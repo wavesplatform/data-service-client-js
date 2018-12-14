@@ -1,5 +1,5 @@
 import { transformCandle } from '../transform';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@waves/data-entities';
 
 describe('Candles transformation', () => {
   it('should transform null candle', () => {

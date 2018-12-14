@@ -1,4 +1,5 @@
 import { Asset, IAssetJSON, BigNumber, AssetPair } from '@waves/data-entities';
+import { api } from '@waves/ts-types';
 
 import { AliasesByAddressOptions } from './methods/getAliases';
 
@@ -34,7 +35,7 @@ export type TApiAliasResponse = TApiResponseBase<ApiTypes.Alias, Alias>;
 export type TApiPairResponse = TApiResponseBase<ApiTypes.Pair, PairBase>;
 export type TApiTransactionResponse = TApiResponseBase<
   ApiTypes.Transaction,
-  Transaction
+  ExchangeTransactionJSON | TransferTransaction | MassTransferTransaction
 >;
 export type TApiCandleResponse = TApiResponseBase<
   ApiTypes.Candle,
@@ -59,7 +60,7 @@ export type TransformationResult =
   | Asset
   | Alias
   | PairBase
-  | Transaction
+  | ExchangeTransaction | TransferTransaction | MassTransferTransaction
   | TCandleBase<BigNumber | null>
   | null;
 
@@ -95,9 +96,14 @@ export interface LibRequest {
   body?: {};
 }
 
-export interface Transaction {
-  // @TODO add txs interfaces
-}
+export interface ExchangeTransaction extends api.IExchangeTransaction<BigNumber> {}
+export interface ExchangeTransactionJSON extends api.IExchangeTransaction<number | string> {}
+
+export interface TransferTransaction extends api.ITransferTransaction<BigNumber> {}
+export interface TransferTransactionJSON extends api.ITransferTransaction<number | string> {}
+
+export interface MassTransferTransaction extends api.IMassTransferTransaction<BigNumber> {}
+export interface MassTransferTransactionJSON extends api.IMassTransferTransaction<number | string> {}
 
 export interface ExchangeTxFilters {
   timeStart?: string | Date | number;
@@ -131,19 +137,19 @@ export interface MassTransferTxFilters {
 }
 
 export interface GetExchangeTxs {
-  (filters: ExchangeTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+  (filters: ExchangeTxFilters): Response<ExchangeTransactionJSON[]>;
+  (id: string): Response<ExchangeTransactionJSON>;
+  (): Response<ExchangeTransactionJSON[]>;
 }
 export interface GetTransferTxs {
-  (filters: TransferTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+  (filters: TransferTxFilters): Response<TransferTransactionJSON[]>;
+  (id: string): Response<TransferTransactionJSON>;
+  (): Response<TransferTransactionJSON[]>;
 }
 export interface GetMassTransferTxs {
-  (filters: MassTransferTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+  (filters: MassTransferTxFilters): Response<MassTransferTransaction[]>;
+  (id: string): Response<MassTransferTransaction>;
+  (): Response<MassTransferTransaction[]>;
 }
 export type Response<T> = Promise<{
   data: T;
