@@ -11,7 +11,7 @@ import { createRequest } from '../createRequest';
 
 type CandlesRequestFilters = [string, string, TCandlesParams];
 
-const isFilters = (filters: any): filters is CandlesRequestFilters => {
+const isFilters = (filters: unknown): filters is CandlesRequestFilters => {
   const possibleParams = ['timeStart', 'timeEnd', 'interval'];
   return (
     Array.isArray(filters) &&

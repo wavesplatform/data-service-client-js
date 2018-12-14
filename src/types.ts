@@ -29,32 +29,31 @@ export type TApiResponseBase<T, D> = {
   [key: string]: any;
 };
 export type TApiListResponseBase<T> = TApiResponseBase<ApiTypes.List, T[]>;
-export type TAssetResponse = TApiResponseBase<ApiTypes.Asset, IAssetJSON>;
-export type TAliasResponse = TApiResponseBase<ApiTypes.Alias, Alias>;
-export type TPairResponse = TApiResponseBase<ApiTypes.Pair, PairBase>;
-export type TTransactionResponse = TApiResponseBase<
+export type TApiAssetResponse = TApiResponseBase<ApiTypes.Asset, IAssetJSON>;
+export type TApiAliasResponse = TApiResponseBase<ApiTypes.Alias, Alias>;
+export type TApiPairResponse = TApiResponseBase<ApiTypes.Pair, PairBase>;
+export type TApiTransactionResponse = TApiResponseBase<
   ApiTypes.Transaction,
   Transaction
 >;
-export type TCandleResponse = TApiResponseBase<
+export type TApiCandleResponse = TApiResponseBase<
   ApiTypes.Candle,
   TCandleBase<string | number>
 >;
 
 export type TApiElement =
-  | TCandleResponse
-  | TAssetResponse
-  | TPairResponse
-  | TTransactionResponse
-  | TAliasResponse
-  | null
-  | TApiResponseBase<string, any>;
+  | TApiCandleResponse
+  | TApiAssetResponse
+  | TApiPairResponse
+  | TApiTransactionResponse
+  | TApiAliasResponse
+  | null;
 export type TApiResponse =
   | TApiListResponseBase<TApiElement>
-  | TAssetResponse
-  | TAliasResponse
-  | TPairResponse
-  | TTransactionResponse;
+  | TApiAssetResponse
+  | TApiAliasResponse
+  | TApiPairResponse
+  | TApiTransactionResponse;
 
 export type TransformationResult =
   | Asset
@@ -62,8 +61,7 @@ export type TransformationResult =
   | PairBase
   | Transaction
   | TCandleBase<BigNumber | null>
-  | null
-  | unknown;
+  | null;
 
 export type TCandlesParams = {
   timeStart: string | Date | number;
@@ -74,7 +72,7 @@ export type TGetCandles = (
   amountAsset: string,
   priceAsset: string,
   params: TCandlesParams
-) => TApiListResponseBase<TCandleResponse>;
+) => TApiListResponseBase<TApiCandleResponse>;
 
 export enum ApiTypes {
   List = 'list',

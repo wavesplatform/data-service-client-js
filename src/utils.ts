@@ -26,15 +26,14 @@ export const some = (predicate: TPredicate) => (arr: any[]): boolean =>
 /**
  * customSerialize :: a -> string
  */
-const customSerialize = (v: Date | any): string => {
-  switch (true) {
-    case v instanceof Date:
-      return v.toISOString();
-    default:
-      return v;
+const customSerialize = (v: unknown): string => {
+  if (v instanceof Date) {
+    return v.toISOString();
+  } else {
+    return String(v);
   }
 };
-const createKeyValue = (key: any, v: any): string =>
+const createKeyValue = (key: string, v: unknown): string =>
   `${key}=${customSerialize(v)}`;
 export const createQS = (obj: Object): string => {
   const qs = Object.entries(obj)
