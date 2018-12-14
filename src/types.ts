@@ -1,4 +1,5 @@
 import { Asset, IAssetJSON, BigNumber, AssetPair } from '@waves/data-entities';
+import { api } from '@waves/ts-types';
 
 import { AliasesByAddressOptions } from './methods/getAliases';
 
@@ -12,6 +13,7 @@ export enum ApiTypes {
   Pair = 'pair',
   Transaction = 'transaction',
   Alias = 'alias',
+  Candle = 'candle',
 }
 export enum HttpMethods {
   Get = 'GET',
@@ -23,9 +25,16 @@ export interface LibRequest {
   headers?: {};
   body?: {};
 }
-export interface Transaction {
-  // @TODO add txs interfaces
-}
+
+export interface ExchangeTransaction extends api.IExchangeTransaction<BigNumber> {}
+export interface ExchangeTransactionJSON extends api.IExchangeTransaction<number | string> {}
+
+export interface TransferTransaction extends api.ITransferTransaction<BigNumber> {}
+export interface TransferTransactionJSON extends api.ITransferTransaction<number | string> {}
+
+export interface MassTransferTransaction extends api.IMassTransferTransaction<BigNumber> {}
+export interface MassTransferTransactionJSON extends api.IMassTransferTransaction<number | string> {}
+
 export interface ExchangeTxFilters {
   timeStart?: string | Date | number;
   timeEnd?: string | Date | number;
@@ -57,25 +66,26 @@ export interface MassTransferTxFilters {
 }
 
 export interface GetExchangeTxs {
-  (filters: ExchangeTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+  (filters: ExchangeTxFilters): Response<ExchangeTransactionJSON[]>;
+  (id: string): Response<ExchangeTransactionJSON>;
+  (): Response<ExchangeTransactionJSON[]>;
 }
 export interface GetTransferTxs {
-  (filters: TransferTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+  (filters: TransferTxFilters): Response<TransferTransactionJSON[]>;
+  (id: string): Response<TransferTransactionJSON>;
+  (): Response<TransferTransactionJSON[]>;
 }
 export interface GetMassTransferTxs {
-  (filters: MassTransferTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+  (filters: MassTransferTxFilters): Response<MassTransferTransaction[]>;
+  (id: string): Response<MassTransferTransaction>;
+  (): Response<MassTransferTransaction[]>;
 }
 export type Response<T> = Promise<{
   data: T;
   fetchMore?: TFunction;
 }>;
 export type TGetAssets = (...ids: TAssetId[]) => Response<Asset[]>;
+export type TGetAssetsByTicker = (ticker: string) => Response<Asset[]>;
 export type getAliasById = (id: AliasId) => Response<Alias>;
 export type getAliasesByAddress = (
   address: string,
@@ -109,6 +119,29 @@ export type TAssetResponseJSON = {
 };
 
 export type TAssetsResponseJSON = TListResponseJSON<TAssetResponseJSON>;
+
+export type TCandleJSON = {
+  time: Date;
+  open: BigNumber;
+  close: BigNumber;
+  high: BigNumber;
+  low: BigNumber;
+  volume: BigNumber;
+  priceVolume: BigNumber;
+  weightedAveragePrice: BigNumber;
+  maxHeight: number;
+  txsCoung: number;
+};
+export type TCandlesParams = {
+  timeStart: string | Date | number;
+  timeEnd?: string | Date | number;
+  interval: string;
+}
+export type TCandleReponseJSON = {
+  __type: ApiTypes.Candle;
+  data: TCandleJSON;
+}
+export type TGetCandles = (amountAsset: string, priceAsset: string, params: TCandlesParams) => TListResponseJSON<TCandleReponseJSON>;
 
 export type TGetPairs = (...pairs: AssetPair[]) => Response<IPairJSON[]>;
 

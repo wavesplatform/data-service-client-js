@@ -9,13 +9,14 @@
     "dev": "ts-node src/index.ts",
     "build": "tsc",
     "build:browser:dev": "tsc && browserify ./dist/index.js -o ./dist/umd.js",
-    "build:browser": "browserify ./dist/index.js -o ./dist/umd.js -u bignumber.js -u @waves/json-bigint",
+    "build:browser": "browserify ./dist/index.js -o ./dist/umd.js -u bignumber.js -u @waves/json-bigint -u @waves/ts-types",
     "build:all": "rimraf ./dist/* && npm run build && npm run build:browser",
     "test": "jest",
     "prepare": "npm run build:all && npm test"
   },
   "dependencies": {
-    "@waves/data-entities": "1.6.0"
+    "@waves/data-entities": "1.6.0",
+    "@waves/ts-types": "^0.0.1"
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",
@@ -38,6 +39,7 @@
       "/node_modules/",
       ".history"
     ],
+    "testURL": "http://localhost/",
     "moduleFileExtensions": [
       "ts",
       "tsx",
