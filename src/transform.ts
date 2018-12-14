@@ -70,7 +70,6 @@ const transformSingleElement = (el: TApiElement): TransformationResult => {
       case ApiTypes.Candle:
         return transformCandle(el.data);
       case ApiTypes.Transaction:
-        /** @var ITransaction data */
         switch (el.data.type) {
           case TRANSACTION_TYPE.EXCHANGE:
             return transformExchangeTransaction(el.data);
