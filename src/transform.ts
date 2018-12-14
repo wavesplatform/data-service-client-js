@@ -39,7 +39,7 @@ const transformPair = id;
 const toBigNumber = (v: string | number | null) =>
   v ? new BigNumber(v) : null;
 
-const transformCandle = (
+export const transformCandle = (
   candle: TCandleBase<string | number>
 ): TCandleBase<BigNumber | null> => ({
   ...candle,
