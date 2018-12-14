@@ -2,7 +2,7 @@ import {
   TCreateGetFn,
   TransferTxFilters,
   GetTransferTxs,
-  LibRequest
+  LibRequest,
 } from '../types';
 
 import { createMethod } from './createMethod';
@@ -24,7 +24,7 @@ const isFilters = (filters: any): filters is TransferTxFilters => {
     'timeStart',
     'timeEnd',
     'sort',
-    'limit'
+    'limit',
   ];
   return (
     typeof filters === 'object' &&
@@ -44,7 +44,7 @@ const createGetTransferTxs: TCreateGetFn<GetTransferTxs> = libOptions => {
   const getTransferTxsOne = createMethod({
     validate: validateId,
     generateRequest: generateRequestOne,
-    libOptions
+    libOptions,
   });
   const getTransferTxsMany = createMethod({
     validate: validateFilters,
@@ -53,8 +53,8 @@ const createGetTransferTxs: TCreateGetFn<GetTransferTxs> = libOptions => {
     addPaginationToArgs: ({ args: [filters], cursor, count }) => ({
       ...filters,
       after: cursor,
-      ...(count ? { limit: count } : {})
-    })
+      ...(count ? { limit: count } : {}),
+    }),
   });
 
   const getTransferTxs: GetTransferTxs = (

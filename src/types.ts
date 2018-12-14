@@ -32,11 +32,29 @@ export type TApiListResponseBase<T> = TApiResponseBase<ApiTypes.List, T[]>;
 export type TAssetResponse = TApiResponseBase<ApiTypes.Asset, IAssetJSON>;
 export type TAliasResponse = TApiResponseBase<ApiTypes.Alias, Alias>;
 export type TPairResponse = TApiResponseBase<ApiTypes.Pair, PairBase>;
-export type TTransactionResponse = TApiResponseBase<ApiTypes.Transaction, Transaction>;
-export type TCandleResponse = TApiResponseBase<ApiTypes.Candle, TCandleBase<string | number>>;
+export type TTransactionResponse = TApiResponseBase<
+  ApiTypes.Transaction,
+  Transaction
+>;
+export type TCandleResponse = TApiResponseBase<
+  ApiTypes.Candle,
+  TCandleBase<string | number>
+>;
 
-export type TApiElement = TCandleResponse | TAssetResponse | TPairResponse | TTransactionResponse | TAliasResponse | null | TApiResponseBase<string, any>;
-export type TApiResponse = TApiListResponseBase<TApiElement> | TAssetResponse | TAliasResponse | TPairResponse | TTransactionResponse;
+export type TApiElement =
+  | TCandleResponse
+  | TAssetResponse
+  | TPairResponse
+  | TTransactionResponse
+  | TAliasResponse
+  | null
+  | TApiResponseBase<string, any>;
+export type TApiResponse =
+  | TApiListResponseBase<TApiElement>
+  | TAssetResponse
+  | TAliasResponse
+  | TPairResponse
+  | TTransactionResponse;
 
 export type TCandlesParams = {
   timeStart: string | Date | number;
@@ -55,12 +73,12 @@ export enum ApiTypes {
   Pair = 'pair',
   Transaction = 'transaction',
   Alias = 'alias',
-  Candle = 'candle'
+  Candle = 'candle',
 }
 
 export enum HttpMethods {
   Get = 'GET',
-  Post = 'POST'
+  Post = 'POST',
 }
 
 export interface LibRequest {

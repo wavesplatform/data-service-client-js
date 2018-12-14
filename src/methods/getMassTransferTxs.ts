@@ -41,7 +41,9 @@ const generateRequestMany = (rootUrl: string) => (
 ): LibRequest =>
   createRequest(`${rootUrl}/transactions/mass-transfer`, filters);
 
-const createGetMassTransferTxs: TCreateGetFn<GetMassTransferTxs> = libOptions => {
+const createGetMassTransferTxs: TCreateGetFn<
+  GetMassTransferTxs
+> = libOptions => {
   const getMassTransferTxsOne = createMethod({
     validate: validateId,
     generateRequest: generateRequestOne,

@@ -5,7 +5,7 @@ const createMethod = ({
   validate = T,
   generateRequest,
   libOptions,
-  addPaginationToArgs
+  addPaginationToArgs,
 }: TCreateMethodParams): TFunction => {
   function method(...args: any[]) {
     return pipeP(
@@ -32,7 +32,7 @@ const addPagination = ({ method, args, addPaginationToArgs, rawData }: any) => (
   return {
     data,
     fetchMore: (count: number) =>
-      method(addPaginationToArgs({ args, cursor: rawData.lastCursor, count }))
+      method(addPaginationToArgs({ args, cursor: rawData.lastCursor, count })),
   };
 };
 

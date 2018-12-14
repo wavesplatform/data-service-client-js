@@ -121,15 +121,15 @@ describe('Candles endpoint: ', () => {
     await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', {
       timeStart: '2018-12-01',
       timeEnd: '2018-12-31',
-      interval: '1h'
+      interval: '1h',
     });
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
   it('fetch is called with correct params#2', async () => {
-    await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', { 
+    await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', {
       timeStart: '2018-12-01',
-      interval: '1h'
-     });
+      interval: '1h',
+    });
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
   it('throws, if called with wrong types', async () => {
@@ -265,9 +265,7 @@ describe('TransferTxs endpoint: ', async () => {
 describe('Pagination: ', () => {
   it('works', async () => {
     const customFetch = jest.fn(() =>
-      Promise.resolve(
-        '{"__type": "list","lastCursor": "cursor", "data": []}'
-      )
+      Promise.resolve('{"__type": "list","lastCursor": "cursor", "data": []}')
     );
     const customClient = new DataServiceClient({
       rootUrl: NODE_URL,

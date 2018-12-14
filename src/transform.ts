@@ -53,7 +53,7 @@ const transformCandle = (
         low: toBigNumber(candle.low),
         weightedAveragePrice: toBigNumber(candle.weightedAveragePrice),
         volume: toBigNumber(candle.volume),
-        quoteVolume: toBigNumber(candle.quoteVolume)
+        quoteVolume: toBigNumber(candle.quoteVolume),
       };
 
 export default transformer;
