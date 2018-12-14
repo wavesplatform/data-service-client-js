@@ -9,7 +9,7 @@ import { createMethod } from './createMethod';
 import { createRequest } from '../createRequest';
 
 // One
-const validateId = id =>
+const validateId = (id: string): Promise<string> =>
   typeof id === 'string' ? Promise.resolve(id) : Promise.reject('Wrong id');
 const generateRequestOne = (rootUrl: string) => (id: string): LibRequest =>
   createRequest(`${rootUrl}/transactions/exchange/${id}`);

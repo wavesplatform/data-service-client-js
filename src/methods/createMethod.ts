@@ -1,21 +1,21 @@
-import { T, pipeP } from '../utils';
+import { T, pipeP, id } from '../utils';
 import { TFunction, LibOptions } from '../types';
 
 const createMethod = ({
   validate = T,
   generateRequest,
   libOptions,
-  addPaginationToArgs,
+  addPaginationToArgs
 }: TCreateMethodParams): TFunction => {
-  function method(...args) {
+  function method(...args: any[]) {
     return pipeP(
       validate,
       generateRequest(libOptions.rootUrl),
-      ({url, ...options}) => libOptions.fetch(url, options),
-      libOptions.parse,
+      ({ url, ...options }) => libOptions.fetch(url, options),
+      libOptions.parse ? libOptions.parse : JSON.parse,
       rawData =>
         pipeP(
-          libOptions.transform,
+          libOptions.transform ? libOptions.transform : id,
           addPagination({ method, args, addPaginationToArgs, rawData })
         )(rawData)
     )(...args);
@@ -23,19 +23,16 @@ const createMethod = ({
   return method;
 };
 
-const addPagination = ({
-  method,
-  args,
-  addPaginationToArgs,
-  rawData,
-}) => data => {
+const addPagination = ({ method, args, addPaginationToArgs, rawData }: any) => (
+  data: any
+) => {
   if (!data || !addPaginationToArgs || !rawData || !rawData.lastCursor) {
     return { data };
   }
   return {
     data,
-    fetchMore: count =>
-      method(addPaginationToArgs({ args, cursor: rawData.lastCursor, count })),
+    fetchMore: (count: number) =>
+      method(addPaginationToArgs({ args, cursor: rawData.lastCursor, count }))
   };
 };
 

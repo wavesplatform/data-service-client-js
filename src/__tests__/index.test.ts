@@ -2,7 +2,7 @@ const parser = require('parse-json-bignumber')();
 import DataServiceClient from '../index';
 import { AssetPair, Asset } from '@waves/data-entities';
 
-const fetch = jest.fn(() => Promise.resolve('{"data":[{ "data": 1 }]}'));
+const fetch = jest.fn(() => Promise.resolve('{"__type":"list", "data": []}'));
 const NODE_URL = 'NODE_URL';
 const client = new DataServiceClient({
   rootUrl: NODE_URL,
@@ -266,7 +266,7 @@ describe('Pagination: ', () => {
   it('works', async () => {
     const customFetch = jest.fn(() =>
       Promise.resolve(
-        '{"__type": "list","lastCursor": "cursor", "data": [{ "data": 1 }]}'
+        '{"__type": "list","lastCursor": "cursor", "data": []}'
       )
     );
     const customClient = new DataServiceClient({

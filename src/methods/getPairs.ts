@@ -3,7 +3,7 @@ import { AssetPair } from '@waves/data-entities';
 import { createMethod } from './createMethod';
 import { createRequest } from '../createRequest';
 
-const isAssetPair = pair => {
+const isAssetPair = (pair: string | object | any) => {
   switch (true) {
     case typeof pair === 'string':
       return pair.split('/').length === 2;
