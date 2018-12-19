@@ -16,10 +16,16 @@ export type TCandleBase<T> = {
   txsCoung: number;
 };
 
-export type PairBase = {
-  firstPrice: BigNumber;
-  lastPrice: BigNumber;
-  volume: BigNumber;
+export type TPairBase<T> = {
+  firstPrice: T;
+  lastPrice: T;
+  low: T;
+  high: T;
+  volume: T;
+  quoteVolume: T;
+  volumeWaves: T;
+  weightedAveragePrice: T;
+  txsCount: Number;
   amountAsset: string;
   priceAsset: string;
 };
@@ -32,7 +38,10 @@ export type TApiResponseBase<T, D> = {
 export type TApiListResponseBase<T> = TApiResponseBase<ApiTypes.List, T[]>;
 export type TApiAssetResponse = TApiResponseBase<ApiTypes.Asset, IAssetJSON>;
 export type TApiAliasResponse = TApiResponseBase<ApiTypes.Alias, Alias>;
-export type TApiPairResponse = TApiResponseBase<ApiTypes.Pair, PairBase>;
+export type TApiPairResponse = TApiResponseBase<
+  ApiTypes.Pair,
+  TPairBase<string | number>
+>;
 export type TApiTransactionResponse = TApiResponseBase<
   ApiTypes.Transaction,
   ExchangeTransactionJSON | TransferTransaction | MassTransferTransaction
@@ -59,8 +68,10 @@ export type TApiResponse =
 export type TransformationResult =
   | Asset
   | Alias
-  | PairBase
-  | ExchangeTransaction | TransferTransaction | MassTransferTransaction
+  | TPairBase<BigNumber>
+  | ExchangeTransaction
+  | TransferTransaction
+  | MassTransferTransaction
   | TCandleBase<BigNumber | null>
   | null;
 
@@ -96,14 +107,20 @@ export interface LibRequest {
   body?: {};
 }
 
-export interface ExchangeTransaction extends api.IExchangeTransaction<BigNumber> {}
-export interface ExchangeTransactionJSON extends api.IExchangeTransaction<number | string> {}
+export interface ExchangeTransaction
+  extends api.IExchangeTransaction<BigNumber> {}
+export interface ExchangeTransactionJSON
+  extends api.IExchangeTransaction<number | string> {}
 
-export interface TransferTransaction extends api.ITransferTransaction<BigNumber> {}
-export interface TransferTransactionJSON extends api.ITransferTransaction<number | string> {}
+export interface TransferTransaction
+  extends api.ITransferTransaction<BigNumber> {}
+export interface TransferTransactionJSON
+  extends api.ITransferTransaction<number | string> {}
 
-export interface MassTransferTransaction extends api.IMassTransferTransaction<BigNumber> {}
-export interface MassTransferTransactionJSON extends api.IMassTransferTransaction<number | string> {}
+export interface MassTransferTransaction
+  extends api.IMassTransferTransaction<BigNumber> {}
+export interface MassTransferTransactionJSON
+  extends api.IMassTransferTransaction<number | string> {}
 
 export interface ExchangeTxFilters {
   timeStart?: string | Date | number;
@@ -191,4 +208,4 @@ export type Alias = {
   alias: string;
 };
 export type TGetAssetsFn = (...ids: TAssetId[]) => Response<Asset[]>;
-export type TGetPairs = (...pairs: AssetPair[]) => Response<PairBase[]>;
+export type TGetPairs = (...pairs: AssetPair[]) => Response<TPairBase<string|number>[]>;

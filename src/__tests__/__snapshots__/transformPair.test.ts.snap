@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pairs transformation should transform correct 1`] = `
+Object {
+  "amountAsset": "test1",
+  "firstPrice": "1.1",
+  "high": "3",
+  "lastPrice": "2.1",
+  "low": "1",
+  "priceAsset": "test2",
+  "quoteVolume": "99.2",
+  "txsCount": 102,
+  "volume": "100.22",
+  "volumeWaves": "10.33",
+  "weightedAveragePrice": "1.22",
+}
+`;

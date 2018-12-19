@@ -1,12 +1,33 @@
 import { Asset, IAssetJSON, BigNumber } from '@waves/data-entities';
-import { TRANSACTION_TYPE } from "@waves/ts-types";
-import { ApiTypes, TCandleBase, TApiResponse, TApiElement, TransformationResult, ExchangeTransaction, ExchangeTransactionJSON } from './types';
+import { TRANSACTION_TYPE } from '@waves/ts-types';
+import {
+  ApiTypes,
+  TCandleBase,
+  TPairBase,
+  TApiResponse,
+  TApiElement,
+  TransformationResult,
+  ExchangeTransaction,
+  ExchangeTransactionJSON,
+} from './types';
 import { id } from './utils';
 
 const transformAsset = (data: IAssetJSON | null): Asset | null =>
   data === null ? null : new Asset(data);
 
-const transformPair = id;
+export const transformPair = (
+  pair: TPairBase<string | number>
+): TPairBase<BigNumber> => ({
+  ...pair,
+  firstPrice: new BigNumber(pair.firstPrice),
+  lastPrice: new BigNumber(pair.lastPrice),
+  low: new BigNumber(pair.low),
+  high: new BigNumber(pair.high),
+  volume: new BigNumber(pair.volume),
+  quoteVolume: new BigNumber(pair.quoteVolume),
+  volumeWaves: new BigNumber(pair.volumeWaves),
+  weightedAveragePrice: new BigNumber(pair.weightedAveragePrice),
+});
 
 const toBigNumber = (v: string | number | null) =>
   v ? new BigNumber(v) : null;
@@ -24,7 +45,6 @@ export const transformCandle = (
   quoteVolume: toBigNumber(candle.quoteVolume),
 });
 
-
 export const transformExchangeTransaction = (
   data: ExchangeTransactionJSON
 ): ExchangeTransaction => ({
@@ -38,17 +58,19 @@ export const transformExchangeTransaction = (
     ...data.order1,
     price: new BigNumber(data.order1.price),
     amount: new BigNumber(data.order1.amount),
-    matcherFee: new BigNumber(data.order1.matcherFee)
+    matcherFee: new BigNumber(data.order1.matcherFee),
   },
   order2: {
     ...data.order2,
     price: new BigNumber(data.order2.price),
     amount: new BigNumber(data.order2.amount),
-    matcherFee: new BigNumber(data.order2.matcherFee)
-  }
+    matcherFee: new BigNumber(data.order2.matcherFee),
+  },
 });
 
-const transformer = (response: TApiResponse): TransformationResult | TransformationResult[] => {
+const transformer = (
+  response: TApiResponse
+): TransformationResult | TransformationResult[] => {
   switch (response.__type) {
     case ApiTypes.List:
       return response.data.map(transformSingleElement);
@@ -66,7 +88,11 @@ const transformSingleElement = (el: TApiElement): TransformationResult => {
       case ApiTypes.Alias:
         return el.data;
       case ApiTypes.Pair:
-        return transformPair(el.data);
+        return transformPair({
+          ...el.data,
+          amountAsset: el.amountAsset,
+          priceAsset: el.priceAsset,
+        });
       case ApiTypes.Candle:
         return transformCandle(el.data);
       case ApiTypes.Transaction:
