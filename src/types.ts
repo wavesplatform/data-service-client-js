@@ -80,6 +80,9 @@ export type TCandlesParams = {
   timeEnd?: string | Date | number;
   interval: string;
 };
+export type TPairsParams = {
+  limit: number;
+};
 export type TGetCandles = (
   amountAsset: string,
   priceAsset: string,
