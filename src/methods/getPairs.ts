@@ -9,7 +9,7 @@ import { AssetPair } from '@waves/data-entities';
 import { createMethod } from './createMethod';
 import { createRequest } from '../createRequest';
 
-const isAssetPairOrParams = (pairOrParams: unknown) => {
+const isAssetPair = (pairOrParams: unknown) => {
   if (typeof pairOrParams === 'string')
     return pairOrParams.split('/').length === 2;
   else if (typeof pairOrParams === 'object' && pairOrParams !== null)
@@ -24,7 +24,7 @@ const validatePairsAndParams = (
     return Promise.resolve(pairOrPairs);
 
   const arrayToCheck = Array.isArray(pairOrPairs) ? pairOrPairs : [pairOrPairs];
-  return arrayToCheck.every(isAssetPairOrParams)
+  return arrayToCheck.every(isAssetPair)
     ? Promise.resolve(arrayToCheck)
     : Promise.reject(
         new Error(
