@@ -1,17 +1,28 @@
-import { TGetPairs, TCreateGetFn, LibOptions, LibRequest } from '../types';
+import {
+  TGetPairs,
+  TCreateGetFn,
+  LibOptions,
+  LibRequest,
+  TPairsParams,
+} from '../types';
 import { AssetPair } from '@waves/data-entities';
 import { createMethod } from './createMethod';
 import { createRequest } from '../createRequest';
 
-const isAssetPair = (pair: unknown) => {
-  if (typeof pair === 'string') return pair.split('/').length === 2;
-  else if (typeof pair === 'object' && pair !== null) return AssetPair.isAssetPair(pair);
+const isAssetPair = (pair: unknown): pair is AssetPair => {
+  if (typeof pair === 'string')
+    return pair.split('/').length === 2;
+  else if (typeof pair === 'object' && pair !== null)
+    return AssetPair.isAssetPair(pair);
   return false;
 };
 
-const validatePairs = (
-  pairOrPairs: AssetPair[] | AssetPair
-): Promise<AssetPair[]> => {
+const validatePairsAndParams = (
+  pairOrPairs: AssetPair[] | AssetPair | TPairsParams
+): Promise<AssetPair[] | TPairsParams> => {
+  if (isPairsParams(pairOrPairs))
+    return Promise.resolve(pairOrPairs);
+
   const arrayToCheck = Array.isArray(pairOrPairs) ? pairOrPairs : [pairOrPairs];
   return arrayToCheck.every(isAssetPair)
     ? Promise.resolve(arrayToCheck)
@@ -22,14 +33,21 @@ const validatePairs = (
       );
 };
 
+const isPairsParams = (data: unknown): data is TPairsParams =>
+  typeof data === 'object' && data !== null && 'limit' in data;
+
 const createRequestForMany = (nodeUrl: string) => (
-  pairs: AssetPair[]
-): LibRequest =>
-  createRequest(`${nodeUrl}/pairs`, { pairs: pairs.map(p => p.toString()) });
+  data: AssetPair[] | TPairsParams
+): LibRequest => {
+  const params = isPairsParams(data)
+    ? { limit: data.limit }
+    : { pairs: data.map(p => p.toString()) };
+  return createRequest(`${nodeUrl}/pairs`, params);
+};
 
 const getPairs: TCreateGetFn<TGetPairs> = (libOptions: LibOptions) =>
   createMethod({
-    validate: validatePairs,
+    validate: validatePairsAndParams,
     generateRequest: createRequestForMany,
     libOptions,
   });
