@@ -17,11 +17,11 @@ const isAssetPairOrParams = (pairOrParams: unknown) => {
   return false;
 };
 
-const validatePairs = (
-  pairOrPairs: AssetPair[] | AssetPair
-): Promise<AssetPair[]> => {
-  if (typeof pairOrPairs === 'object' && 'limit' in pairOrPairs)
-    return pairOrPairs;
+const validatePairsAndParams = (
+  pairOrPairs: AssetPair[] | AssetPair | TPairsParams
+): Promise<AssetPair[] | TPairsParams> => {
+  if (isPairsParams(pairOrPairs))
+    return Promise.resolve(pairOrPairs);
 
   const arrayToCheck = Array.isArray(pairOrPairs) ? pairOrPairs : [pairOrPairs];
   return arrayToCheck.every(isAssetPairOrParams)
@@ -47,7 +47,7 @@ const createRequestForMany = (nodeUrl: string) => (
 
 const getPairs: TCreateGetFn<TGetPairs> = (libOptions: LibOptions) =>
   createMethod({
-    validate: validatePairs,
+    validate: validatePairsAndParams,
     generateRequest: createRequestForMany,
     libOptions,
   });
