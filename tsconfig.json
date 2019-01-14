@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "declaration": false,
+    "declaration": true,
     "outDir": "dist/",
     "moduleResolution": "node",
     "lib": [
@@ -17,7 +17,6 @@
     "**/__tests__/**"
   ],
   "include": [
-    "src/**/*",
-    "node_modules/*"
+    "src/index.ts"
   ]
 }
