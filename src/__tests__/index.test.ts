@@ -121,15 +121,15 @@ describe('Candles endpoint: ', () => {
     await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', {
       timeStart: '2018-12-01',
       timeEnd: '2018-12-31',
-      interval: '1h'
+      interval: '1h',
     });
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
   it('fetch is called with correct params#2', async () => {
-    await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', { 
+    await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', {
       timeStart: '2018-12-01',
-      interval: '1h'
-     });
+      interval: '1h',
+    });
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
   it('throws, if called with wrong types', async () => {
@@ -320,19 +320,37 @@ describe('Custom transformer: ', () => {
         },
       ],
     }),
+    candles: JSON.stringify({
+      __type: 'list',
+      data: [
+        {
+          __type: 'candle',
+          data: {},
+        },
+        {
+          __type: 'candle',
+          data: {},
+        },
+        {
+          __type: 'candle',
+          data: {},
+        },
+      ],
+    }),
   };
   const customFetchMock = type =>
     jest.fn(() => Promise.resolve(fetchMocks[type]));
 
-  const transformMocks = {
-    list: jest.fn(d => d.map(customTransformer)),
-    asset: jest.fn(),
-    pair: jest.fn(),
-  };
-  const customTransformer = ({ __type, data, ...etc }) =>
+  it('works for list of assets', async () => {
+    const transformMocks = {
+      list: jest.fn(d => d.map(customTransformer)),
+      asset: jest.fn(),
+      pair: jest.fn(),
+    };
+
+    const customTransformer = ({ __type, data, ...etc }) =>
     transformMocks[__type](data);
 
-  it('works for list of assets', async () => {
     const customClient = new DataServiceClient({
       rootUrl: NODE_URL,
       parse: parser,
@@ -342,6 +360,32 @@ describe('Custom transformer: ', () => {
     const assets = await customClient.getAssets('1', '2');
     expect(transformMocks.list).toHaveBeenCalledTimes(1);
     expect(transformMocks.asset).toHaveBeenCalledTimes(2);
+    expect(transformMocks.pair).toHaveBeenCalledTimes(0);
+  });
+
+  it('works for list of candles', async () => {
+    const transformMocks = {
+      list: jest.fn(d => d.map(customTransformer)),
+      pair: jest.fn(),
+      candle: jest.fn(),
+    };
+
+    const customTransformer = ({ __type, data, ...etc }) =>
+    transformMocks[__type](data);
+
+    const customClient = new DataServiceClient({
+      rootUrl: NODE_URL,
+      parse: parser,
+      fetch: customFetchMock('candles'),
+      transform: customTransformer,
+    });
+
+    const candles = await customClient.getCandles('WAVES', 'BTC', {
+      timeStart: new Date(),
+      interval: '1d'
+    });
+    expect(transformMocks.list).toHaveBeenCalledTimes(1);
+    expect(transformMocks.candle).toHaveBeenCalledTimes(3);
     expect(transformMocks.pair).toHaveBeenCalledTimes(0);
   });
 });
