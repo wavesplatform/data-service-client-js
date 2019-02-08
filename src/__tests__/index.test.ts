@@ -349,7 +349,7 @@ describe('Custom transformer: ', () => {
     };
 
     const customTransformer = ({ __type, data, ...etc }) =>
-    transformMocks[__type](data);
+      transformMocks[__type](data);
 
     const customClient = new DataServiceClient({
       rootUrl: NODE_URL,
@@ -371,7 +371,7 @@ describe('Custom transformer: ', () => {
     };
 
     const customTransformer = ({ __type, data, ...etc }) =>
-    transformMocks[__type](data);
+      transformMocks[__type](data);
 
     const customClient = new DataServiceClient({
       rootUrl: NODE_URL,
@@ -382,7 +382,7 @@ describe('Custom transformer: ', () => {
 
     const candles = await customClient.getCandles('WAVES', 'BTC', {
       timeStart: new Date(),
-      interval: '1d'
+      interval: '1d',
     });
     expect(transformMocks.list).toHaveBeenCalledTimes(1);
     expect(transformMocks.candle).toHaveBeenCalledTimes(3);

@@ -1,9 +1,4 @@
-import {
-  Asset,
-  Candle,
-  BigNumber,
-  AssetPair,
-} from '@waves/data-entities';
+import { Asset, Candle, BigNumber, AssetPair } from '@waves/data-entities';
 
 import { AliasesByAddressOptions } from './methods/getAliases';
 
