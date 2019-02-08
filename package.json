@@ -12,8 +12,7 @@
     "build:browser": "browserify ./dist/index.js -o ./dist/umd.js -u bignumber.js -u @waves/json-bigint",
     "build:all": "rimraf ./dist/* && npm run build && npm run build:browser",
     "test": "jest",
-    "prepare": "npm run build:all && npm test",
-    "lint": "eslint dist"
+    "prepare": "npm run build:all && npm test"
   },
   "dependencies": {
     "@waves/data-entities": "^1.10.0"
@@ -23,7 +22,6 @@
     "@types/node": "8.0.0",
     "@types/node-fetch": "^1.6.9",
     "browserify": "^16.2.2",
-    "eslint": "^5.13.0",
     "jest": "^23.6.0",
     "node-fetch": "^2.1.2",
     "parse-json-bignumber": "^0.0.2",
