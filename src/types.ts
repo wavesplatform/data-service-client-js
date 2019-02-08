@@ -1,22 +1,22 @@
-import { Asset, IAssetJSON, BigNumber, AssetPair } from '@waves/data-entities';
+import { Asset, Candle, BigNumber, AssetPair } from "@waves/data-entities";
 
-import { AliasesByAddressOptions } from './methods/getAliases';
+import { AliasesByAddressOptions } from "./methods/getAliases";
 
 export type TListResponseJSON<T> = {
   __type: ApiTypes.List;
   data: T[];
 };
 export enum ApiTypes {
-  List = 'list',
-  Asset = 'asset',
-  Pair = 'pair',
-  Transaction = 'transaction',
-  Alias = 'alias',
-  Candle = 'candle',
+  List = "list",
+  Asset = "asset",
+  Pair = "pair",
+  Transaction = "transaction",
+  Alias = "alias",
+  Candle = "candle"
 }
 export enum HttpMethods {
-  Get = 'GET',
-  Post = 'POST',
+  Get = "GET",
+  Post = "POST"
 }
 export interface LibRequest {
   url: string;
@@ -83,6 +83,11 @@ export type getAliasesByAddress = (
   address: string,
   options?: AliasesByAddressOptions
 ) => Response<Alias[]>;
+export type TGetCandles = (
+  amountAsset: string,
+  priceAsset: string,
+  params: TCandlesParams
+) => Response<Candle[]>;
 export type TCreateGetFn<T> = (libOptions: LibOptions) => T;
 export type TPredicate = (...args: any[]) => boolean;
 export type TFunction = (...args: any[]) => any;
@@ -103,37 +108,12 @@ export type Alias = {
   address: string;
   alias: string;
 };
-export type TGetAssetsFn = (...ids: TAssetId[]) => Response<Asset[]>;
 
-export type TAssetResponseJSON = {
-  __type: ApiTypes.Asset;
-  data: IAssetJSON;
-};
-
-export type TAssetsResponseJSON = TListResponseJSON<TAssetResponseJSON>;
-
-export type TCandleJSON = {
-  time: Date;
-  open: BigNumber;
-  close: BigNumber;
-  high: BigNumber;
-  low: BigNumber;
-  volume: BigNumber;
-  priceVolume: BigNumber;
-  weightedAveragePrice: BigNumber;
-  maxHeight: number;
-  txsCoung: number;
-};
 export type TCandlesParams = {
   timeStart: string | Date | number;
   timeEnd?: string | Date | number;
   interval: string;
-}
-export type TCandleReponseJSON = {
-  __type: ApiTypes.Candle;
-  data: TCandleJSON;
-}
-export type TGetCandles = (amountAsset: string, priceAsset: string, params: TCandlesParams) => TListResponseJSON<TCandleReponseJSON>;
+};
 
 export type TGetPairs = (...pairs: AssetPair[]) => Response<IPairJSON[]>;
 
