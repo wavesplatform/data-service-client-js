@@ -1,22 +1,22 @@
-import { Asset, Candle, BigNumber, AssetPair } from "@waves/data-entities";
+import { Asset, Candle, BigNumber, AssetPair } from '@waves/data-entities';
 
-import { AliasesByAddressOptions } from "./methods/getAliases";
+import { AliasesByAddressOptions } from './methods/getAliases';
 
 export type TListResponseJSON<T> = {
   __type: ApiTypes.List;
   data: T[];
 };
 export enum ApiTypes {
-  List = "list",
-  Asset = "asset",
-  Pair = "pair",
-  Transaction = "transaction",
-  Alias = "alias",
-  Candle = "candle"
+  List = 'list',
+  Asset = 'asset',
+  Pair = 'pair',
+  Transaction = 'transaction',
+  Alias = 'alias',
+  Candle = 'candle',
 }
 export enum HttpMethods {
-  Get = "GET",
-  Post = "POST"
+  Get = 'GET',
+  Post = 'POST',
 }
 export interface LibRequest {
   url: string;
