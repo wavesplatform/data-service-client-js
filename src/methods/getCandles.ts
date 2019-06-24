@@ -11,11 +11,13 @@ import { createRequest } from '../createRequest';
 
 type CandlesRequestFilters = [string, string, TCandlesParams];
 
-const possibleParams: Array<keyof TCandlesParams> = ['timeStart', 'timeEnd', 'interval', 'matcher'];  
+type TCandlesParamsKey = keyof TCandlesParams;
+
+const possibleParams: Array<TCandlesParamsKey> = ['timeStart', 'timeEnd', 'interval', 'matcher'];  
 
 const isCandlesParams = (params: any): params is TCandlesParams =>
   typeof params === 'object' &&
-  Object.keys(params).every((k: keyof TCandlesParams) => possibleParams.includes(k));
+  Object.keys(params).every((k: TCandlesParamsKey) => possibleParams.includes(k));
 
 const isFilters = (filters: any): filters is CandlesRequestFilters =>
   Array.isArray(filters) &&
