@@ -113,6 +113,7 @@ export type TCandlesParams = {
   timeStart: string | Date | number;
   timeEnd?: string | Date | number;
   interval: string;
+  matcher: string;
 };
 
 export type TGetPairs = (...pairs: AssetPair[]) => Response<IPairJSON[]>;
