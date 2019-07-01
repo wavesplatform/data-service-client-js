@@ -122,6 +122,7 @@ describe('Candles endpoint: ', () => {
       timeStart: '2018-12-01',
       timeEnd: '2018-12-31',
       interval: '1h',
+      matcher: '123',
     });
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
@@ -129,6 +130,7 @@ describe('Candles endpoint: ', () => {
     await client.getCandles('AMOUNTASSETID', 'PRICEASSETID', {
       timeStart: '2018-12-01',
       interval: '1h',
+      matcher: '123',
     });
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
@@ -383,6 +385,7 @@ describe('Custom transformer: ', () => {
     const candles = await customClient.getCandles('WAVES', 'BTC', {
       timeStart: new Date(),
       interval: '1d',
+      matcher: 'matcher'
     });
     expect(transformMocks.list).toHaveBeenCalledTimes(1);
     expect(transformMocks.candle).toHaveBeenCalledTimes(3);

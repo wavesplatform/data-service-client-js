@@ -74,7 +74,7 @@ Array [
 
 exports[`Candles endpoint:  fetch is called with correct params#1 1`] = `
 Array [
-  "NODE_URL/candles/AMOUNTASSETID/PRICEASSETID?timeStart=2018-12-01&timeEnd=2018-12-31&interval=1h",
+  "NODE_URL/candles/AMOUNTASSETID/PRICEASSETID?timeStart=2018-12-01&timeEnd=2018-12-31&interval=1h&matcher=123",
   Object {
     "method": "GET",
   },
@@ -83,7 +83,7 @@ Array [
 
 exports[`Candles endpoint:  fetch is called with correct params#2 1`] = `
 Array [
-  "NODE_URL/candles/AMOUNTASSETID/PRICEASSETID?timeStart=2018-12-01&interval=1h",
+  "NODE_URL/candles/AMOUNTASSETID/PRICEASSETID?timeStart=2018-12-01&interval=1h&matcher=123",
   Object {
     "method": "GET",
   },
