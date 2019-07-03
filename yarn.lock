@@ -18,6 +18,13 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@types/bignumber.js@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/bignumber.js/-/bignumber.js-5.0.0.tgz#d9f1a378509f3010a3255e9cc822ad0eeb4ab969"
+  integrity sha512-0DH7aPGCClywOFaxxjE6UwpN2kQYe9LwuDQMv+zYA97j5GkOMo8e66LYT+a8JYU7jfmUFRZLa9KycxHDsKXJCA==
+  dependencies:
+    bignumber.js "*"
+
 "@types/jest@^22.2.3":
   version "22.2.3"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
@@ -40,12 +47,20 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.0.tgz#acaa89247afddc7967e9902fd11761dadea1a555"
   integrity sha512-j2tekvJCO7j22cs+LO6i0kRPhmQ9MXaPZ55TzOc1lzkN5b6BWqq4AFjl04s1oRRQ1v5rSe+KEvnLUSTonuls/A==
 
-"@waves/data-entities@^1.6.0":
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/@waves/data-entities/-/data-entities-1.6.4.tgz#c615a013ff6d4e6a8048611d400cd71cc16825a8"
-  integrity sha512-amWUZzZMpw+YSXFWjLCeYiEKvDDwmeinlZqCl3JhPj8mp5HBSbaBhR9bE4uxDgB8Bafwtm5RLHHFam6/PV9zrQ==
+"@waves/bignumber@0.0.1-a5", "@waves/bignumber@^0.0.1-a5":
+  version "0.0.1-a5"
+  resolved "https://registry.yarnpkg.com/@waves/bignumber/-/bignumber-0.0.1-a5.tgz#0a783a4d0e7488c375c8f0b9239688196b720578"
+  integrity sha512-DUTH3MRBCVs4NPAMRfTiCOdzQ7kpmhYXviiOi3p/prbz3ofnqCeaVbzeDqZijRrmd6SLxUd1H1n7lRY1k6O3lA==
   dependencies:
-    bignumber.js "7.0.1"
+    "@types/bignumber.js" "^5.0.0"
+    bignumber.js "^8.1.1"
+
+"@waves/data-entities@^2.0.0-a3":
+  version "2.0.0-a3"
+  resolved "https://registry.yarnpkg.com/@waves/data-entities/-/data-entities-2.0.0-a3.tgz#86affc3ef5ac9df835628f0986a661bf5e1c20bb"
+  integrity sha512-vYMXIWe14m0bZc2TQQ/EFh30preWZRZzX5nAq5TUVvPQv3kDsVCCEwaZXtZRlM9Qvyerlcx9S6hHT+5C8wmX6Q==
+  dependencies:
+    "@waves/bignumber" "0.0.1-a5"
 
 JSONStream@^1.0.3:
   version "1.3.2"
@@ -504,10 +519,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bignumber.js@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.0.1.tgz#8d2ff74fb2e7a78cbfc3a57bd63cd6106bf8903a"
-  integrity sha512-orXkDA6dhvrCTxYkWMDLIu8R1XWKfPWoJCkFeXOi/Rybl0FVUGHvgDYgUkWVn8fGa5mw2xy25VQGPPmrxfoZkQ==
+bignumber.js@*, bignumber.js@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-8.1.1.tgz#4b072ae5aea9c20f6730e4e5d529df1271c4d885"
+  integrity sha512-QD46ppGintwPGuL1KqmwhR0O+N2cZUg8JG/VzwI2e28sM9TqHjQB10lI4QAaMHVbLzwVLLAwEglpKPViWX+5NQ==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
@@ -4361,10 +4376,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.2.tgz#fe8101c46aa123f8353523ebdcf5730c2ae493e5"
-  integrity sha512-VCj5UiSyHBjwfYacmDuc/NOk4QQixbE+Wn7MFJuS0nRuPQbof132Pw4u53dm264O8LPc2MVsc7RJNml5szurkg==
+typescript@^3.4.5:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
+  integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
 
 uglify-js@^2.6:
   version "2.8.29"
