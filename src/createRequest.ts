@@ -1,7 +1,7 @@
 import { createQS } from './utils';
-import { LibRequest, HttpMethods } from './types';
+import { HttpMethods, ILibRequest } from './types';
 
-export const createRequest = (methodUrl: string, params?: any): LibRequest => {
+export const createRequest = (methodUrl: string, params?: any): ILibRequest => {
   const URL_MAX_LENGTH = 2000;
   if (typeof params === 'undefined') {
     return { url: methodUrl, method: HttpMethods.Get };

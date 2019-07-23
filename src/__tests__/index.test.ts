@@ -4,6 +4,7 @@ import { AssetPair, Asset } from '@waves/data-entities';
 
 const fetch = jest.fn(() => Promise.resolve('{"data":[{ "data": 1 }]}'));
 const NODE_URL = 'NODE_URL';
+const MATCHER = '3PJjwFREg8F9V6Cp9fnUuEwRts6HQQa5nfP';
 const client = new DataServiceClient({
   rootUrl: NODE_URL,
   parse: parser,
@@ -65,13 +66,13 @@ describe('Pairs endpoint: ', () => {
       'WAVES' as any,
       '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu' as any
     );
-    await client.getPairs(pair1, pair2);
+    await client.getPairs([pair1, pair2], MATCHER);
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
   it('fetch is called with correct params#2', async () => {
     const pairs = [];
-    await client.getPairs(...pairs);
+    await client.getPairs(pairs, MATCHER);
 
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
@@ -88,7 +89,7 @@ describe('Pairs endpoint: ', () => {
       '',
     ];
     wrongTypes.map(
-      async t => await expect(client.getPairs(t)).rejects.toBeDefined()
+      async t => await expect(client.getPairs(t, MATCHER)).rejects.toBeDefined()
     );
   });
 });
@@ -385,7 +386,7 @@ describe('Custom transformer: ', () => {
     const candles = await customClient.getCandles('WAVES', 'BTC', {
       timeStart: new Date(),
       interval: '1d',
-      matcher: 'matcher'
+      matcher: 'matcher',
     });
     expect(transformMocks.list).toHaveBeenCalledTimes(1);
     expect(transformMocks.candle).toHaveBeenCalledTimes(3);
@@ -411,7 +412,7 @@ describe('Long params transforms into POST request', () => {
           } as any)
         )
     );
-    await client.getPairs(...pairs);
+    await client.getPairs(pairs, MATCHER);
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 });

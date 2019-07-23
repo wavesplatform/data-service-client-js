@@ -1,9 +1,10 @@
+import { Asset } from '@waves/data-entities';
 import {
+  ILibOptions,
+  ILibRequest,
   TAssetId,
   TGetAssets,
   TCreateGetFn,
-  LibOptions,
-  LibRequest,
 } from '../types';
 
 import { isNotString } from '../utils';
@@ -19,10 +20,10 @@ const validateIds = (idOrIds: TAssetId[] | TAssetId): Promise<TAssetId[]> => {
 
 const createRequestForMany = (rootUrl: string) => (
   ids: TAssetId[]
-): LibRequest => createRequest(`${rootUrl}/assets`, { ids });
+): ILibRequest => createRequest(`${rootUrl}/assets`, { ids });
 
-const createGetAssets: TCreateGetFn<TGetAssets> = (libOptions: LibOptions) =>
-  createMethod({
+const createGetAssets: TCreateGetFn<TGetAssets> = (libOptions: ILibOptions) =>
+  createMethod<Asset[]>({
     validate: validateIds,
     generateRequest: createRequestForMany,
     libOptions,

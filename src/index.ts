@@ -11,28 +11,28 @@ import createGetMassTransferTxs from './methods/getMassTransferTxs';
 import createGetAliases from './methods/getAliases';
 
 import {
-  LibOptions,
+  ILibOptions,
+  IGetExchangeTxs,
+  IGetTransferTxs,
+  IGetMassTransferTxs,
+  TAliases,
   TGetAssets,
   TGetAssetsByTicker,
   TGetCandles,
   TGetPairs,
-  GetExchangeTxs,
-  GetTransferTxs,
-  GetMassTransferTxs,
-  aliases,
 } from './types';
 
-export default class DataServiceClient {
+export default class DataServiceClient<T> {
   public getPairs: TGetPairs;
   public getAssets: TGetAssets;
   public getAssetsByTicker: TGetAssetsByTicker;
   public getCandles: TGetCandles;
-  public getExchangeTxs: GetExchangeTxs;
-  public getTransferTxs: GetTransferTxs;
-  public getMassTransferTxs: GetMassTransferTxs;
-  public aliases: aliases;
+  public getExchangeTxs: IGetExchangeTxs;
+  public getTransferTxs: IGetTransferTxs;
+  public getMassTransferTxs: IGetMassTransferTxs;
+  public aliases: TAliases;
 
-  constructor(params: LibOptions) {
+  constructor(params: ILibOptions) {
     let options = { ...params };
     if (!options.rootUrl) {
       throw new Error(

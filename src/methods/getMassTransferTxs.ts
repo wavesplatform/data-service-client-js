@@ -1,8 +1,9 @@
 import {
+  ILibRequest,
   TCreateGetFn,
-  MassTransferTxFilters,
-  GetMassTransferTxs,
-  LibRequest,
+  ITransaction,
+  IMassTransferTxFilters,
+  IGetMassTransferTxs,
 } from '../types';
 
 import { createMethod } from './createMethod';
@@ -11,11 +12,11 @@ import { createRequest } from '../createRequest';
 // One
 const validateId = id =>
   typeof id === 'string' ? Promise.resolve(id) : Promise.reject('Wrong id');
-const generateRequestOne = (rootUrl: string) => (id: string): LibRequest =>
+const generateRequestOne = (rootUrl: string) => (id: string): ILibRequest =>
   createRequest(`${rootUrl}/transactions/mass-transfer/${id}`);
 
 //Many
-const isFilters = (filters: any): filters is MassTransferTxFilters => {
+const isFilters = (filters: any): filters is IMassTransferTxFilters => {
   const possibleFilters = [
     'sender',
     'assetId',
@@ -37,17 +38,19 @@ const validateFilters = (filters: any) =>
     : Promise.reject('Wrong filters object');
 
 const generateRequestMany = (rootUrl: string) => (
-  filters: MassTransferTxFilters
-): LibRequest =>
+  filters: IMassTransferTxFilters
+): ILibRequest =>
   createRequest(`${rootUrl}/transactions/mass-transfer`, filters);
 
-const createGetMassTransferTxs: TCreateGetFn<GetMassTransferTxs> = libOptions => {
-  const getMassTransferTxsOne = createMethod({
+const createGetMassTransferTxs: TCreateGetFn<
+  IGetMassTransferTxs
+> = libOptions => {
+  const getMassTransferTxsOne = createMethod<ITransaction[]>({
     validate: validateId,
     generateRequest: generateRequestOne,
     libOptions,
   });
-  const getMassTransferTxsMany = createMethod({
+  const getMassTransferTxsMany = createMethod<ITransaction[]>({
     validate: validateFilters,
     generateRequest: generateRequestMany,
     libOptions,
@@ -58,8 +61,8 @@ const createGetMassTransferTxs: TCreateGetFn<GetMassTransferTxs> = libOptions =>
     }),
   });
 
-  const getMassTransferTxs: GetMassTransferTxs = (
-    idOrFilters: string | MassTransferTxFilters = {}
+  const getMassTransferTxs: IGetMassTransferTxs = (
+    idOrFilters: string | IMassTransferTxFilters = {}
   ) =>
     typeof idOrFilters === 'string'
       ? getMassTransferTxsOne(idOrFilters)

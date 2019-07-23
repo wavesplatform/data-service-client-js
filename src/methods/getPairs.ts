@@ -1,4 +1,11 @@
-import { TGetPairs, TCreateGetFn, LibOptions, LibRequest } from '../types';
+import {
+  TCreateGetFn,
+  ILibOptions,
+  ILibRequest,
+  TGetPairs,
+  TPairsRequest,
+  TPairJSON,
+} from '../types';
 import { AssetPair } from '@waves/data-entities';
 import { createMethod } from './createMethod';
 import { createRequest } from '../createRequest';
@@ -14,12 +21,20 @@ const isAssetPair = pair => {
   }
 };
 
-const validatePairs = (
-  pairOrPairs: AssetPair[] | AssetPair
-): Promise<AssetPair[]> => {
-  const arrayToCheck = Array.isArray(pairOrPairs) ? pairOrPairs : [pairOrPairs];
-  return arrayToCheck.every(isAssetPair)
-    ? Promise.resolve(arrayToCheck)
+const isValidPairsFilters = (request: any): request is TPairsRequest => {
+  return (
+    Array.isArray(request) &&
+    request.length === 2 &&
+    (Array.isArray(request[0]) ? request[0] : [request[0]]).every(
+      isAssetPair
+    ) &&
+    typeof request[1] === 'string'
+  );
+};
+
+const validateRequest = (request: any): Promise<TPairsRequest> => {
+  return isValidPairsFilters(request)
+    ? Promise.resolve(request)
     : Promise.reject(
         new Error(
           'ArgumentsError: AssetPair should be object with amountAsset, priceAsset'
@@ -27,14 +42,18 @@ const validatePairs = (
       );
 };
 
-const createRequestForMany = (nodeUrl: string) => (
-  pairs: AssetPair[]
-): LibRequest =>
-  createRequest(`${nodeUrl}/pairs`, { pairs: pairs.map(p => p.toString()) });
+const createRequestForMany = (nodeUrl: string) => ([
+  pairs,
+  matcher,
+]: TPairsRequest): ILibRequest =>
+  createRequest(`${nodeUrl}/pairs`, {
+    pairs: pairs.map(p => p.toString()),
+    matcher,
+  });
 
-const getPairs: TCreateGetFn<TGetPairs> = (libOptions: LibOptions) =>
-  createMethod({
-    validate: validatePairs,
+const getPairs: TCreateGetFn<TGetPairs> = (libOptions: ILibOptions) =>
+  createMethod<TPairJSON[]>({
+    validate: validateRequest,
     generateRequest: createRequestForMany,
     libOptions,
   });
