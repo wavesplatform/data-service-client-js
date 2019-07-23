@@ -66,13 +66,16 @@ describe('Pairs endpoint: ', () => {
       'WAVES' as any,
       '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu' as any
     );
-    await client.getPairs([pair1, pair2], MATCHER);
+    await client.getPairs('3PJjwFREg8F9V6Cp9fnUuEwRts6HQQa5nfP')([
+      pair1,
+      pair2,
+    ]);
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 
   it('fetch is called with correct params#2', async () => {
     const pairs = [];
-    await client.getPairs(pairs, MATCHER);
+    await client.getPairs('3PJjwFREg8F9V6Cp9fnUuEwRts6HQQa5nfP')(pairs);
 
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
@@ -89,7 +92,10 @@ describe('Pairs endpoint: ', () => {
       '',
     ];
     wrongTypes.map(
-      async t => await expect(client.getPairs(t, MATCHER)).rejects.toBeDefined()
+      async t =>
+        await expect(
+          client.getPairs('3PJjwFREg8F9V6Cp9fnUuEwRts6HQQa5nfP')(t)
+        ).rejects.toBeDefined()
     );
   });
 });
@@ -412,7 +418,7 @@ describe('Long params transforms into POST request', () => {
           } as any)
         )
     );
-    await client.getPairs(pairs, MATCHER);
+    await client.getPairs('3PJjwFREg8F9V6Cp9fnUuEwRts6HQQa5nfP')(pairs);
     expect(fetch.mock.calls.slice().pop()).toMatchSnapshot();
   });
 });

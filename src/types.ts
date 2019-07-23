@@ -122,7 +122,7 @@ export type TGetCandles = (
   params: TCandlesParams
 ) => TResponse<Candle[]>;
 
-export type TPairsRequest = [AssetPair[], string];
+export type TPairsRequest = [string, AssetPair[]];
 export type TPairJSON = {
   firstPrice: BigNumber;
   lastPrice: BigNumber;
@@ -131,6 +131,5 @@ export type TPairJSON = {
   priceAsset: string;
 };
 export type TGetPairs = (
-  pairs: AssetPair[],
   matcher: string
-) => TResponse<TPairJSON[]>;
+) => (pairs: AssetPair[]) => TResponse<TPairJSON[]>;

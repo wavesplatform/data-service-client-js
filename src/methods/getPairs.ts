@@ -25,14 +25,15 @@ const isValidPairsFilters = (request: any): request is TPairsRequest => {
   return (
     Array.isArray(request) &&
     request.length === 2 &&
-    (Array.isArray(request[0]) ? request[0] : [request[0]]).every(
-      isAssetPair
-    ) &&
-    typeof request[1] === 'string'
+    typeof request[0] === 'string' &&
+    (Array.isArray(request[1]) ? request[1] : [request[1]]).every(isAssetPair)
   );
 };
 
-const validateRequest = (request: any): Promise<TPairsRequest> => {
+const validateRequest = (matcher: any) => (
+  pairs: any
+): Promise<TPairsRequest> => {
+  const request = [matcher, pairs];
   return isValidPairsFilters(request)
     ? Promise.resolve(request)
     : Promise.reject(
@@ -43,17 +44,19 @@ const validateRequest = (request: any): Promise<TPairsRequest> => {
 };
 
 const createRequestForMany = (nodeUrl: string) => ([
-  pairs,
   matcher,
+  pairs,
 ]: TPairsRequest): ILibRequest =>
   createRequest(`${nodeUrl}/pairs`, {
     pairs: pairs.map(p => p.toString()),
     matcher,
   });
 
-const getPairs: TCreateGetFn<TGetPairs> = (libOptions: ILibOptions) =>
+const getPairs: TCreateGetFn<TGetPairs> = (libOptions: ILibOptions) => (
+  matcher: string
+) =>
   createMethod<TPairJSON[]>({
-    validate: validateRequest,
+    validate: validateRequest(matcher),
     generateRequest: createRequestForMany,
     libOptions,
   });
