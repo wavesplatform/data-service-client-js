@@ -1,17 +1,16 @@
 import {
-  AliasId,
-  aliases,
+  ILibOptions,
+  ILibRequest,
   TCreateGetFn,
-  LibOptions,
-  LibRequest,
+  TAliasesByAddressParams,
+  TAliasId,
+  TAlias,
+  TAliases,
 } from '../types';
 
 import { isNotString } from '../utils';
 import { createMethod } from './createMethod';
 import { createRequest } from '../createRequest';
-
-export type AliasesByAddressOptions = { showBroken?: boolean };
-type AliasesByAddressParams = [string, AliasesByAddressOptions];
 
 const validateId = (id: string): Promise<string> =>
   isNotString(id)
@@ -21,31 +20,31 @@ const validateId = (id: string): Promise<string> =>
 const validateByAddressParams = ([
   address,
   options,
-]: AliasesByAddressParams): Promise<AliasesByAddressParams> =>
+]: TAliasesByAddressParams): Promise<TAliasesByAddressParams> =>
   isNotString(address)
     ? Promise.reject(new Error('ArgumentsError: address should be string'))
-    : Promise.resolve([address, options] as AliasesByAddressParams);
+    : Promise.resolve([address, options] as TAliasesByAddressParams);
 
-const createRequestForId = (rootUrl: string) => (id: AliasId): LibRequest =>
+const createRequestForId = (rootUrl: string) => (id: TAliasId): ILibRequest =>
   createRequest(`${rootUrl}/aliases/${id}`);
 
 const createRequestForAddress = (rootUrl: string) => ([
   address,
   { showBroken },
-]: AliasesByAddressParams): LibRequest =>
+]: TAliasesByAddressParams): ILibRequest =>
   createRequest(`${rootUrl}/aliases`, {
     address,
     showBroken,
   });
 
-const createGetAliases: TCreateGetFn<aliases> = (libOptions: LibOptions) => ({
-  getById: createMethod({
+const createGetAliases: TCreateGetFn<TAliases> = (libOptions: ILibOptions) => ({
+  getById: createMethod<TAlias[]>({
     validate: validateId,
     generateRequest: createRequestForId,
     libOptions,
   }),
   getByAddress: (address, options = {}) =>
-    createMethod({
+    createMethod<TAlias[]>({
       validate: validateByAddressParams,
       generateRequest: createRequestForAddress,
       libOptions,

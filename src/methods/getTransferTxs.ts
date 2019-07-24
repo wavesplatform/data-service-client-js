@@ -1,8 +1,10 @@
 import {
+  ILibRequest,
   TCreateGetFn,
-  TransferTxFilters,
-  GetTransferTxs,
-  LibRequest,
+  TResponse,
+  ITransaction,
+  ITransferTxFilters,
+  IGetTransferTxs,
 } from '../types';
 
 import { createMethod } from './createMethod';
@@ -11,11 +13,11 @@ import { createRequest } from '../createRequest';
 // One
 const validateId = id =>
   typeof id === 'string' ? Promise.resolve(id) : Promise.reject('Wrong id');
-const generateRequestOne = (rootUrl: string) => (id: string): LibRequest =>
+const generateRequestOne = (rootUrl: string) => (id: string): ILibRequest =>
   createRequest(`${rootUrl}/transactions/transfer/${id}`);
 
 //Many
-const isFilters = (filters: any): filters is TransferTxFilters => {
+const isFilters = (filters: any): filters is ITransferTxFilters => {
   const possibleFilters = [
     'sender',
     'assetId',
@@ -37,16 +39,16 @@ const validateFilters = (filters: any) =>
     : Promise.reject('Wrong filters object');
 
 const generateRequestMany = (rootUrl: string) => (
-  filters: TransferTxFilters
-): LibRequest => createRequest(`${rootUrl}/transactions/transfer`, filters);
+  filters: ITransferTxFilters
+): ILibRequest => createRequest(`${rootUrl}/transactions/transfer`, filters);
 
-const createGetTransferTxs: TCreateGetFn<GetTransferTxs> = libOptions => {
-  const getTransferTxsOne = createMethod({
+const createGetTransferTxs: TCreateGetFn<IGetTransferTxs> = libOptions => {
+  const getTransferTxsOne = createMethod<ITransaction[]>({
     validate: validateId,
     generateRequest: generateRequestOne,
     libOptions,
   });
-  const getTransferTxsMany = createMethod({
+  const getTransferTxsMany = createMethod<ITransaction[]>({
     validate: validateFilters,
     generateRequest: generateRequestMany,
     libOptions,
@@ -57,8 +59,8 @@ const createGetTransferTxs: TCreateGetFn<GetTransferTxs> = libOptions => {
     }),
   });
 
-  const getTransferTxs: GetTransferTxs = (
-    idOrFilters: string | TransferTxFilters = {}
+  const getTransferTxs: IGetTransferTxs = (
+    idOrFilters: string | ITransferTxFilters = {}
   ) =>
     typeof idOrFilters === 'string'
       ? getTransferTxsOne(idOrFilters)
