@@ -22,7 +22,7 @@ import {
   TGetPairs,
 } from './types';
 
-export default class DataServiceClient<T> {
+export default class DataServiceClient {
   public getPairs: TGetPairs;
   public getAssets: TGetAssets;
   public getAssetsByTicker: TGetAssetsByTicker;
