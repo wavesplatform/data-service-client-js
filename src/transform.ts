@@ -1,4 +1,4 @@
-import { Asset, IAssetJSON, Candle, ICandleJSON } from '@waves/data-entities';
+import { Asset, IAssetJSON, Candle, ICandleJSON } from '@bancoin/data-entities';
 import { ApiTypes } from './types';
 import { id } from './utils';
 const transformer = ({ __type, data, ...rest }) => {

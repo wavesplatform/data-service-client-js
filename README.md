@@ -1,20 +1,20 @@
-# JS Library for Waves data services
+# JS Library for Bancoin data services
 
 ## Usage
 
 ```typescript
-const DataServiceClient = require('@waves/data-service-client-js').default;
+const DataServiceClient = require('@bancoin/data-service-client-js').default;
 
 // Initialization
 const client = new DataServiceClient({
-  rootUrl: 'http://api.wavesplatform.com/v0',
+  rootUrl: 'http://api.bancoinplatform.com/v0',
   fetch: req => window.fetch(req).then(res => res.text()), // fetch must return string
   parse: str => JSON.parse(str),
 });
 
 // Fetching
 (async () => {
-  const { data } = await client.getAssets('WAVES'); // data: Asset {}
+  const { data } = await client.getAssets('BCT'); // data: Asset {}
 })();
 ```
 
@@ -29,19 +29,19 @@ const client = new DataServiceClient({
 - getAssets:
 
 ```typescript
-await client.getAssets('WAVES'); // One { data: Asset }
-await client.getAssets('WAVES', '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // Or many { data: Asset[] }
-await client.getAssetsByTicker('WAVES');  // Many { data: Asset[] }
+await client.getAssets('BCT'); // One { data: Asset }
+await client.getAssets('BCT', '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // Or many { data: Asset[] }
+await client.getAssetsByTicker('BCT');  // Many { data: Asset[] }
 await client.getAssetsByTicker('*');  // Many { data: Asset[] } - all assets
 ```
 
 - getPairs
 
 ```typescript
-await client.getPairs('WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // One { data: {} }
+await client.getPairs('BCT/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // One { data: {} }
 await client.getPairs(
-  'WAVES/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
-  'WAVES/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu'
+  'BCT/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
+  'BCT/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu'
 ); // Many { data: Object[] }
 ```
 
@@ -93,7 +93,7 @@ await client.getCandles(amountAsset: string, priceAsset: string, {
   timeEnd?: string | Date | number;
   interval: string; // interval pattern is xy, where x - number, y - one of m (minutes), h (hours), d (days), M (Month)
 });
-await client.getCandles('WAVES', '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS', {
+await client.getCandles('BCT', '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS', {
   timeStart: '2018-12-01',
   timeEnd: '2018-12-31',
   interval: '1d'
