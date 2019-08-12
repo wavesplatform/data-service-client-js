@@ -2,16 +2,19 @@ import { TPredicate, TFunction } from './types';
 
 export const noop = () => {};
 export const defaultFetch = (...args): Promise<string> => {
-  return (window as any).fetch(...args).then(
-    (res: Response) =>
+  return (window as any)
+    .fetch(...args)
+    .then((res: Response) =>
       res.ok
         ? res.text()
         : res.text().then(str => Promise.reject(new Error(str)))
-  );
+    );
 };
 export const defaultParse = JSON.parse.bind(JSON);
 export const isNotString = (value: any): boolean => typeof value !== 'string';
-export const pipeP = (...fns: TFunction[]) => (...args: any[]): Promise<any> =>
+export const pipeP = (...fns: TFunction<any>[]) => (
+  ...args: any[]
+): Promise<any> =>
   fns.reduce(
     (prev, fn) => prev.then(fn),
     Promise.resolve(args.length === 1 ? args[0] : args)

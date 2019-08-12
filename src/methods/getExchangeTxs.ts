@@ -1,8 +1,9 @@
 import {
+  ILibRequest,
   TCreateGetFn,
-  ExchangeTxFilters,
-  GetExchangeTxs,
-  LibRequest,
+  ITransaction,
+  IExchangeTxFilters,
+  IGetExchangeTxs,
 } from '../types';
 
 import { createMethod } from './createMethod';
@@ -11,11 +12,11 @@ import { createRequest } from '../createRequest';
 // One
 const validateId = id =>
   typeof id === 'string' ? Promise.resolve(id) : Promise.reject('Wrong id');
-const generateRequestOne = (rootUrl: string) => (id: string): LibRequest =>
+const generateRequestOne = (rootUrl: string) => (id: string): ILibRequest =>
   createRequest(`${rootUrl}/transactions/exchange/${id}`);
 
 //Many
-const isFilters = (filters: any): filters is ExchangeTxFilters => {
+const isFilters = (filters: any): filters is IExchangeTxFilters => {
   const possibleFilters = [
     'timeStart',
     'timeEnd',
@@ -38,16 +39,16 @@ const validateFilters = (filters: any) =>
     : Promise.reject('Wrong filters object');
 
 const generateRequestMany = (rootUrl: string) => (
-  filters: ExchangeTxFilters
-): LibRequest => createRequest(`${rootUrl}/transactions/exchange`, filters);
+  filters: IExchangeTxFilters
+): ILibRequest => createRequest(`${rootUrl}/transactions/exchange`, filters);
 
-const createGetExchangeTxs: TCreateGetFn<GetExchangeTxs> = libOptions => {
-  const getExchangeTxsOne = createMethod({
+const createGetExchangeTxs: TCreateGetFn<IGetExchangeTxs> = libOptions => {
+  const getExchangeTxsOne = createMethod<ITransaction[]>({
     validate: validateId,
     generateRequest: generateRequestOne,
     libOptions,
   });
-  const getExchangeTxsMany = createMethod({
+  const getExchangeTxsMany = createMethod<ITransaction[]>({
     validate: validateFilters,
     generateRequest: generateRequestMany,
     libOptions,
@@ -58,8 +59,8 @@ const createGetExchangeTxs: TCreateGetFn<GetExchangeTxs> = libOptions => {
     }),
   });
 
-  const getExchangeTxs: GetExchangeTxs = (
-    idOrFilters: string | ExchangeTxFilters = {}
+  const getExchangeTxs: IGetExchangeTxs = (
+    idOrFilters: string | IExchangeTxFilters = {}
   ) =>
     typeof idOrFilters === 'string'
       ? getExchangeTxsOne(idOrFilters)

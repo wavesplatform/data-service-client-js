@@ -1,12 +1,6 @@
 import { Asset, Candle, AssetPair } from '@bancoin/data-entities';
 import { BigNumber } from '@bancoin/bignumber';
 
-import { AliasesByAddressOptions } from './methods/getAliases';
-
-export type TListResponseJSON<T> = {
-  __type: ApiTypes.List;
-  data: T[];
-};
 export enum ApiTypes {
   List = 'list',
   Asset = 'asset',
@@ -19,16 +13,36 @@ export enum HttpMethods {
   Get = 'GET',
   Post = 'POST',
 }
-export interface LibRequest {
+export interface ILibRequest {
   url: string;
   method: HttpMethods;
   headers?: {};
   body?: {};
 }
-export interface Transaction {
+export interface ILibOptions {
+  rootUrl: string;
+  parse?: TParser;
+  fetch?: TFunction<any>;
+  transform?: TFunction<any>;
+}
+
+export type TListResponseJSON<T> = {
+  __type: ApiTypes.List;
+  data: T[];
+};
+export type TResponse<T> = Promise<{
+  data: T;
+  fetchMore?: TFunction<TResponse<T>>;
+}>;
+export type TCreateGetFn<T> = (libOptions: ILibOptions) => T;
+export type TPredicate = (...args: any[]) => boolean;
+export type TFunction<T> = (...args: any[]) => T;
+export type TParser = (text: string) => any;
+
+export interface ITransaction {
   // @TODO add txs interfaces
 }
-export interface ExchangeTxFilters {
+export interface IExchangeTxFilters {
   timeStart?: string | Date | number;
   timeEnd?: string | Date | number;
   matcher?: string;
@@ -38,7 +52,7 @@ export interface ExchangeTxFilters {
   limit?: number;
   sort?: string;
 }
-export interface TransferTxFilters {
+export interface ITransferTxFilters {
   sender?: string;
   recipient?: string;
   assetId?: string;
@@ -48,7 +62,7 @@ export interface TransferTxFilters {
   sort?: string;
 }
 
-export interface MassTransferTxFilters {
+export interface IMassTransferTxFilters {
   sender?: string;
   recipient?: string;
   assetId?: string;
@@ -58,57 +72,42 @@ export interface MassTransferTxFilters {
   sort?: string;
 }
 
-export interface GetExchangeTxs {
-  (filters: ExchangeTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+export interface IGetExchangeTxs {
+  (filters: IExchangeTxFilters): TResponse<ITransaction[]>;
+  (id: string): TResponse<ITransaction>;
+  (): TResponse<ITransaction[]>;
 }
-export interface GetTransferTxs {
-  (filters: TransferTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+export interface IGetTransferTxs {
+  (filters: ITransferTxFilters): TResponse<ITransaction[]>;
+  (id: string): TResponse<ITransaction>;
+  (): TResponse<ITransaction[]>;
 }
-export interface GetMassTransferTxs {
-  (filters: MassTransferTxFilters): Response<Transaction[]>;
-  (id: string): Response<Transaction>;
-  (): Response<Transaction[]>;
+export interface IGetMassTransferTxs {
+  (filters: IMassTransferTxFilters): TResponse<ITransaction[]>;
+  (id: string): TResponse<ITransaction>;
+  (): TResponse<ITransaction[]>;
 }
-export type Response<T> = Promise<{
-  data: T;
-  fetchMore?: TFunction;
-}>;
-export type TGetAssets = (...ids: TAssetId[]) => Response<Asset[]>;
-export type TGetAssetsByTicker = (ticker: string) => Response<Asset[]>;
-export type getAliasById = (id: AliasId) => Response<Alias>;
-export type getAliasesByAddress = (
-  address: string,
-  options?: AliasesByAddressOptions
-) => Response<Alias[]>;
-export type TGetCandles = (
-  amountAsset: string,
-  priceAsset: string,
-  params: TCandlesParams
-) => Response<Candle[]>;
-export type TCreateGetFn<T> = (libOptions: LibOptions) => T;
-export type TPredicate = (...args: any[]) => boolean;
-export type TFunction = (...args: any[]) => any;
-export type TParser = (text: string) => any;
-export type aliases = {
-  getById: getAliasById;
-  getByAddress: getAliasesByAddress;
-};
-export interface LibOptions {
-  rootUrl: string;
-  parse?: TParser;
-  fetch?: TFunction;
-  transform?: TFunction;
-}
+
 export type TAssetId = string;
-export type AliasId = string;
-export type Alias = {
+export type TGetAssets = (...ids: TAssetId[]) => TResponse<Asset[]>;
+export type TGetAssetsByTicker = (ticker: string) => TResponse<Asset[]>;
+
+export type TAliasId = string;
+export type TAlias = {
   address: string;
   alias: string;
 };
+export type TAliasesByAddressOptions = { showBroken?: boolean };
+export type TAliasesByAddressParams = [string, TAliasesByAddressOptions];
+export type TAliases = {
+  getById: TGetAliasById;
+  getByAddress: TGetAliasesByAddress;
+};
+export type TGetAliasById = (id: TAliasId) => TResponse<TAlias[]>;
+export type TGetAliasesByAddress = (
+  address: string,
+  options?: TAliasesByAddressOptions
+) => TResponse<TAlias[]>;
 
 export type TCandlesParams = {
   timeStart: string | Date | number;
@@ -116,19 +115,21 @@ export type TCandlesParams = {
   interval: string;
   matcher: string;
 };
+export type TCandlesRequestFilters = [string, string, TCandlesParams];
+export type TGetCandles = (
+  amountAsset: string,
+  priceAsset: string,
+  params: TCandlesParams
+) => TResponse<Candle[]>;
 
-export type TGetPairs = (...pairs: AssetPair[]) => Response<IPairJSON[]>;
-
-export type IPairJSON = {
+export type TPairsRequest = [string, AssetPair[]];
+export type TPairJSON = {
   firstPrice: BigNumber;
   lastPrice: BigNumber;
   volume: BigNumber;
   amountAsset: string;
   priceAsset: string;
 };
-
-export type TPairResponseJSON = {
-  __type: ApiTypes.Pair;
-  data: IPairJSON;
-};
-export type TPairsResponseJSON = TListResponseJSON<TPairResponseJSON>;
+export type TGetPairs = (
+  matcher: string
+) => (pairs: AssetPair[]) => TResponse<TPairJSON[]>;

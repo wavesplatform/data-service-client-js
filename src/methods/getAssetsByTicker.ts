@@ -1,8 +1,9 @@
+import { Asset } from '@waves/data-entities';
 import {
-  TGetAssetsByTicker,
   TCreateGetFn,
-  LibOptions,
-  LibRequest,
+  ILibOptions,
+  ILibRequest,
+  TGetAssetsByTicker,
 } from '../types';
 
 import { createMethod } from './createMethod';
@@ -16,10 +17,12 @@ const validateTicker = (ticker: string): Promise<string> => {
 
 const createRequestForMany = (rootUrl: string) => (
   ticker: string
-): LibRequest => createRequest(`${rootUrl}/assets`, { ticker });
+): ILibRequest => createRequest(`${rootUrl}/assets`, { ticker });
 
-const createGetAssetsByTicker: TCreateGetFn<TGetAssetsByTicker> = (libOptions: LibOptions) =>
-  createMethod({
+const createGetAssetsByTicker: TCreateGetFn<TGetAssetsByTicker> = (
+  libOptions: ILibOptions
+) =>
+  createMethod<Asset[]>({
     validate: validateTicker,
     generateRequest: createRequestForMany,
     libOptions,

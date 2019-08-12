@@ -1,17 +1,24 @@
 import { T, pipeP } from '../utils';
-import { TFunction, LibOptions } from '../types';
+import { TFunction, ILibOptions, ILibRequest, TResponse } from '../types';
 
-const createMethod = ({
+type TCreateMethodParams = {
+  validate: TFunction<any>;
+  generateRequest: TFunction<TFunction<ILibRequest>>;
+  libOptions: ILibOptions;
+  addPaginationToArgs?: TFunction<any>;
+};
+
+const createMethod = <T>({
   validate = T,
   generateRequest,
   libOptions,
   addPaginationToArgs,
-}: TCreateMethodParams): TFunction => {
+}: TCreateMethodParams): TFunction<TResponse<T>> => {
   function method(...args) {
     return pipeP(
       validate,
       generateRequest(libOptions.rootUrl),
-      ({url, ...options}) => libOptions.fetch(url, options),
+      ({ url, ...options }) => libOptions.fetch(url, options),
       libOptions.parse,
       rawData =>
         pipeP(
@@ -40,9 +47,3 @@ const addPagination = ({
 };
 
 export { createMethod };
-type TCreateMethodParams = {
-  validate: TFunction;
-  generateRequest: TFunction;
-  libOptions: LibOptions;
-  addPaginationToArgs?: TFunction;
-};

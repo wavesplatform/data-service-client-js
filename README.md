@@ -38,11 +38,12 @@ await client.getAssetsByTicker('*');  // Many { data: Asset[] } - all assets
 - getPairs
 
 ```typescript
-await client.getPairs('BCT/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS'); // One { data: {} }
-await client.getPairs(
+
+const getPairs = client.getPairs('MATCHER_ID'); // set up DEX matcher
+await getPairs([
   'BCT/8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
   'BCT/474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu'
-); // Many { data: Object[] }
+]); // get pairs
 ```
 
 - getExchangeTxs:
