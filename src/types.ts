@@ -101,9 +101,11 @@ export type TAliasesByAddressOptions = { showBroken?: boolean };
 export type TAliasesByAddressParams = [string, TAliasesByAddressOptions];
 export type TAliases = {
   getById: TGetAliasById;
+  getByIdList: TGetAliasByIdList;
   getByAddress: TGetAliasesByAddress;
 };
 export type TGetAliasById = (id: TAliasId) => TResponse<TAlias[]>;
+export type TGetAliasByIdList = (idList: Array<TAliasId>) => TResponse<TAlias[]>;
 export type TGetAliasesByAddress = (
   address: string,
   options?: TAliasesByAddressOptions
