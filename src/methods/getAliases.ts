@@ -17,6 +17,11 @@ const validateId = (id: string): Promise<string> =>
     ? Promise.reject(new Error('ArgumentsError: aliasId should be string'))
     : Promise.resolve(id);
 
+const validateIdList = (idList: Array<string>): Promise<Array<string>> =>
+    Array.isArray(idList)
+        ? Promise.resolve(idList)
+        : Promise.reject(new Error('ArgumentsError: aliasId should be Array'));
+
 const validateByAddressParams = ([
   address,
   options,
@@ -27,6 +32,9 @@ const validateByAddressParams = ([
 
 const createRequestForId = (rootUrl: string) => (id: TAliasId): ILibRequest =>
   createRequest(`${rootUrl}/aliases/${id}`);
+
+const createRequestForIdList = (rootUrl: string) => (idList: Array<TAliasId>): ILibRequest =>
+    createRequest(`${rootUrl}/aliases/?aliases=${idList.join(',')}`);
 
 const createRequestForAddress = (rootUrl: string) => ([
   address,
@@ -42,6 +50,11 @@ const createGetAliases: TCreateGetFn<TAliases> = (libOptions: ILibOptions) => ({
     validate: validateId,
     generateRequest: createRequestForId,
     libOptions,
+  }),
+  getByIdList: createMethod<TAlias[]>({
+      validate: validateIdList,
+      generateRequest: createRequestForIdList,
+      libOptions,
   }),
   getByAddress: (address, options = {}) =>
     createMethod<TAlias[]>({
