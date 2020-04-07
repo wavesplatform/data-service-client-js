@@ -15,7 +15,7 @@
     "prepare": "npm run build:all && npm test"
   },
   "dependencies": {
-    "@waves/bignumber": "^0.0.1-a5",
+    "@waves/bignumber": "^1.0.0",
     "@waves/data-entities": "^2.0.0-a3"
   },
   "devDependencies": {
