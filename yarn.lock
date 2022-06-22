@@ -47,13 +47,20 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.0.tgz#acaa89247afddc7967e9902fd11761dadea1a555"
   integrity sha512-j2tekvJCO7j22cs+LO6i0kRPhmQ9MXaPZ55TzOc1lzkN5b6BWqq4AFjl04s1oRRQ1v5rSe+KEvnLUSTonuls/A==
 
-"@waves/bignumber@0.0.1-a5", "@waves/bignumber@^0.0.1-a5":
+"@waves/bignumber@0.0.1-a5":
   version "0.0.1-a5"
   resolved "https://registry.yarnpkg.com/@waves/bignumber/-/bignumber-0.0.1-a5.tgz#0a783a4d0e7488c375c8f0b9239688196b720578"
   integrity sha512-DUTH3MRBCVs4NPAMRfTiCOdzQ7kpmhYXviiOi3p/prbz3ofnqCeaVbzeDqZijRrmd6SLxUd1H1n7lRY1k6O3lA==
   dependencies:
     "@types/bignumber.js" "^5.0.0"
     bignumber.js "^8.1.1"
+
+"@waves/bignumber@^1.0.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@waves/bignumber/-/bignumber-1.1.1.tgz#4fa396b2685c6f2d22c44120941264bf6cb6b750"
+  integrity sha512-WUY0R0y0Rd92nbyQHbIFDXCWh2YMtf5FYtpoTv4yRomM75cRLJ0/NIQ828guUXLKeVytKzWgvDYj1CZfxatDkg==
+  dependencies:
+    bignumber.js "^9.0.1"
 
 "@waves/data-entities@^2.0.0-a3":
   version "2.0.0-a3"
@@ -217,21 +224,6 @@ array-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/array-equal/-/array-equal-1.0.0.tgz#8c2a5ef2472fd9ea742b04c77a75093ba2757c93"
   integrity sha1-jCpe8kcv2ep0KwTHenUJO6J1fJM=
-
-array-filter@~0.0.0:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/array-filter/-/array-filter-0.0.1.tgz#7da8cf2e26628ed732803581fd21f67cacd2eeec"
-  integrity sha1-fajPLiZijtcygDWB/SH2fKzS7uw=
-
-array-map@~0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/array-map/-/array-map-0.0.0.tgz#88a2bab73d1cf7bcd5c1b118a003f66f665fa662"
-  integrity sha1-iKK6tz0c97zVwbEYoAP2b2ZfpmI=
-
-array-reduce@~0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/array-reduce/-/array-reduce-0.0.0.tgz#173899d3ffd1c7d9383e4479525dbe278cab5f2b"
-  integrity sha1-FziZ0//Rx9k4PkR5Ul2+J4yrXys=
 
 array-unique@^0.2.1:
   version "0.2.1"
@@ -523,6 +515,11 @@ bignumber.js@*, bignumber.js@^8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-8.1.1.tgz#4b072ae5aea9c20f6730e4e5d529df1271c4d885"
   integrity sha512-QD46ppGintwPGuL1KqmwhR0O+N2cZUg8JG/VzwI2e28sM9TqHjQB10lI4QAaMHVbLzwVLLAwEglpKPViWX+5NQ==
+
+bignumber.js@^9.0.1:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.2.tgz#71c6c6bed38de64e24a65ebe16cfcf23ae693673"
+  integrity sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
@@ -3893,14 +3890,9 @@ shebang-regex@^1.0.0:
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
 shell-quote@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.6.1.tgz#f4781949cce402697127430ea3b3c5476f481767"
-  integrity sha1-9HgZSczkAmlxJ0MOo7PFR29IF2c=
-  dependencies:
-    array-filter "~0.0.0"
-    array-map "~0.0.0"
-    array-reduce "~0.0.0"
-    jsonify "~0.0.0"
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.7.3.tgz#aa40edac170445b9a431e17bb62c0b881b9c4123"
+  integrity sha512-Vpfqwm4EnqGdlsBFNmHhxhElJYrdfcxPThu+ryKS5J8L/fhAwLazFZtq+S+TWZ9ANj2piSQLGj6NQg+lKPmxrw==
 
 shellwords@^0.1.1:
   version "0.1.1"
