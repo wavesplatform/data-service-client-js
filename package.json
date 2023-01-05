@@ -23,7 +23,7 @@
     "@types/node": "8.0.0",
     "@types/node-fetch": "^1.6.9",
     "browserify": "^16.2.2",
-    "jest": "^23.6.0",
+    "jest": "^29.3.1",
     "node-fetch": "^2.1.2",
     "parse-json-bignumber": "^0.0.2",
     "rimraf": "^2.6.2",
